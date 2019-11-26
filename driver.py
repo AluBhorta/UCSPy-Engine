@@ -1,13 +1,6 @@
 import numpy as np
 from models.models import Lecture, Course, Instructor, Room, Timeslot
-
-ROOMS = ["R1", "R2", "R3"]
-
-TIMESLOTS = [1, 2, 3, 4]
-
-COURSES = ["CSC101", "CSC102", "MAT301"]
-
-INSTRUCTORS = ["I1", "I2", "I3"]
+from data import COURSES, INSTRUCTORS, ROOMS, TIMESLOTS
 
 
 # L = (R[i], T[j], C[k], I[p])
@@ -26,10 +19,17 @@ def encode(lecture: Lecture) -> (int, int, int, int):
     return lecture.encoded_lecture
 
 
-l1 = (1,1,2,1)
+if __name__ == "__main__":
+    print("(Room, Timeslot, Course, Instructor)")
+    
+    # generate a lecture
+    l1 = (3,4,1,0)
+    
+    print(l1)
 
-L1 = decode(l1)
-print(L1)
-l2 = encode(L1)
-print(l2)
+    L1 = decode(l1)
+    print(L1)
+    
+    l2 = encode(L1)
+    print(l2)
 
