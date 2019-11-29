@@ -1,44 +1,29 @@
 import numpy as np
 from models.models import Lecture, Course, Instructor, Room, Timeslot
-from data.rand_data import COURSES, INSTRUCTORS, ROOMS, TIMESLOTS, generate_random_schedule
+from data.data import COURSES, INSTRUCTORS, ROOMS, TIMESLOTS
+from data.generate_random_schedule import generate_random_schedule
+from fitness.constraints.hard_constraints import violates_hc1, violates_hc2
 
 
-# L = (R[i], T[j], C[k], I[p])
-
-def decode(encoded_lecture) -> Lecture:
-    return Lecture(
-        encoded_lecture,
-        ROOMS[encoded_lecture[0]],
-        TIMESLOTS[encoded_lecture[1]], 
-        COURSES[encoded_lecture[2]], 
-        INSTRUCTORS[encoded_lecture[3]]
-    )
+def print_inputs():
+    print("\nROOMS: (str room_id) \n", ROOMS)
+    print("\nTIMESLOTS: (str timeslot_id) \n", TIMESLOTS)
+    print("\nCOURSES: (str course_id, int num_of_lectures, int[] preferred_rooms)\n", COURSES)
+    print("\nINSTRUCTORS: (str instuctor_id, int[] qualified_courses, int[] available_timeslots)\n", INSTRUCTORS)
 
 
-def encode(lecture: Lecture) -> (int, int, int, int):
-    return lecture.encoded_lecture
+def check_constraints():
+    for i in range(100):
+        s = generate_random_schedule()
 
-
-def print_input():
-    print("\nROOMS: (str room_id) \n",ROOMS)
-    print("\nTIMESLOTS: (str timeslot_id) \n",TIMESLOTS)
-    print("\nCOURSES: (str course_id, int num_of_lectures, int[] preferred_rooms)\n",COURSES)
-    print("\nINSTRUCTORS: (str instuctor_id, int[] qualified_courses, int[] available_timeslots)\n",INSTRUCTORS)
+        hc1 = violates_hc1(s)
+        hc2 = violates_hc2(s)
+        print("hc1: %d, hc2: %d" % (hc1, hc2))
 
 
 def main():
-    print("(Room, Timeslot, Course, Instructor)")
-    
-    # generate a lecture
-    l1 = (3,4,1,0)
-    print(l1)
+    check_constraints()
 
-    L1 = decode(l1)
-    print(L1)
-    
-    l2 = encode(L1)
-    print(l2)
 
 if __name__ == "__main__":
-    print_input()
-    
+    main()
