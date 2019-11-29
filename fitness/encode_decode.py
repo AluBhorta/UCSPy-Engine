@@ -1,5 +1,6 @@
 from models.models import Lecture
 from data.data import COURSES, INSTRUCTORS, ROOMS, TIMESLOTS
+from data.generate_random_schedule import generate_random_schedule
 
 def decode(encoded_lecture: (int, int, int, int)) -> Lecture:
     """solution decoder"""
@@ -20,10 +21,10 @@ def encode(lecture: Lecture) -> (int, int, int, int):
 def _verify_encode_decode():
     print("(Room, Timeslot, Course, Instructor)")
     # generate a lecture
-    l1 = (3, 4, 1, 0)
-    print(l1)
-    L1 = decode(l1)
-    print(L1)
-    l2 = encode(L1)
-    print(l2)
+    s = generate_random_schedule()
+    for lec in s:
+        de_lec = decode(lec)
+        print(lec)
+        print(de_lec)
+
 

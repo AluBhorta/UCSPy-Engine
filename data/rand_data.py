@@ -21,8 +21,14 @@ MAX_LECS_THAT_CAN_BE_OFFERED = MAX_LECS_PER_TIMESLOT * NUM_OF_TIMELSOTS
 
 # inputs to the Engine
 
+"""
+(str room_id)[]
+"""
 ROOMS = np.array(["Room-%d" % i for i in np.arange(NUM_OF_ROOMS)])
 
+"""
+(str timeslot_id)[]
+"""
 TIMESLOTS = np.array(["Timeslot-%d" % i for i in np.arange(NUM_OF_TIMELSOTS)])
 
 """

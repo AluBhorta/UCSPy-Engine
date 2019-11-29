@@ -3,6 +3,7 @@ from models.models import Lecture, Course, Instructor, Room, Timeslot
 from data.data import COURSES, INSTRUCTORS, ROOMS, TIMESLOTS
 from data.generate_random_schedule import generate_random_schedule
 from fitness.constraints.hard_constraints import violates_hc1, violates_hc2
+from fitness.encode_decode import encode, decode
 
 
 def print_inputs():
@@ -18,7 +19,7 @@ def check_constraints():
 
         hc1 = violates_hc1(s)
         hc2 = violates_hc2(s)
-        print("hc1: %d, hc2: %d" % (hc1, hc2))
+        print("hc1: %s,\thc2: %s" % (hc1, hc2))
 
 
 def main():

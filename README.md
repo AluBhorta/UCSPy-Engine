@@ -14,3 +14,7 @@ Python Prototype of UCSP Engine.
 - Python 3.6
 - virtualenv
 
+### Todo
+
+- write better doc when system implemented
+    - write installation guide for: virtualenv, pipenv, conda

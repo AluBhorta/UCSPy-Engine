@@ -24,11 +24,11 @@ def violates_hc1(schedule):
     for room_slot in schedule[:, 0:2]:
         for unique_room_slot in unique_room_slots:
             if np.array_equal(room_slot, unique_room_slot):
-                return 0
+                return True
 
         unique_room_slots.append(room_slot)
 
-    return 1
+    return False
 
 
 def violates_hc2(schedule):
@@ -37,11 +37,12 @@ def violates_hc2(schedule):
     for instr_slot in schedule[:, [1, 3]]:
         for unique_instr_slot in unique_instr_slots:
             if np.array_equal(instr_slot, unique_instr_slot):
-                return 0
+                return True
 
         unique_instr_slots.append(instr_slot)
 
-    return 1
+    return False
+
 
 def violates_hc3(schedule):
     pass
