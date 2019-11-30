@@ -30,18 +30,14 @@ def check_constraints(sch):
 
 
 def print_decoded_schedule(sch):
-    for l in s:
+    for l in sch:
         print(decode(l))
+
 
 def main():
     s = generate_random_schedule()
     for l in s:
         print(decode(l))
-
-
-    # for i in range(100):
-    #     s = generate_random_schedule()
-    #     check_constraints(s)
 
 
 if __name__ == "__main__":
