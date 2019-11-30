@@ -11,10 +11,11 @@ else:				return 1
 2. No instructor can take more than one lecture at a given Timeslot
 
 3. Instructors can only take certain courses they are qualified for
-    - Lec[2] (course_id) should be in the list -> decode(Lec).instructor[1] (instructor.qualified_courses)
+    - Lec[2] (course_id) should be in the list -> decode(Lec)[3][1] (instructor.qualified_courses)
 
 4. Instructors are only available at certain timeslots
-    - Lec[1] (timeslot_id) should be in the list -> decode(Lec).instructor[2] (instructor.available_timeslots)
+    - Lec[1] (timeslot_id) should be in the list -> decode(Lec)[3][2] (instructor.available_timeslots)
+
 
 
 Schedule: (Room, Timeslot, Course, Instructor)[]
@@ -28,12 +29,12 @@ Schedule: (Room, Timeslot, Course, Instructor)[]
 
 """
 import numpy as np
-from fitness.encode_decode import encode, decode
+from fitness.encode_decode import decode
 
 
-def violates_hc1(schedule):
+def violates_hard_constraint_1(schedule):
     """
-    Rule: No two lectures can take place in the same room at the same Timeslot
+    Hard Constraint 1: No two lectures can take place in the same room at the same Timeslot
     """
     unique_room_slots = []
 
@@ -47,9 +48,9 @@ def violates_hc1(schedule):
     return False
 
 
-def violates_hc2(schedule):
+def violates_hard_constraint_2(schedule):
     """
-    Rule: No instructor can take more than one lecture at a given Timeslot
+    Hard Constraint 2: No instructor can take more than one lecture at a given Timeslot
     """
     unique_instr_slots = []
 
@@ -63,15 +64,15 @@ def violates_hc2(schedule):
     return False
 
 
-def violates_hc3(schedule):
+def violates_hard_constraint_3(schedule):
     """
-    Rule: Instructors can only take certain courses they are qualified for
+    Hard Constraint 3: Instructors can only take certain courses they are qualified for
     """
     for lec in schedule:
         course_id = lec[2]
 
         decoded_lec = decode(lec)
-        qualified_courses = decoded_lec.instructor[1]
+        qualified_courses = decoded_lec[3][1]
 
         if course_id not in qualified_courses:
             return True
@@ -79,11 +80,23 @@ def violates_hc3(schedule):
     return False
 
 
-def violates_hc4(schedule):
-    pass
+def violates_hard_constraint_4(schedule):
+    """
+    Hard Constraint 4: Instructors are only available at certain timeslots
+    """
+    for lec in schedule:
+        timeslot_id = lec[1]
+
+        decoded_lec = decode(lec)
+        available_timeslots = decoded_lec[3][2]
+
+        if timeslot_id not in available_timeslots:
+            return True
+
+    return False
 
 
 """
 Contains all the hard-constraint-funcs
 """
-HARD_CONSTRAINTS = [violates_hc1, violates_hc2]
+HARD_CONSTRAINTS = [violates_hard_constraint_1, violates_hard_constraint_2, violates_hard_constraint_3, violates_hard_constraint_4]

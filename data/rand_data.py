@@ -1,7 +1,7 @@
 # TODO: make a func that takes in the changeable variables and returns the genrated random inputs
 import numpy as np
 
-np.random.seed(69)
+# np.random.seed(69)
 
 # vairables to alter for randomization
 
@@ -10,7 +10,7 @@ NUM_OF_TIMELSOTS = 20
 NUM_OF_COURSES = 10
 NUM_OF_INSTRUCTORS = 8
 
-MAX_NUM_OF_LECS_PER_COURSE = 5
+MAX_NUM_OF_LECS_PER_COURSE = 10
 MAX_NUM_OF_PREFFERED_ROOMS = NUM_OF_ROOMS * 0.9
 MAX_NUM_OF_QUALIFIED_COURSES_PER_INSTRUCTOR = NUM_OF_COURSES * 0.9
 
@@ -24,12 +24,12 @@ MAX_LECS_THAT_CAN_BE_OFFERED = MAX_LECS_PER_TIMESLOT * NUM_OF_TIMELSOTS
 """
 (str room_id)[]
 """
-ROOMS = np.array(["Room-%d" % i for i in np.arange(NUM_OF_ROOMS)])
+ROOMS = np.array(["Room%d" % i for i in np.arange(NUM_OF_ROOMS)])
 
 """
 (str timeslot_id)[]
 """
-TIMESLOTS = np.array(["Timeslot-%d" % i for i in np.arange(NUM_OF_TIMELSOTS)])
+TIMESLOTS = np.array(["Timeslot%d" % i for i in np.arange(NUM_OF_TIMELSOTS)])
 
 """
 (str course_id, int num_of_lectures, int[] preferred_rooms)[]

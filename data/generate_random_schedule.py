@@ -2,7 +2,6 @@ import numpy as np
 from data.data import NUM_OF_ROOMS, NUM_OF_TIMELSOTS, NUM_OF_COURSES, NUM_OF_INSTRUCTORS, LECS_BEING_OFFERED
 
 
-
 def generate_random_schedule():     # generates a random schedule
     # (Room, Timeslot, Course, Instructor)[]
     return np.array([
@@ -13,3 +12,5 @@ def generate_random_schedule():     # generates a random schedule
             np.random.randint(NUM_OF_INSTRUCTORS)
         ) for i in np.arange(LECS_BEING_OFFERED)
     ])
+
+# TODO: set the high and low params of the `np.random.randint` func to generate schedules without violating hard constraints

@@ -2,8 +2,8 @@ from fitness.constraints.hard_constraints import HARD_CONSTRAINTS
 
 
 def violates_a_hard_constraint(schedule) -> bool:
-    for violates_hc in HARD_CONSTRAINTS:
-        if violates_hc(schedule):
+    for violates_hard_constraint in HARD_CONSTRAINTS:
+        if violates_hard_constraint(schedule):
             return True
 
     return False
