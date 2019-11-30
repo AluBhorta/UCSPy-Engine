@@ -2,8 +2,9 @@ import numpy as np
 from models.models import Lecture, Course, Instructor, Room, Timeslot
 from data.data import COURSES, INSTRUCTORS, ROOMS, TIMESLOTS
 from data.generate_random_schedule import generate_random_schedule
-from fitness.constraints.hard_constraints import violates_hc1, violates_hc2
 from fitness.encode_decode import encode, decode
+from fitness.fitness import fitness, hard_penalty_multiplier
+from fitness.constraints.hard_constraints import violates_hc1, violates_hc2, violates_hc3
 
 
 def print_inputs():
@@ -13,17 +14,34 @@ def print_inputs():
     print("\nINSTRUCTORS: (str instuctor_id, int[] qualified_courses, int[] available_timeslots)\n", INSTRUCTORS)
 
 
-def check_constraints():
-    for i in range(100):
-        s = generate_random_schedule()
+def check_constraints(sch):
+    hc1 = violates_hc1(sch)
+    hc2 = violates_hc2(sch)
+    hc3 = violates_hc3(sch)
+    out = ""
+    if not hc1:
+        out += "yay, no VHC11"
+    if not hc2:
+        out += "\tyay, no VHC2!"
+    if not hc3:
+        out += "\tyay, no VHC3!"
 
-        hc1 = violates_hc1(s)
-        hc2 = violates_hc2(s)
-        print("hc1: %s,\thc2: %s" % (hc1, hc2))
+    print(out)
 
+
+def print_decoded_schedule(sch):
+    for l in s:
+        print(decode(l))
 
 def main():
-    check_constraints()
+    s = generate_random_schedule()
+    for l in s:
+        print(decode(l))
+
+
+    # for i in range(100):
+    #     s = generate_random_schedule()
+    #     check_constraints(s)
 
 
 if __name__ == "__main__":

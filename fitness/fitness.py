@@ -1,8 +1,12 @@
+from fitness.constraints.hard_constraints import HARD_CONSTRAINTS
+
 
 def violates_a_hard_constraint(schedule) -> bool:
-    # TODO: keep a list of hard-constraint-func in hard_constraints.py. when this func is called, check this schedule against every hard-constraint-func
-    # TODO(later) how to incorporate decorator so that adding a particular decorater to a func makes it a hard-constraint-func?
-    pass
+    for violates_hc in HARD_CONSTRAINTS:
+        if violates_hc(schedule):
+            return True
+
+    return False
 
 
 def hard_penalty_multiplier(schedule) -> float:

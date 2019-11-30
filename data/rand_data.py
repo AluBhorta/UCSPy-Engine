@@ -11,8 +11,8 @@ NUM_OF_COURSES = 10
 NUM_OF_INSTRUCTORS = 8
 
 MAX_NUM_OF_LECS_PER_COURSE = 5
-MAX_NUM_OF_PREFFERED_ROOMS = NUM_OF_ROOMS/2
-MAX_NUM_OF_QUALIFIED_COURSES_PER_INSTRUCTOR = NUM_OF_COURSES/2
+MAX_NUM_OF_PREFFERED_ROOMS = NUM_OF_ROOMS * 0.9
+MAX_NUM_OF_QUALIFIED_COURSES_PER_INSTRUCTOR = NUM_OF_COURSES * 0.9
 
 # (DO NOT MODIFY) inferred variables
 
@@ -38,7 +38,7 @@ COURSES = np.array([
     (
         "CSE%d" % i,
         np.random.randint(low=1, high=MAX_NUM_OF_LECS_PER_COURSE),
-        np.random.randint(low=0, high=NUM_OF_ROOMS+1,
+        np.random.randint(low=0, high=NUM_OF_ROOMS,
                           size=np.random.randint(MAX_NUM_OF_PREFFERED_ROOMS))
     ) for i in np.arange(NUM_OF_COURSES)
 ])
