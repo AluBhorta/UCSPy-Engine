@@ -1,6 +1,6 @@
 import numpy as np
 from data.data import ROOMS, TIMESLOTS, COURSES, INSTRUCTORS, NUM_OF_ROOMS, NUM_OF_TIMELSOTS, NUM_OF_COURSES, NUM_OF_INSTRUCTORS, NUM_OF_LECS_BEING_OFFERED
-from fitness.encode_decode import encode, decode
+from fitness.solution_encoding import decode
 
 
 def naive_random_schedule():     # generates a random schedule
@@ -34,10 +34,17 @@ def generate_random_schedule():
                 "Error! No qualified instructors for Course %s found!" % Course[1])
 
         for lec_i in range(Course[2]):
+            # TODO (resolving hard constraint 2): before assigning instructor, go thru each qualified_instructors (qi) & check if any lec in S exists at (qi, qi.available_timeslots)
+            # if not, take that pair of (qi, qi.available_timeslots)
             instructor_id = np.random.choice(qualified_instructors)
             timeslot_id = np.random.choice(INSTRUCTORS[instructor_id][3])
-            room_id = np.random.choice(Course[3])   # optimizes for soft_constraint_1 as well
-            # np.random.randint(NUM_OF_ROOMS)       # worse violations
+            
+            # TODO (resolving hard constraint 1): before assigning room, check if a lecture exists at that (room, timeslot)
+            # OR: 
+            # if len(Course[3]) > 0: use np.random.choice(Course[3]) 
+            # else: np.random.randint(NUM_OF_ROOMS)
+            room_id = np.random.randint(NUM_OF_ROOMS)
+            # room_id = np.random.choice(Course[3])   # optimizes for soft_constraint_1 as well!
 
             Schedule.append([room_id, timeslot_id, course_id, instructor_id])
 

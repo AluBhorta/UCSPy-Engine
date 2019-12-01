@@ -11,12 +11,8 @@ else:				return 1
 2. No instructor can take more than one lecture at a given Timeslot
 
 3. Instructors can only take certain courses they are qualified for
-    - Lec[2] (course_id) should be in the list -> decode(Lec)[3][1] (instructor.qualified_courses)
 
 4. Instructors are only available at certain timeslots
-    - Lec[1] (timeslot_id) should be in the list -> decode(Lec)[3][2] (instructor.available_timeslots)
-
-
 
 Schedule: (Room, Timeslot, Course, Instructor)[]
 
@@ -29,7 +25,7 @@ Schedule: (Room, Timeslot, Course, Instructor)[]
 
 """
 import numpy as np
-from fitness.encode_decode import decode
+from fitness.solution_encoding import decode
 
 
 def violates_hard_constraint_1(schedule):
@@ -99,4 +95,9 @@ def violates_hard_constraint_4(schedule):
 """
 Contains all the hard-constraint-funcs
 """
-HARD_CONSTRAINTS = [violates_hard_constraint_1, violates_hard_constraint_2, violates_hard_constraint_3, violates_hard_constraint_4]
+HARD_CONSTRAINTS = [
+    violates_hard_constraint_1, 
+    violates_hard_constraint_2, 
+    violates_hard_constraint_3, 
+    violates_hard_constraint_4
+]
