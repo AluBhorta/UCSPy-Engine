@@ -1,30 +1,11 @@
 from models.models import Lecture
-from data.data import COURSES, INSTRUCTORS, ROOMS, TIMESLOTS
-from data.generate_random_schedule import generate_random_schedule
+from data.data import ROOMS, TIMESLOTS, COURSES, INSTRUCTORS
 
 
-def _decode(encoded_lecture: (int, int, int, int)) -> Lecture:
-    """DEPRICATED"""
-    return Lecture(
-        encoded_lecture,
-        ROOMS[encoded_lecture[0]],
-        TIMESLOTS[encoded_lecture[1]],
-        COURSES[encoded_lecture[2]],
-        INSTRUCTORS[encoded_lecture[3]]
-    )
+'''Encoded_Lecture: (Room, Timeslot, Course, Instructor)
+    (int room_id, int timeslot_id, int course_id, int instructor_id)
+'''
 
-
-def _encode(lecture: Lecture) -> (int, int, int, int):
-    """DEPRICATED"""
-    return lecture.encoded_lecture
-
-#  Decoded_Lecture: (Room, Timeslot, Course, Instructor)
-# (
-#   Room:       (str room_id),
-#   Timeslot:   (str timeslot_id),
-#   Course:     (str course_id, int num_of_lectures, int[] preferred_rooms),
-#   Instructor: (str instuctor_id, int[] qualified_courses, int[] available_timeslots)
-# )
 
 def decode(encoded_lecture):
     """solution decoder"""
@@ -36,23 +17,21 @@ def decode(encoded_lecture):
     )
 
 
+'''Decoded_Lecture: (Room, Timeslot, Course, Instructor)
+(
+  Room:       (int room_id, str room_desc) 
+  Timeslot:   (int timeslot_id, str timeslot_desc) 
+  Course:     (int course_id, str course_desc, int num_of_lectures, int[] preferred_rooms)
+  Instructor: (int instuctor_id, str instuctor_desc, int[] qualified_courses, int[] available_timeslots)
+)
+'''
+
+
 def encode(decoded_lecture):
     """solution encoder"""
-    room_id         =   int(decoded_lecture[0][4:])
-    timeslot_id     =   int(decoded_lecture[1][8:])
-    course_id       =   int(decoded_lecture[2][0][3:])
-    instructor_id   =   int(decoded_lecture[3][0][10:])
+    room_id         = decoded_lecture[0][0]
+    timeslot_id     = decoded_lecture[1][0]
+    course_id       = decoded_lecture[2][0]
+    instructor_id   = decoded_lecture[3][0]
 
     return [room_id, timeslot_id, course_id, instructor_id]
-
-
-
-def _verify_encode_decode():
-    print("(Room, Timeslot, Course, Instructor)")
-    # generate a lecture
-    s = generate_random_schedule()
-    for lec in s:
-        de_lec = decode(lec)
-        print(lec)
-        print(de_lec)
-

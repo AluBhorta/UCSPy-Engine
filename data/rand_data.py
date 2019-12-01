@@ -5,14 +5,22 @@ import numpy as np
 
 # vairables to alter for randomization
 
-NUM_OF_ROOMS = 10
+NUM_OF_ROOMS = 20
 NUM_OF_TIMELSOTS = 20
-NUM_OF_COURSES = 10
-NUM_OF_INSTRUCTORS = 8
+NUM_OF_COURSES = 15
+NUM_OF_INSTRUCTORS = 20
 
-MAX_NUM_OF_LECS_PER_COURSE = 10
-MAX_NUM_OF_PREFFERED_ROOMS = NUM_OF_ROOMS * 0.9
+MAX_NUM_OF_LECS_PER_COURSE = 2
+MIN_NUM_OF_LECS_PER_COURSE = 1
+
+MAX_NUM_OF_PREFFERED_ROOMS_PER_COURSE = NUM_OF_ROOMS * 0.9
+MIN_NUM_OF_PREFFERED_ROOMS_PER_COURSE = 1
+
 MAX_NUM_OF_QUALIFIED_COURSES_PER_INSTRUCTOR = NUM_OF_COURSES * 0.9
+MIN_NUM_OF_QUALIFIED_COURSES_PER_INSTRUCTOR = 2
+
+MAX_AVAILABLE_TIMESLOTS_PER_INSTRUCTOR = NUM_OF_TIMELSOTS
+MIN_AVAILABLE_TIMESLOTS_PER_INSTRUCTOR = 2
 
 # (DO NOT MODIFY) inferred variables
 
@@ -22,39 +30,55 @@ MAX_LECS_THAT_CAN_BE_OFFERED = MAX_LECS_PER_TIMESLOT * NUM_OF_TIMELSOTS
 # inputs to the Engine
 
 """
-(str room_id)[]
+(int room_id, str room_desc)[]
 """
-ROOMS = np.array(["Room%d" % i for i in np.arange(NUM_OF_ROOMS)])
+ROOMS = np.array([(
+    i,
+    "Room%d" % i
+) for i in np.arange(NUM_OF_ROOMS)], dtype=object)
+"""
+(int timeslot_id, str timeslot_desc)[]
+"""
+TIMESLOTS = np.array([(
+    i,
+    "Timeslot%d" % i
+) for i in np.arange(NUM_OF_TIMELSOTS)], dtype=object)
 
 """
-(str timeslot_id)[]
-"""
-TIMESLOTS = np.array(["Timeslot%d" % i for i in np.arange(NUM_OF_TIMELSOTS)])
-
-"""
-(str course_id, int num_of_lectures, int[] preferred_rooms)[]
+(int course_id, str course_desc, int num_of_lectures, int[] preferred_rooms)[]
 """
 COURSES = np.array([
     (
+        i,
         "CSE%d" % i,
-        np.random.randint(low=1, high=MAX_NUM_OF_LECS_PER_COURSE),
-        np.random.randint(low=0, high=NUM_OF_ROOMS,
-                          size=np.random.randint(MAX_NUM_OF_PREFFERED_ROOMS))
+        np.random.randint(
+            low=MIN_NUM_OF_LECS_PER_COURSE,
+            high=MAX_NUM_OF_LECS_PER_COURSE+1
+        ),
+        np.random.randint(
+            low=0,
+            high=NUM_OF_ROOMS,
+            size=np.random.randint(
+                low=MIN_NUM_OF_PREFFERED_ROOMS_PER_COURSE,
+                high=MAX_NUM_OF_PREFFERED_ROOMS_PER_COURSE+1
+            )
+        )
     ) for i in np.arange(NUM_OF_COURSES)
 ])
 
 """
-(str instuctor_id, int[] qualified_courses, int[] available_timeslots)[]
+(int instuctor_id, str instuctor_desc, int[] qualified_courses, int[] available_timeslots)[]
 """
 INSTRUCTORS = np.array([
     (
+        i,
         "INSTRUCTOR%d" % i,
         list(set(
             np.random.choice(
                 np.arange(NUM_OF_COURSES),
                 size=np.random.randint(
-                    low=1,
-                    high=MAX_NUM_OF_QUALIFIED_COURSES_PER_INSTRUCTOR
+                    low=MIN_NUM_OF_QUALIFIED_COURSES_PER_INSTRUCTOR,
+                    high=MAX_NUM_OF_QUALIFIED_COURSES_PER_INSTRUCTOR+1
                 )
             )
         )),
@@ -62,8 +86,8 @@ INSTRUCTORS = np.array([
             np.random.choice(
                 np.arange(NUM_OF_TIMELSOTS),
                 size=np.random.randint(
-                    low=1,
-                    high=NUM_OF_TIMELSOTS
+                    low=MIN_AVAILABLE_TIMESLOTS_PER_INSTRUCTOR,
+                    high=MAX_AVAILABLE_TIMESLOTS_PER_INSTRUCTOR+1
                 )
             )
         )),
@@ -72,12 +96,12 @@ INSTRUCTORS = np.array([
 
 
 # sum of lectures of all courses
-LECS_BEING_OFFERED = COURSES[:, 1].sum()
+NUM_OF_LECS_BEING_OFFERED = COURSES[:, 2].sum()
 
 # sanity check
-if LECS_BEING_OFFERED > MAX_LECS_THAT_CAN_BE_OFFERED:
+if NUM_OF_LECS_BEING_OFFERED > MAX_LECS_THAT_CAN_BE_OFFERED:
     raise Exception(
         "ERROR! Max number of Lectures exceeded.\n" +
-        "LECS_BEING_OFFERED: %d" % LECS_BEING_OFFERED +
+        "LECS_BEING_OFFERED: %d" % NUM_OF_LECS_BEING_OFFERED +
         ",\tMAX_LECS_THAT_CAN_BE_OFFERED: %d" % MAX_LECS_THAT_CAN_BE_OFFERED
     )

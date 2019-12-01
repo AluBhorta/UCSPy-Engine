@@ -7,6 +7,8 @@
 3. (optional) Minimize consecutive lectures i.e. spread out lectures over available Timeslots.   | Penalty: 3
 Q. HOW does one measure spread? Standard Dev / Interquartile range?
 
+4. (optional) instructors prefer certain rooms I.preffered_rooms
+
 """
 
 
