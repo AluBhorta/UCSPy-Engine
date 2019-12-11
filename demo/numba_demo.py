@@ -1,6 +1,7 @@
 import numpy as np
 from numba import jit
 
+
 @jit(nopython=True)
 def numba_pass_arr(arr):
     for i in range(len(arr)):
@@ -39,3 +40,13 @@ def numba_list_append(n):
         a.append(i**3)
 
     return a
+
+
+@jit(nopython=True)
+def numba_in_comparison(n):
+    arr = [1,2,4,5,67]
+    if n in arr:
+        return True
+    else:
+        return False
+    

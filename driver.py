@@ -8,8 +8,7 @@ from fitness.fitness import fitness, hard_penalty_multiplier, violates_a_hard_co
 from fitness.constraints.hard_constraints import violates_hard_constraint_1, violates_hard_constraint_2, violates_hard_constraint_3, violates_hard_constraint_4
 from fitness.constraints.soft_constraints import penalty_of_soft_constraint_1
 
-from demo.numba_demo import numba_list_append
-
+from demo.numba_demo import numba_in_comparison
 
 def print_params():
     print(
@@ -21,27 +20,14 @@ def print_params():
         TIMESLOTS
     )
     print(
-        ("\nCOURSES: %d (int course_id, str course_desc, int num_of_lectures, int[] preferred_rooms)\n" % len(COURSES)),
+        ("\nCOURSES: %d (int course_id, str course_desc, int num_of_lectures, int[] preferred_rooms, int[] preferred_timeslots)\n" % len(COURSES)),
         COURSES
     )
     print(
-        ("\nINSTRUCTORS: %d (int instuctor_id, str instuctor_desc, int[] qualified_courses, int[] available_timeslots)\n" % len(INSTRUCTORS)),
+        ("\nINSTRUCTORS: %d (int instuctor_id, str instuctor_desc, int[] qualified_courses, int[] available_timeslots, int[] preferred_rooms, int[] preferred_timeslots)\n" % len(INSTRUCTORS)),
         INSTRUCTORS
     )
     print("\nNUM_OF_LECS_BEING_OFFERED: \n", NUM_OF_LECS_BEING_OFFERED)
-
-
-def check_hpm(iterations=100):
-    '''check hard_penalty_multiplier'''
-    counter = 0
-
-    for i in range(iterations):
-        sch = generate_random_schedule()
-
-        if hard_penalty_multiplier(sch) == 1:
-            counter += 1
-
-    print("success on hpm: %d times!" % counter)
 
 
 def check_fitness(iterations=100):
@@ -53,17 +39,17 @@ def check_fitness(iterations=100):
 
         f = fitness(sch)
         if f > 0:
+            print(f)
             counter += 1
-            # print(f)
 
     print("fitness(sch) > 0: %d times!" % counter)
 
 
 def main():
-    # print_params()
 
-    print("\nNUM_OF_LECS_BEING_OFFERED: %d" % NUM_OF_LECS_BEING_OFFERED)
     check_fitness(1024)
+    # print_params()
+    # print("\nNUM_OF_LECS_BEING_OFFERED: %d" % NUM_OF_LECS_BEING_OFFERED)
 
 
 if __name__ == "__main__":

@@ -1,12 +1,14 @@
 """
 unit_penalty: the penalty for violating a particular soft_constraint once.
 
-1. [unit_penalty=9] Some Courses have Room preferences. (i.e. Course.prefered_rooms)
+1. Some Courses have Room preferences. (i.e. Course.prefered_rooms)
 - N.B: some courses might have 0 preffered_rooms, in that case, allow any room
 
-2. [unit_penalty=_] Some Courses have Timeslot preferences.
+2. Some Instructors have Room preferences.
 
-3. [unit_penalty=_] Instructors have Timeslot preferences.
+3. Some Courses have Timeslot preferences.
+
+4. Some Instructors have Timeslot preferences.
 
 ### How to add a soft constraint
 
@@ -20,9 +22,9 @@ unit_penalty: the penalty for violating a particular soft_constraint once.
 from fitness.solution_encoding import decode
 
 
-def penalty_of_soft_constraint_1(schedule, unit_penalty=9):
+def penalty_of_soft_constraint_1(schedule, unit_penalty=7):
     """
-    [unit_penalty=9] Some courses should be taught in particular classrooms eg. labs (i.e. Course.prefered_rooms)
+    [unit_penalty=7] Some Courses have Room preferences.
     """
     violation_count = 0
     for lec in schedule:
@@ -37,12 +39,19 @@ def penalty_of_soft_constraint_1(schedule, unit_penalty=9):
 
 def penalty_of_soft_constraint_2(schedule):
     """
-    [unit_penalty=_] Some Courses have Timeslot preferences.
+    [unit_penalty=_] Some Instructors have Room preferences.
     """
     pass
 
 
 def penalty_of_soft_constraint_3(schedule):
+    """
+    [unit_penalty=_] Some Courses have Timeslot preferences.
+    """
+    pass
+
+
+def penalty_of_soft_constraint_4(schedule):
     """
     [unit_penalty=_] Instructors have Timeslot preferences. 
     """

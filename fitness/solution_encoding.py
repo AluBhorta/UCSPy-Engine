@@ -19,10 +19,14 @@ def decode(encoded_lecture):
 
 '''Decoded_Lecture: (Room, Timeslot, Course, Instructor)
 (
-  Room:       (int room_id, str room_desc) 
-  Timeslot:   (int timeslot_id, str timeslot_desc) 
-  Course:     (int course_id, str course_desc, int num_of_lectures, int[] preferred_rooms)
-  Instructor: (int instuctor_id, str instuctor_desc, int[] qualified_courses, int[] available_timeslots)
+  Room:       
+    (int room_id, str room_desc) 
+  Timeslot:
+    (int timeslot_id, str timeslot_desc) 
+  Course:
+    (int course_id, str course_desc, int num_of_lectures, int[] preferred_rooms, int[] preferred_timeslots)
+  Instructor:
+   (int instuctor_id, str instuctor_desc, int[] qualified_courses, int[] available_timeslots, int[] preferred_rooms, int[] preferred_timeslots)
 )
 '''
 

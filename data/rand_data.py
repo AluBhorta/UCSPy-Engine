@@ -13,14 +13,26 @@ NUM_OF_INSTRUCTORS = 20
 MAX_NUM_OF_LECS_PER_COURSE = 2
 MIN_NUM_OF_LECS_PER_COURSE = 1
 
-MAX_NUM_OF_PREFFERED_ROOMS_PER_COURSE = NUM_OF_ROOMS * 0.9
-MIN_NUM_OF_PREFFERED_ROOMS_PER_COURSE = 1
-
 MAX_NUM_OF_QUALIFIED_COURSES_PER_INSTRUCTOR = NUM_OF_COURSES * 0.9
 MIN_NUM_OF_QUALIFIED_COURSES_PER_INSTRUCTOR = 2
 
 MAX_AVAILABLE_TIMESLOTS_PER_INSTRUCTOR = NUM_OF_TIMELSOTS
 MIN_AVAILABLE_TIMESLOTS_PER_INSTRUCTOR = 2
+
+# SOFT CONSTRAINT PARAMS
+
+MAX_NUM_OF_PREFFERED_ROOMS_PER_COURSE = NUM_OF_ROOMS * 0.9
+MIN_NUM_OF_PREFFERED_ROOMS_PER_COURSE = 1
+
+# new
+MAX_NUM_OF_PREFFERED_ROOMS_PER_INSTRUCTOR = NUM_OF_ROOMS * 0.9
+MIN_NUM_OF_PREFFERED_ROOMS_PER_INSTRUCTOR = 1
+
+MAX_NUM_OF_PREFFERED_TIMESLOTS_PER_COURSE = NUM_OF_TIMELSOTS * 0.9
+MIN_NUM_OF_PREFFERED_TIMESLOTS_PER_COURSE = 1
+
+MAX_NUM_OF_PREFFERED_TIMESLOTS_PER_INSTRUCTOR = NUM_OF_TIMELSOTS * 0.9
+MIN_NUM_OF_PREFFERED_TIMESLOTS_PER_INSTRUCTOR = 1
 
 # (DO NOT MODIFY) inferred variables
 
@@ -45,7 +57,7 @@ TIMESLOTS = np.array([(
 ) for i in np.arange(NUM_OF_TIMELSOTS)], dtype=object)
 
 """
-(int course_id, str course_desc, int num_of_lectures, int[] preferred_rooms)[]
+(int course_id, str course_desc, int num_of_lectures, int[] preferred_rooms, int[] preferred_timeslots)[]
 """
 COURSES = np.array([
     (
@@ -62,12 +74,20 @@ COURSES = np.array([
                 low=MIN_NUM_OF_PREFFERED_ROOMS_PER_COURSE,
                 high=MAX_NUM_OF_PREFFERED_ROOMS_PER_COURSE+1
             )
+        ),
+        np.random.randint(
+            low=0,
+            high=NUM_OF_ROOMS,
+            size=np.random.randint(
+                low=MIN_NUM_OF_PREFFERED_TIMESLOTS_PER_COURSE,
+                high=MAX_NUM_OF_PREFFERED_TIMESLOTS_PER_COURSE+1
+            )
         )
     ) for i in np.arange(NUM_OF_COURSES)
 ])
 
 """
-(int instuctor_id, str instuctor_desc, int[] qualified_courses, int[] available_timeslots)[]
+(int instuctor_id, str instuctor_desc, int[] qualified_courses, int[] available_timeslots, int[] preferred_rooms, int[] preferred_timeslots)[]
 """
 INSTRUCTORS = np.array([
     (
@@ -91,6 +111,22 @@ INSTRUCTORS = np.array([
                 )
             )
         )),
+        np.random.randint(
+            low=0,
+            high=NUM_OF_ROOMS,
+            size=np.random.randint(
+                low=MIN_NUM_OF_PREFFERED_ROOMS_PER_INSTRUCTOR,
+                high=MAX_NUM_OF_PREFFERED_ROOMS_PER_INSTRUCTOR+1
+            )
+        ),
+        np.random.randint(
+            low=0,
+            high=NUM_OF_ROOMS,
+            size=np.random.randint(
+                low=MIN_NUM_OF_PREFFERED_TIMESLOTS_PER_INSTRUCTOR,
+                high=MAX_NUM_OF_PREFFERED_TIMESLOTS_PER_INSTRUCTOR+1
+            )
+        )
     ) for i in np.arange(NUM_OF_INSTRUCTORS)
 ])
 
