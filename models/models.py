@@ -1,3 +1,22 @@
+
+'''Encoded_Lecture: (Room, Timeslot, Course, Instructor)
+    (int room_id, int timeslot_id, int course_id, int instructor_id)
+'''
+
+'''Decoded_Lecture: (Room, Timeslot, Course, Instructor)
+(
+  Room:       
+    (int room_id, str room_desc) 
+  Timeslot:
+    (int timeslot_id, str timeslot_desc) 
+  Course:
+    (int course_id, str course_desc, int num_of_lectures, int[] preferred_rooms, int[] preferred_timeslots)
+  Instructor:
+   (int instuctor_id, str instuctor_desc, int[] qualified_courses, int[] available_timeslots, int[] preferred_rooms, int[] preferred_timeslots)
+)
+'''
+
+
 class Room:
     def __init__(self, room_id):
         self.room_id = room_id

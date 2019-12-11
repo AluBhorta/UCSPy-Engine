@@ -1,4 +1,5 @@
 import numpy as np
+from matplotlib import pyplot as plt
 
 from data.data import COURSES, INSTRUCTORS, ROOMS, TIMESLOTS, NUM_OF_LECS_BEING_OFFERED
 from data.generate_random_schedule import generate_random_schedule
@@ -30,24 +31,33 @@ def print_params():
     print("\nNUM_OF_LECS_BEING_OFFERED: \n", NUM_OF_LECS_BEING_OFFERED)
 
 
-def check_fitness(iterations=100):
+def check_fitness(iterations=1000):
     '''check fitness for n iterations '''
     counter = 0
+    
+    fitnesses = [None for _ in range(iterations)]
 
     for i in range(iterations):
         sch = generate_random_schedule()
 
         f = fitness(sch)
+        fitnesses[i] = f
         if f > 0:
-            print(f)
+            # print(f)
             counter += 1
 
-    print("fitness(sch) > 0: %d times!" % counter)
+    # print("fitness(sch) > 0: %d times!" % counter)
+    # plt.plot(range(len(fitnesses)) ,fitnesses, '*')
+    # plt.show()
 
 
 def main():
 
-    check_fitness(1024)
+    # s = generate_random_schedule()
+    # print(s)
+
+
+    check_fitness(1000)
     # print_params()
     # print("\nNUM_OF_LECS_BEING_OFFERED: %d" % NUM_OF_LECS_BEING_OFFERED)
 

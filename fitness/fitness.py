@@ -20,8 +20,8 @@ def hard_penalty_multiplier(schedule) -> int:
 def total_soft_penalty(schedule):
     total_penalty = 0
 
-    for soft_penalty_of in SOFT_CONSTRAINTS:
-        total_penalty += soft_penalty_of(schedule)
+    for soft_penalty_i_of in SOFT_CONSTRAINTS:
+        total_penalty += soft_penalty_i_of(schedule)
 
     return total_penalty
 

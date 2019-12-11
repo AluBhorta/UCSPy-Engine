@@ -1,5 +1,9 @@
 """
-unit_penalty: the penalty for violating a particular soft_constraint once.
+unit_penalty: the penalty for violating a particular soft_constraint once. Also 
+1 <= unit_penalty <= 10
+
+Encoded_Lecture: (Room, Timeslot, Course, Instructor)
+    (int room_id, int timeslot_id, int course_id, int instructor_id)
 
 1. Some Courses have Room preferences. (i.e. Course.prefered_rooms)
 - N.B: some courses might have 0 preffered_rooms, in that case, allow any room
@@ -22,7 +26,7 @@ unit_penalty: the penalty for violating a particular soft_constraint once.
 from fitness.solution_encoding import decode
 
 
-def penalty_of_soft_constraint_1(schedule, unit_penalty=7):
+def penalty_of_soft_constraint_1(schedule, unit_penalty=8):
     """
     [unit_penalty=7] Some Courses have Room preferences.
     """
@@ -37,30 +41,58 @@ def penalty_of_soft_constraint_1(schedule, unit_penalty=7):
     return violation_count * unit_penalty
 
 
-def penalty_of_soft_constraint_2(schedule):
+def penalty_of_soft_constraint_2(schedule, unit_penalty=4):
     """
-    [unit_penalty=_] Some Instructors have Room preferences.
+    [unit_penalty=7] Some Instructors have Room preferences.
     """
-    pass
+    violation_count = 0
+    for lec in schedule:
+        room_id = lec[0]
+        preferred_rooms = decode(lec)[3][4]
+
+        if room_id not in preferred_rooms:
+            violation_count += 1
+
+    return violation_count * unit_penalty
 
 
-def penalty_of_soft_constraint_3(schedule):
+def penalty_of_soft_constraint_3(schedule, unit_penalty=9):
     """
-    [unit_penalty=_] Some Courses have Timeslot preferences.
+    [unit_penalty=9] Some Courses have Timeslot preferences.
     """
-    pass
+    violation_count = 0
+    for lec in schedule:
+        timeslot_id = lec[1]
+        preferred_timeslots = decode(lec)[2][4]
+
+        if timeslot_id not in preferred_timeslots:
+            violation_count += 1
+
+    return violation_count * unit_penalty
 
 
-def penalty_of_soft_constraint_4(schedule):
+
+def penalty_of_soft_constraint_4(schedule, unit_penalty=6):
     """
-    [unit_penalty=_] Instructors have Timeslot preferences. 
+    [unit_penalty=6] Instructors have Timeslot preferences. 
     """
-    pass
+    violation_count = 0
+    for lec in schedule:
+        timeslot_id = lec[1]
+        preferred_timeslots = decode(lec)[3][5]
+
+        if timeslot_id not in preferred_timeslots:
+            violation_count += 1
+
+    return violation_count * unit_penalty
 
 
 """
 Contains all the soft-constraint-funcs
 """
 SOFT_CONSTRAINTS = [
-    penalty_of_soft_constraint_1
+    penalty_of_soft_constraint_1,
+    penalty_of_soft_constraint_2,
+    penalty_of_soft_constraint_3,
+    penalty_of_soft_constraint_4,
 ]
