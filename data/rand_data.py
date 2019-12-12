@@ -42,14 +42,14 @@ MAX_LECS_THAT_CAN_BE_OFFERED = MAX_LECS_PER_TIMESLOT * NUM_OF_TIMELSOTS
 # inputs to the Engine
 
 """
-(int room_id, str room_desc)[]
+(int room_idx, str room_desc)[]
 """
 ROOMS = np.array([(
     i,
     "Room%d" % i
 ) for i in np.arange(NUM_OF_ROOMS)], dtype=object)
 """
-(int timeslot_id, str timeslot_desc)[]
+(int timeslot_idx, str timeslot_desc)[]
 """
 TIMESLOTS = np.array([(
     i,
@@ -57,7 +57,7 @@ TIMESLOTS = np.array([(
 ) for i in np.arange(NUM_OF_TIMELSOTS)], dtype=object)
 
 """
-(int course_id, str course_desc, int num_of_lectures, int[] preferred_rooms, int[] preferred_timeslots)[]
+(int course_idx, str course_desc, int num_of_lectures, int[] preferred_rooms, int[] preferred_timeslots)[]
 """
 COURSES = np.array([
     (
@@ -87,7 +87,7 @@ COURSES = np.array([
 ])
 
 """
-(int instuctor_id, str instuctor_desc, int[] qualified_courses, int[] available_timeslots, int[] preferred_rooms, int[] preferred_timeslots)[]
+(int instuctor_idx, str instuctor_desc, int[] qualified_courses, int[] available_timeslots, int[] preferred_rooms, int[] preferred_timeslots)[]
 """
 INSTRUCTORS = np.array([
     (

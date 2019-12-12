@@ -22,11 +22,11 @@ def generate_random_schedule():
     Schedule = []
 
     for Course in COURSES:
-        course_id = Course[0]
+        course_idx = Course[0]
 
         qualified_instructors = []
         for Instructor in INSTRUCTORS:
-            if course_id in Instructor[2]:
+            if course_idx in Instructor[2]:
                 qualified_instructors.append(Instructor[0])
 
         if not qualified_instructors:
@@ -37,15 +37,15 @@ def generate_random_schedule():
             # TODO (resolving hard constraint 2): before assigning instructor, go thru each qualified_instructors (qi) & check if any lec in S exists at (qi, qi.available_timeslots)
             # if not, take that pair of (qi, qi.available_timeslots)
             instructor_id = np.random.choice(qualified_instructors)
-            timeslot_id = np.random.choice(INSTRUCTORS[instructor_id][3])
+            timeslot_idx = np.random.choice(INSTRUCTORS[instructor_id][3])
             
             # TODO (resolving hard constraint 1): before assigning room, check if a lecture exists at that (room, timeslot)
             # OR: 
             # if len(Course[3]) > 0: use np.random.choice(Course[3]) 
             # else: np.random.randint(NUM_OF_ROOMS)
-            room_id = np.random.randint(NUM_OF_ROOMS)
-            # room_id = np.random.choice(Course[3])   # optimizes for soft_constraint_1 as well!
+            room_idx = np.random.randint(NUM_OF_ROOMS)
+            # room_idx = np.random.choice(Course[3])   # optimizes for soft_constraint_1 as well!
 
-            Schedule.append([room_id, timeslot_id, course_id, instructor_id])
+            Schedule.append([room_idx, timeslot_idx, course_idx, instructor_id])
 
     return np.array(Schedule)

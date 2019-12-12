@@ -6,9 +6,9 @@ else:				return 1
 
 ## Constraints 
 
-1. No two lectures can take place in the same room at the same Timeslot
+1. No two lectures can take place in the same room at the same Timeslot. i.e. unique 2-tuple (R, T)
 
-2. No instructor can take more than one lecture at a given Timeslot
+2. No instructor can take more than one lecture at a given Timeslot. i.e. unique 2-tuple (I, T)
 
 3. Instructors can only take certain courses they are qualified for
 
@@ -34,12 +34,12 @@ def violates_hard_constraint_1(schedule):
     """
     unique_room_timeslots = []
 
-    for room_slot in schedule[:, 0:2]:
-        for unique_room_slot in unique_room_timeslots:
-            if np.array_equal(room_slot, unique_room_slot):
+    for room_timeslot in schedule[:, 0:2]:
+        for unique_room_timeslot in unique_room_timeslots:
+            if np.array_equal(room_timeslot, unique_room_timeslot):
                 return True
 
-        unique_room_timeslots.append(room_slot)
+        unique_room_timeslots.append(room_timeslot)
 
     return False
 
@@ -65,12 +65,12 @@ def violates_hard_constraint_3(schedule):
     Hard Constraint 3: Instructors can only take certain courses they are qualified for
     """
     for lec in schedule:
-        course_id = lec[2]
+        course_idx = lec[2]
 
         decoded_lec = decode(lec)
         qualified_courses = decoded_lec[3][2]
 
-        if course_id not in qualified_courses:
+        if course_idx not in qualified_courses:
             return True
 
     return False
@@ -81,12 +81,12 @@ def violates_hard_constraint_4(schedule):
     Hard Constraint 4: Instructors are only available at certain timeslots
     """
     for lec in schedule:
-        timeslot_id = lec[1]
+        timeslot_idx = lec[1]
 
         decoded_lec = decode(lec)
         available_timeslots = decoded_lec[3][3]
 
-        if timeslot_id not in available_timeslots:
+        if timeslot_idx not in available_timeslots:
             return True
 
     return False

@@ -3,7 +3,7 @@ unit_penalty: the penalty for violating a particular soft_constraint once. Also
 1 <= unit_penalty <= 10
 
 Encoded_Lecture: (Room, Timeslot, Course, Instructor)
-    (int room_id, int timeslot_id, int course_id, int instructor_id)
+    (int room_idx, int timeslot_idx, int course_idx, int instructor_id)
 
 1. Some Courses have Room preferences. (i.e. Course.prefered_rooms)
 - N.B: some courses might have 0 preffered_rooms, in that case, allow any room
@@ -32,10 +32,10 @@ def penalty_of_soft_constraint_1(schedule, unit_penalty=8):
     """
     violation_count = 0
     for lec in schedule:
-        room_id = lec[0]
+        room_idx = lec[0]
         preferred_rooms = decode(lec)[2][3]
 
-        if room_id not in preferred_rooms:
+        if room_idx not in preferred_rooms:
             violation_count += 1
 
     return violation_count * unit_penalty
@@ -47,10 +47,10 @@ def penalty_of_soft_constraint_2(schedule, unit_penalty=4):
     """
     violation_count = 0
     for lec in schedule:
-        room_id = lec[0]
+        room_idx = lec[0]
         preferred_rooms = decode(lec)[3][4]
 
-        if room_id not in preferred_rooms:
+        if room_idx not in preferred_rooms:
             violation_count += 1
 
     return violation_count * unit_penalty
@@ -62,10 +62,10 @@ def penalty_of_soft_constraint_3(schedule, unit_penalty=9):
     """
     violation_count = 0
     for lec in schedule:
-        timeslot_id = lec[1]
+        timeslot_idx = lec[1]
         preferred_timeslots = decode(lec)[2][4]
 
-        if timeslot_id not in preferred_timeslots:
+        if timeslot_idx not in preferred_timeslots:
             violation_count += 1
 
     return violation_count * unit_penalty
@@ -78,10 +78,10 @@ def penalty_of_soft_constraint_4(schedule, unit_penalty=6):
     """
     violation_count = 0
     for lec in schedule:
-        timeslot_id = lec[1]
+        timeslot_idx = lec[1]
         preferred_timeslots = decode(lec)[3][5]
 
-        if timeslot_id not in preferred_timeslots:
+        if timeslot_idx not in preferred_timeslots:
             violation_count += 1
 
     return violation_count * unit_penalty
