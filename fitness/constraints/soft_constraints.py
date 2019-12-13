@@ -71,7 +71,6 @@ def penalty_of_soft_constraint_3(schedule, unit_penalty=9):
     return violation_count * unit_penalty
 
 
-
 def penalty_of_soft_constraint_4(schedule, unit_penalty=6):
     """
     [unit_penalty=6] Instructors have Timeslot preferences. 

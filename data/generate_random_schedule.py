@@ -16,7 +16,8 @@ def naive_random_schedule():     # generates a random schedule
 
 
 def generate_random_schedule():
-    '''
+    '''Random schedule generator
+
     satisfies hard constraint 3 & 4 first, when possible
     '''
     Schedule = []
