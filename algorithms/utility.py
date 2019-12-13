@@ -6,3 +6,7 @@ def flatten(schedule):
     the flattening is done across the rows, meaning first all the rooms, then all timeslots, all courses & finally all instructors to be appended to the 1d array
     '''
     return concatenate((schedule[:, 0], schedule[:, 1], schedule[:, 2], schedule[:, 3]), axis=0)
+
+
+def deflatten(s):
+    pass

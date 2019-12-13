@@ -8,6 +8,7 @@ from fitness.solution_encoding import encode, decode
 
 from algorithms.GA.ga import GA_for_UCSP
 from algorithms.Memetic.memetic import Memetic_for_UCSP
+from algorithms.PSO.pso import PSO_for_UCSP
 
 
 def print_params():
@@ -48,8 +49,10 @@ def check_fitness(iterations=1000):
 
 def main():
     # sch = GA_for_UCSP(population_size=256, epochs=200, mutable_pct=30)
-    sch = Memetic_for_UCSP(population_size=256, epochs=20, mutable_pct=40)
-    print("\nFinal Fitness %f" % fitness(sch))
+    # sch = Memetic_for_UCSP(population_size=256, epochs=20, mutable_pct=40)
+    # print("\nFinal Fitness %f" % fitness(sch))
+    PSO_for_UCSP()
+    pass
 
 
 if __name__ == "__main__":
