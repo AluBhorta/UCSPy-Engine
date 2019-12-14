@@ -36,7 +36,7 @@ def Firefly_for_UCSP(epochs=100, min_acceptable_fitness=0.5, population_size=256
 
     epoch = 0
     while epoch < epochs:
-        print("Epoch: %d \t glob_fit: %f" %
+        print("Epoch: %d \t max fitness: %f" %
               (epoch, fireflies[max_bright_idx][1]))
 
         if fireflies[max_bright_idx][1] > min_acceptable_fitness:

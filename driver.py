@@ -53,10 +53,11 @@ def pretty_print_schedule(sch):
 
 
 def main():
-    # sch = GA_for_UCSP(population_size=256, epochs=20, mutable_pct=30)
+    sch = GA_for_UCSP(population_size=1024, epochs=100, mutable_pct=30)
     # sch = Memetic_for_UCSP(population_size=256, epochs=20, mutable_pct=40)
-    # sch = PSO_for_UCSP(epochs=20)
-    sch = Firefly_for_UCSP(epochs=20)
+    # sch = PSO_for_UCSP(epochs=100, total_particles=1024)
+    # sch = Firefly_for_UCSP(population_size=1024, epochs=50)
+    print(sch)
     print("\nFinal Fitness %f" % fitness(sch))
 
     pass
