@@ -32,7 +32,7 @@ def print_params():
 
 
 def check_fitness(iterations=1000):
-    '''check fitness for best_fitnessions '''
+    '''check fitg_best_fitnessssions '''
     counter = 0
 
     for i in range(iterations):
@@ -50,8 +50,9 @@ def check_fitness(iterations=1000):
 def main():
     # sch = GA_for_UCSP(population_size=256, epochs=200, mutable_pct=30)
     # sch = Memetic_for_UCSP(population_size=256, epochs=20, mutable_pct=40)
-    # print("\nFinal Fitness %f" % fitness(sch))
-    PSO_for_UCSP()
+    sch = PSO_for_UCSP(epochs=20)
+    print("\nFinal Fitness %f" % fitness(sch))
+
     pass
 
 
