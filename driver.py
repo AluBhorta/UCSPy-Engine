@@ -9,6 +9,7 @@ from fitness.solution_encoding import encode, decode
 from algorithms.GA.ga import GA_for_UCSP
 from algorithms.Memetic.memetic import Memetic_for_UCSP
 from algorithms.PSO.pso import PSO_for_UCSP
+from algorithms.Firefly.firefly import Firefly_for_UCSP
 
 
 def print_params():
@@ -47,10 +48,15 @@ def check_fitness(iterations=1000):
     print("fitness(sch) > 0: %d times!" % counter)
 
 
+def pretty_print_schedule(sch):
+    pass
+
+
 def main():
-    # sch = GA_for_UCSP(population_size=256, epochs=200, mutable_pct=30)
+    # sch = GA_for_UCSP(population_size=256, epochs=20, mutable_pct=30)
     # sch = Memetic_for_UCSP(population_size=256, epochs=20, mutable_pct=40)
-    sch = PSO_for_UCSP(epochs=20)
+    # sch = PSO_for_UCSP(epochs=20)
+    sch = Firefly_for_UCSP(epochs=20)
     print("\nFinal Fitness %f" % fitness(sch))
 
     pass

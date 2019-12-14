@@ -1,7 +1,7 @@
 # TODO: make a func that takes in the changeable variables and returns the genrated random inputs
 import numpy as np
 
-# np.random.seed(69)
+np.random.seed(69)
 
 # vairables to alter for randomization
 

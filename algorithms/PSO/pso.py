@@ -5,8 +5,7 @@ from fitness.fitness import fitness
 from data.generate_random_schedule import generate_random_schedule
 
 
-
-def PSO_for_UCSP(epochs=100, total_particles=256, min_acceptable_fitness=0.5, w0=0.9, wf=0.1, c1=2, c2=2):
+def PSO_for_UCSP(epochs=100, total_particles=256, min_acceptable_fitness=0.5, w0=0.9, wf=0.2, c1=2, c2=2):
     '''
     ISSUE: Does not improve fitness after first epoch. (TODO) find out why
     '''
@@ -48,9 +47,9 @@ def PSO_for_UCSP(epochs=100, total_particles=256, min_acceptable_fitness=0.5, w0
 
             # g_best_fitness = fitness(particles[g_best_idx][1])
             if p_best_fitness > g_best_fitness:
-                print("Bingo!")
-                print("i:%d f(X):%f \tf(P):%f \tf(G):%f"
-                      % (i, current_fitness, p_best_fitness, g_best_fitness))
+                # print("Bingo!")
+                # print("i:%d f(X):%f \tf(P):%f \tf(G):%f" %
+                #       (i, current_fitness, p_best_fitness, g_best_fitness))
                 g_best_fitness = p_best_fitness
                 g_best_idx = i
 
