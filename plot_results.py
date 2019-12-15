@@ -8,7 +8,7 @@ def get_file_data(fname):
 epochs = 100
 population_size = 1024
 
-fname = "results/ga-results-e_%d-pop_%d.txt" % (epochs, population_size)
+fname = "results/fitness_vals/ga-results-e_%d-pop_%d.txt" % (epochs, population_size)
 
 f = open(fname, 'r')
 fdata = f.read()

@@ -87,5 +87,5 @@ def GA_for_UCSP(epochs=50, min_acceptable_fitness=0.9, population_size=256, elit
             best_fitness = f
             best_fit_idx = i
 
-    # return population[best_fit_idx]
-    return results
+    return population[best_fit_idx]
+    # return results

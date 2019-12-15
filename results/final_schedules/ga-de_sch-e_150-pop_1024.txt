@@ -1,0 +1,166 @@
+Epoch: 198 | Fitness: 0.043478 
+SCHEDULE
+  LECTURE 0 
+	ROOM - index: 3 | desc: Room3
+	TIMESLOT - index: 7 | desc: Timeslot7
+	COURSE - index: 0 | desc: CSE0 | num of lectures: 1 | preferred rooms: ['Room9', 'Room11', 'Room17', 'Room9', 'Room1', 'Room6', 'Room0', 'Room12', 'Room5', 'Room10', 'Room11', 'Room3'] | preferred timeslots: ['Timeslot7']
+	INSTRUCTOR - index: 5 | desc: INSTRUCTOR5 | qualified courses: ['CSE0', 'CSE1', 'CSE2', 'CSE5'] | available timeslots: ['Timeslot0', 'Timeslot2', 'Timeslot3', 'Timeslot7', 'Timeslot9', 'Timeslot10', 'Timeslot11', 'Timeslot12', 'Timeslot16', 'Timeslot17', 'Timeslot18'] | preferred rooms: ['Room10', 'Room14', 'Room9', 'Room4', 'Room1', 'Room6', 'Room5', 'Room16', 'Room6', 'Room3', 'Room4', 'Room11', 'Room15', 'Room5', 'Room10'] | preferred timeslots: ['Timeslot1', 'Timeslot9', 'Timeslot8']
+  LECTURE 1 
+	ROOM - index: 3 | desc: Room3
+	TIMESLOT - index: 3 | desc: Timeslot3
+	COURSE - index: 1 | desc: CSE1 | num of lectures: 1 | preferred rooms: ['Room3', 'Room7', 'Room15'] | preferred timeslots: ['Timeslot11', 'Timeslot12', 'Timeslot3', 'Timeslot11', 'Timeslot14', 'Timeslot17', 'Timeslot6', 'Timeslot5', 'Timeslot12', 'Timeslot14']
+	INSTRUCTOR - index: 3 | desc: INSTRUCTOR3 | qualified courses: ['CSE0', 'CSE1', 'CSE5'] | available timeslots: ['Timeslot1', 'Timeslot2', 'Timeslot3', 'Timeslot4', 'Timeslot6', 'Timeslot7', 'Timeslot8', 'Timeslot10', 'Timeslot11', 'Timeslot12', 'Timeslot13', 'Timeslot15', 'Timeslot16', 'Timeslot17', 'Timeslot18'] | preferred rooms: ['Room3', 'Room16', 'Room6', 'Room6', 'Room13', 'Room11', 'Room1', 'Room11', 'Room1', 'Room13', 'Room13', 'Room7', 'Room16'] | preferred timeslots: ['Timeslot3']
+  LECTURE 2 
+	ROOM - index: 18 | desc: Room18
+	TIMESLOT - index: 16 | desc: Timeslot16
+	COURSE - index: 2 | desc: CSE2 | num of lectures: 2 | preferred rooms: ['Room16', 'Room13', 'Room16', 'Room10', 'Room10', 'Room19', 'Room18', 'Room11', 'Room14', 'Room17', 'Room18', 'Room5', 'Room12', 'Room14', 'Room0'] | preferred timeslots: ['Timeslot18', 'Timeslot14', 'Timeslot17', 'Timeslot19', 'Timeslot16', 'Timeslot0', 'Timeslot17', 'Timeslot0', 'Timeslot8', 'Timeslot14']
+	INSTRUCTOR - index: 11 | desc: INSTRUCTOR11 | qualified courses: ['CSE0', 'CSE1', 'CSE2', 'CSE3', 'CSE4', 'CSE6', 'CSE7', 'CSE9'] | available timeslots: ['Timeslot1', 'Timeslot2', 'Timeslot4', 'Timeslot8', 'Timeslot11', 'Timeslot12', 'Timeslot13', 'Timeslot16'] | preferred rooms: ['Room12', 'Room12', 'Room10', 'Room2', 'Room4', 'Room16', 'Room14', 'Room4', 'Room6', 'Room13', 'Room18', 'Room10', 'Room19', 'Room14', 'Room12', 'Room16'] | preferred timeslots: ['Timeslot16', 'Timeslot6', 'Timeslot0', 'Timeslot14', 'Timeslot0', 'Timeslot19']
+  LECTURE 3 
+	ROOM - index: 14 | desc: Room14
+	TIMESLOT - index: 14 | desc: Timeslot14
+	COURSE - index: 2 | desc: CSE2 | num of lectures: 2 | preferred rooms: ['Room16', 'Room13', 'Room16', 'Room10', 'Room10', 'Room19', 'Room18', 'Room11', 'Room14', 'Room17', 'Room18', 'Room5', 'Room12', 'Room14', 'Room0'] | preferred timeslots: ['Timeslot18', 'Timeslot14', 'Timeslot17', 'Timeslot19', 'Timeslot16', 'Timeslot0', 'Timeslot17', 'Timeslot0', 'Timeslot8', 'Timeslot14']
+	INSTRUCTOR - index: 13 | desc: INSTRUCTOR13 | qualified courses: ['CSE0', 'CSE1', 'CSE2', 'CSE4', 'CSE6', 'CSE7', 'CSE8'] | available timeslots: ['Timeslot1', 'Timeslot12', 'Timeslot14'] | preferred rooms: ['Room16', 'Room19', 'Room12', 'Room10', 'Room8', 'Room3', 'Room17', 'Room18', 'Room14', 'Room5', 'Room16', 'Room12', 'Room13'] | preferred timeslots: ['Timeslot8', 'Timeslot14', 'Timeslot6', 'Timeslot19', 'Timeslot5', 'Timeslot16']
+  LECTURE 4 
+	ROOM - index: 18 | desc: Room18
+	TIMESLOT - index: 3 | desc: Timeslot3
+	COURSE - index: 3 | desc: CSE3 | num of lectures: 2 | preferred rooms: ['Room9', 'Room9', 'Room9', 'Room18', 'Room17'] | preferred timeslots: ['Timeslot3', 'Timeslot1', 'Timeslot12', 'Timeslot15', 'Timeslot19', 'Timeslot6']
+	INSTRUCTOR - index: 7 | desc: INSTRUCTOR7 | qualified courses: ['CSE1', 'CSE3', 'CSE4', 'CSE5', 'CSE6'] | available timeslots: ['Timeslot1', 'Timeslot3', 'Timeslot4', 'Timeslot5', 'Timeslot10', 'Timeslot12', 'Timeslot13', 'Timeslot15'] | preferred rooms: ['Room18', 'Room5', 'Room13', 'Room18', 'Room15', 'Room13', 'Room16'] | preferred timeslots: ['Timeslot5', 'Timeslot0']
+  LECTURE 5 
+	ROOM - index: 12 | desc: Room12
+	TIMESLOT - index: 19 | desc: Timeslot19
+	COURSE - index: 6 | desc: CSE6 | num of lectures: 2 | preferred rooms: ['Room1', 'Room10', 'Room14', 'Room5', 'Room2', 'Room17', 'Room3', 'Room11', 'Room9', 'Room12', 'Room8', 'Room6', 'Room5', 'Room3'] | preferred timeslots: ['Timeslot2', 'Timeslot9', 'Timeslot19', 'Timeslot12', 'Timeslot14', 'Timeslot18']
+	INSTRUCTOR - index: 18 | desc: INSTRUCTOR18 | qualified courses: ['CSE0', 'CSE2', 'CSE3', 'CSE5', 'CSE6', 'CSE7', 'CSE8'] | available timeslots: ['Timeslot1', 'Timeslot9', 'Timeslot10', 'Timeslot13', 'Timeslot19'] | preferred rooms: ['Room15', 'Room13', 'Room12', 'Room7'] | preferred timeslots: ['Timeslot1', 'Timeslot10', 'Timeslot19', 'Timeslot0', 'Timeslot18', 'Timeslot18', 'Timeslot2', 'Timeslot2', 'Timeslot5', 'Timeslot19']
+  LECTURE 6 
+	ROOM - index: 15 | desc: Room15
+	TIMESLOT - index: 5 | desc: Timeslot5
+	COURSE - index: 4 | desc: CSE4 | num of lectures: 2 | preferred rooms: ['Room5', 'Room15'] | preferred timeslots: ['Timeslot0', 'Timeslot5', 'Timeslot16', 'Timeslot19', 'Timeslot7', 'Timeslot2', 'Timeslot7', 'Timeslot16', 'Timeslot9', 'Timeslot1']
+	INSTRUCTOR - index: 19 | desc: INSTRUCTOR19 | qualified courses: ['CSE3', 'CSE4', 'CSE5'] | available timeslots: ['Timeslot0', 'Timeslot3', 'Timeslot5', 'Timeslot8', 'Timeslot11', 'Timeslot14'] | preferred rooms: ['Room19', 'Room18', 'Room15', 'Room14', 'Room0', 'Room7', 'Room10', 'Room11', 'Room4', 'Room15'] | preferred timeslots: ['Timeslot5', 'Timeslot6', 'Timeslot19', 'Timeslot8', 'Timeslot12', 'Timeslot14', 'Timeslot8', 'Timeslot15', 'Timeslot13', 'Timeslot1']
+  LECTURE 7 
+	ROOM - index: 5 | desc: Room5
+	TIMESLOT - index: 1 | desc: Timeslot1
+	COURSE - index: 4 | desc: CSE4 | num of lectures: 2 | preferred rooms: ['Room5', 'Room15'] | preferred timeslots: ['Timeslot0', 'Timeslot5', 'Timeslot16', 'Timeslot19', 'Timeslot7', 'Timeslot2', 'Timeslot7', 'Timeslot16', 'Timeslot9', 'Timeslot1']
+	INSTRUCTOR - index: 4 | desc: INSTRUCTOR4 | qualified courses: ['CSE1', 'CSE4', 'CSE5', 'CSE7', 'CSE8'] | available timeslots: ['Timeslot1', 'Timeslot2', 'Timeslot3', 'Timeslot5', 'Timeslot6', 'Timeslot9', 'Timeslot10', 'Timeslot11', 'Timeslot13', 'Timeslot14', 'Timeslot15', 'Timeslot17'] | preferred rooms: ['Room11', 'Room0', 'Room5', 'Room19'] | preferred timeslots: ['Timeslot0', 'Timeslot10', 'Timeslot1', 'Timeslot6', 'Timeslot17', 'Timeslot14', 'Timeslot14', 'Timeslot15', 'Timeslot14']
+  LECTURE 8 
+	ROOM - index: 15 | desc: Room15
+	TIMESLOT - index: 19 | desc: Timeslot19
+	COURSE - index: 5 | desc: CSE5 | num of lectures: 1 | preferred rooms: ['Room0', 'Room13', 'Room14', 'Room18', 'Room11', 'Room19', 'Room14', 'Room15'] | preferred timeslots: ['Timeslot2', 'Timeslot14', 'Timeslot13', 'Timeslot12', 'Timeslot8', 'Timeslot19', 'Timeslot0', 'Timeslot1', 'Timeslot17', 'Timeslot14']
+	INSTRUCTOR - index: 8 | desc: INSTRUCTOR8 | qualified courses: ['CSE1', 'CSE3', 'CSE4', 'CSE5', 'CSE6', 'CSE8', 'CSE9'] | available timeslots: ['Timeslot0', 'Timeslot1', 'Timeslot2', 'Timeslot3', 'Timeslot8', 'Timeslot9', 'Timeslot10', 'Timeslot13', 'Timeslot18', 'Timeslot19'] | preferred rooms: ['Room12', 'Room13', 'Room3', 'Room15', 'Room1', 'Room17', 'Room14', 'Room8', 'Room13', 'Room2'] | preferred timeslots: ['Timeslot18', 'Timeslot9', 'Timeslot2', 'Timeslot10', 'Timeslot19', 'Timeslot11']
+  LECTURE 9 
+	ROOM - index: 8 | desc: Room8
+	TIMESLOT - index: 9 | desc: Timeslot9
+	COURSE - index: 6 | desc: CSE6 | num of lectures: 2 | preferred rooms: ['Room1', 'Room10', 'Room14', 'Room5', 'Room2', 'Room17', 'Room3', 'Room11', 'Room9', 'Room12', 'Room8', 'Room6', 'Room5', 'Room3'] | preferred timeslots: ['Timeslot2', 'Timeslot9', 'Timeslot19', 'Timeslot12', 'Timeslot14', 'Timeslot18']
+	INSTRUCTOR - index: 8 | desc: INSTRUCTOR8 | qualified courses: ['CSE1', 'CSE3', 'CSE4', 'CSE5', 'CSE6', 'CSE8', 'CSE9'] | available timeslots: ['Timeslot0', 'Timeslot1', 'Timeslot2', 'Timeslot3', 'Timeslot8', 'Timeslot9', 'Timeslot10', 'Timeslot13', 'Timeslot18', 'Timeslot19'] | preferred rooms: ['Room12', 'Room13', 'Room3', 'Room15', 'Room1', 'Room17', 'Room14', 'Room8', 'Room13', 'Room2'] | preferred timeslots: ['Timeslot18', 'Timeslot9', 'Timeslot2', 'Timeslot10', 'Timeslot19', 'Timeslot11']
+  LECTURE 10 
+	ROOM - index: 3 | desc: Room3
+	TIMESLOT - index: 2 | desc: Timeslot2
+	COURSE - index: 6 | desc: CSE6 | num of lectures: 2 | preferred rooms: ['Room1', 'Room10', 'Room14', 'Room5', 'Room2', 'Room17', 'Room3', 'Room11', 'Room9', 'Room12', 'Room8', 'Room6', 'Room5', 'Room3'] | preferred timeslots: ['Timeslot2', 'Timeslot9', 'Timeslot19', 'Timeslot12', 'Timeslot14', 'Timeslot18']
+	INSTRUCTOR - index: 16 | desc: INSTRUCTOR16 | qualified courses: ['CSE1', 'CSE6', 'CSE7', 'CSE8', 'CSE9'] | available timeslots: ['Timeslot1', 'Timeslot2', 'Timeslot5', 'Timeslot6', 'Timeslot8', 'Timeslot12', 'Timeslot13', 'Timeslot15', 'Timeslot19'] | preferred rooms: ['Room10', 'Room11', 'Room14', 'Room4', 'Room19', 'Room19', 'Room3', 'Room11', 'Room0', 'Room4'] | preferred timeslots: ['Timeslot7', 'Timeslot0', 'Timeslot5', 'Timeslot1', 'Timeslot9', 'Timeslot7', 'Timeslot4', 'Timeslot2', 'Timeslot3']
+  LECTURE 11 
+	ROOM - index: 16 | desc: Room16
+	TIMESLOT - index: 14 | desc: Timeslot14
+	COURSE - index: 7 | desc: CSE7 | num of lectures: 2 | preferred rooms: ['Room3', 'Room19', 'Room16', 'Room2', 'Room9'] | preferred timeslots: ['Timeslot12', 'Timeslot9', 'Timeslot11', 'Timeslot14', 'Timeslot15']
+	INSTRUCTOR - index: 17 | desc: INSTRUCTOR17 | qualified courses: ['CSE0', 'CSE1', 'CSE3', 'CSE4', 'CSE5', 'CSE7'] | available timeslots: ['Timeslot4', 'Timeslot6', 'Timeslot12', 'Timeslot14', 'Timeslot16', 'Timeslot18', 'Timeslot19'] | preferred rooms: ['Room16', 'Room18', 'Room8', 'Room17', 'Room0', 'Room2'] | preferred timeslots: ['Timeslot8', 'Timeslot2', 'Timeslot6', 'Timeslot14', 'Timeslot12', 'Timeslot13', 'Timeslot19']
+  LECTURE 12 
+	ROOM - index: 19 | desc: Room19
+	TIMESLOT - index: 11 | desc: Timeslot11
+	COURSE - index: 7 | desc: CSE7 | num of lectures: 2 | preferred rooms: ['Room3', 'Room19', 'Room16', 'Room2', 'Room9'] | preferred timeslots: ['Timeslot12', 'Timeslot9', 'Timeslot11', 'Timeslot14', 'Timeslot15']
+	INSTRUCTOR - index: 11 | desc: INSTRUCTOR11 | qualified courses: ['CSE0', 'CSE1', 'CSE2', 'CSE3', 'CSE4', 'CSE6', 'CSE7', 'CSE9'] | available timeslots: ['Timeslot1', 'Timeslot2', 'Timeslot4', 'Timeslot8', 'Timeslot11', 'Timeslot12', 'Timeslot13', 'Timeslot16'] | preferred rooms: ['Room12', 'Room12', 'Room10', 'Room2', 'Room4', 'Room16', 'Room14', 'Room4', 'Room6', 'Room13', 'Room18', 'Room10', 'Room19', 'Room14', 'Room12', 'Room16'] | preferred timeslots: ['Timeslot16', 'Timeslot6', 'Timeslot0', 'Timeslot14', 'Timeslot0', 'Timeslot19']
+  LECTURE 13 
+	ROOM - index: 3 | desc: Room3
+	TIMESLOT - index: 5 | desc: Timeslot5
+	COURSE - index: 1 | desc: CSE1 | num of lectures: 1 | preferred rooms: ['Room3', 'Room7', 'Room15'] | preferred timeslots: ['Timeslot11', 'Timeslot12', 'Timeslot3', 'Timeslot11', 'Timeslot14', 'Timeslot17', 'Timeslot6', 'Timeslot5', 'Timeslot12', 'Timeslot14']
+	INSTRUCTOR - index: 16 | desc: INSTRUCTOR16 | qualified courses: ['CSE1', 'CSE6', 'CSE7', 'CSE8', 'CSE9'] | available timeslots: ['Timeslot1', 'Timeslot2', 'Timeslot5', 'Timeslot6', 'Timeslot8', 'Timeslot12', 'Timeslot13', 'Timeslot15', 'Timeslot19'] | preferred rooms: ['Room10', 'Room11', 'Room14', 'Room4', 'Room19', 'Room19', 'Room3', 'Room11', 'Room0', 'Room4'] | preferred timeslots: ['Timeslot7', 'Timeslot0', 'Timeslot5', 'Timeslot1', 'Timeslot9', 'Timeslot7', 'Timeslot4', 'Timeslot2', 'Timeslot3']
+  LECTURE 14 
+	ROOM - index: 1 | desc: Room1
+	TIMESLOT - index: 18 | desc: Timeslot18
+	COURSE - index: 9 | desc: CSE9 | num of lectures: 2 | preferred rooms: ['Room1', 'Room6'] | preferred timeslots: ['Timeslot15', 'Timeslot14', 'Timeslot15', 'Timeslot18', 'Timeslot3', 'Timeslot1', 'Timeslot6', 'Timeslot17', 'Timeslot1', 'Timeslot3']
+	INSTRUCTOR - index: 8 | desc: INSTRUCTOR8 | qualified courses: ['CSE1', 'CSE3', 'CSE4', 'CSE5', 'CSE6', 'CSE8', 'CSE9'] | available timeslots: ['Timeslot0', 'Timeslot1', 'Timeslot2', 'Timeslot3', 'Timeslot8', 'Timeslot9', 'Timeslot10', 'Timeslot13', 'Timeslot18', 'Timeslot19'] | preferred rooms: ['Room12', 'Room13', 'Room3', 'Room15', 'Room1', 'Room17', 'Room14', 'Room8', 'Room13', 'Room2'] | preferred timeslots: ['Timeslot18', 'Timeslot9', 'Timeslot2', 'Timeslot10', 'Timeslot19', 'Timeslot11']
+  LECTURE 15 
+	ROOM - index: 1 | desc: Room1
+	TIMESLOT - index: 1 | desc: Timeslot1
+	COURSE - index: 9 | desc: CSE9 | num of lectures: 2 | preferred rooms: ['Room1', 'Room6'] | preferred timeslots: ['Timeslot15', 'Timeslot14', 'Timeslot15', 'Timeslot18', 'Timeslot3', 'Timeslot1', 'Timeslot6', 'Timeslot17', 'Timeslot1', 'Timeslot3']
+	INSTRUCTOR - index: 14 | desc: INSTRUCTOR14 | qualified courses: ['CSE0', 'CSE4', 'CSE5', 'CSE7', 'CSE8', 'CSE9'] | available timeslots: ['Timeslot1', 'Timeslot3', 'Timeslot5', 'Timeslot6', 'Timeslot12', 'Timeslot15', 'Timeslot16', 'Timeslot17'] | preferred rooms: ['Room8', 'Room13', 'Room0', 'Room12', 'Room12', 'Room17'] | preferred timeslots: ['Timeslot3', 'Timeslot2', 'Timeslot7', 'Timeslot1', 'Timeslot0', 'Timeslot4', 'Timeslot11']
+
+Epoch: 199 | Fitness: 0.043478 
+SCHEDULE
+  LECTURE 0 
+	ROOM - index: 3 | desc: Room3
+	TIMESLOT - index: 7 | desc: Timeslot7
+	COURSE - index: 0 | desc: CSE0 | num of lectures: 1 | preferred rooms: ['Room9', 'Room11', 'Room17', 'Room9', 'Room1', 'Room6', 'Room0', 'Room12', 'Room5', 'Room10', 'Room11', 'Room3'] | preferred timeslots: ['Timeslot7']
+	INSTRUCTOR - index: 5 | desc: INSTRUCTOR5 | qualified courses: ['CSE0', 'CSE1', 'CSE2', 'CSE5'] | available timeslots: ['Timeslot0', 'Timeslot2', 'Timeslot3', 'Timeslot7', 'Timeslot9', 'Timeslot10', 'Timeslot11', 'Timeslot12', 'Timeslot16', 'Timeslot17', 'Timeslot18'] | preferred rooms: ['Room10', 'Room14', 'Room9', 'Room4', 'Room1', 'Room6', 'Room5', 'Room16', 'Room6', 'Room3', 'Room4', 'Room11', 'Room15', 'Room5', 'Room10'] | preferred timeslots: ['Timeslot1', 'Timeslot9', 'Timeslot8']
+  LECTURE 1 
+	ROOM - index: 3 | desc: Room3
+	TIMESLOT - index: 3 | desc: Timeslot3
+	COURSE - index: 1 | desc: CSE1 | num of lectures: 1 | preferred rooms: ['Room3', 'Room7', 'Room15'] | preferred timeslots: ['Timeslot11', 'Timeslot12', 'Timeslot3', 'Timeslot11', 'Timeslot14', 'Timeslot17', 'Timeslot6', 'Timeslot5', 'Timeslot12', 'Timeslot14']
+	INSTRUCTOR - index: 3 | desc: INSTRUCTOR3 | qualified courses: ['CSE0', 'CSE1', 'CSE5'] | available timeslots: ['Timeslot1', 'Timeslot2', 'Timeslot3', 'Timeslot4', 'Timeslot6', 'Timeslot7', 'Timeslot8', 'Timeslot10', 'Timeslot11', 'Timeslot12', 'Timeslot13', 'Timeslot15', 'Timeslot16', 'Timeslot17', 'Timeslot18'] | preferred rooms: ['Room3', 'Room16', 'Room6', 'Room6', 'Room13', 'Room11', 'Room1', 'Room11', 'Room1', 'Room13', 'Room13', 'Room7', 'Room16'] | preferred timeslots: ['Timeslot3']
+  LECTURE 2 
+	ROOM - index: 18 | desc: Room18
+	TIMESLOT - index: 16 | desc: Timeslot16
+	COURSE - index: 2 | desc: CSE2 | num of lectures: 2 | preferred rooms: ['Room16', 'Room13', 'Room16', 'Room10', 'Room10', 'Room19', 'Room18', 'Room11', 'Room14', 'Room17', 'Room18', 'Room5', 'Room12', 'Room14', 'Room0'] | preferred timeslots: ['Timeslot18', 'Timeslot14', 'Timeslot17', 'Timeslot19', 'Timeslot16', 'Timeslot0', 'Timeslot17', 'Timeslot0', 'Timeslot8', 'Timeslot14']
+	INSTRUCTOR - index: 11 | desc: INSTRUCTOR11 | qualified courses: ['CSE0', 'CSE1', 'CSE2', 'CSE3', 'CSE4', 'CSE6', 'CSE7', 'CSE9'] | available timeslots: ['Timeslot1', 'Timeslot2', 'Timeslot4', 'Timeslot8', 'Timeslot11', 'Timeslot12', 'Timeslot13', 'Timeslot16'] | preferred rooms: ['Room12', 'Room12', 'Room10', 'Room2', 'Room4', 'Room16', 'Room14', 'Room4', 'Room6', 'Room13', 'Room18', 'Room10', 'Room19', 'Room14', 'Room12', 'Room16'] | preferred timeslots: ['Timeslot16', 'Timeslot6', 'Timeslot0', 'Timeslot14', 'Timeslot0', 'Timeslot19']
+  LECTURE 3 
+	ROOM - index: 14 | desc: Room14
+	TIMESLOT - index: 14 | desc: Timeslot14
+	COURSE - index: 2 | desc: CSE2 | num of lectures: 2 | preferred rooms: ['Room16', 'Room13', 'Room16', 'Room10', 'Room10', 'Room19', 'Room18', 'Room11', 'Room14', 'Room17', 'Room18', 'Room5', 'Room12', 'Room14', 'Room0'] | preferred timeslots: ['Timeslot18', 'Timeslot14', 'Timeslot17', 'Timeslot19', 'Timeslot16', 'Timeslot0', 'Timeslot17', 'Timeslot0', 'Timeslot8', 'Timeslot14']
+	INSTRUCTOR - index: 13 | desc: INSTRUCTOR13 | qualified courses: ['CSE0', 'CSE1', 'CSE2', 'CSE4', 'CSE6', 'CSE7', 'CSE8'] | available timeslots: ['Timeslot1', 'Timeslot12', 'Timeslot14'] | preferred rooms: ['Room16', 'Room19', 'Room12', 'Room10', 'Room8', 'Room3', 'Room17', 'Room18', 'Room14', 'Room5', 'Room16', 'Room12', 'Room13'] | preferred timeslots: ['Timeslot8', 'Timeslot14', 'Timeslot6', 'Timeslot19', 'Timeslot5', 'Timeslot16']
+  LECTURE 4 
+	ROOM - index: 18 | desc: Room18
+	TIMESLOT - index: 3 | desc: Timeslot3
+	COURSE - index: 3 | desc: CSE3 | num of lectures: 2 | preferred rooms: ['Room9', 'Room9', 'Room9', 'Room18', 'Room17'] | preferred timeslots: ['Timeslot3', 'Timeslot1', 'Timeslot12', 'Timeslot15', 'Timeslot19', 'Timeslot6']
+	INSTRUCTOR - index: 7 | desc: INSTRUCTOR7 | qualified courses: ['CSE1', 'CSE3', 'CSE4', 'CSE5', 'CSE6'] | available timeslots: ['Timeslot1', 'Timeslot3', 'Timeslot4', 'Timeslot5', 'Timeslot10', 'Timeslot12', 'Timeslot13', 'Timeslot15'] | preferred rooms: ['Room18', 'Room5', 'Room13', 'Room18', 'Room15', 'Room13', 'Room16'] | preferred timeslots: ['Timeslot5', 'Timeslot0']
+  LECTURE 5 
+	ROOM - index: 12 | desc: Room12
+	TIMESLOT - index: 19 | desc: Timeslot19
+	COURSE - index: 6 | desc: CSE6 | num of lectures: 2 | preferred rooms: ['Room1', 'Room10', 'Room14', 'Room5', 'Room2', 'Room17', 'Room3', 'Room11', 'Room9', 'Room12', 'Room8', 'Room6', 'Room5', 'Room3'] | preferred timeslots: ['Timeslot2', 'Timeslot9', 'Timeslot19', 'Timeslot12', 'Timeslot14', 'Timeslot18']
+	INSTRUCTOR - index: 18 | desc: INSTRUCTOR18 | qualified courses: ['CSE0', 'CSE2', 'CSE3', 'CSE5', 'CSE6', 'CSE7', 'CSE8'] | available timeslots: ['Timeslot1', 'Timeslot9', 'Timeslot10', 'Timeslot13', 'Timeslot19'] | preferred rooms: ['Room15', 'Room13', 'Room12', 'Room7'] | preferred timeslots: ['Timeslot1', 'Timeslot10', 'Timeslot19', 'Timeslot0', 'Timeslot18', 'Timeslot18', 'Timeslot2', 'Timeslot2', 'Timeslot5', 'Timeslot19']
+  LECTURE 6 
+	ROOM - index: 15 | desc: Room15
+	TIMESLOT - index: 5 | desc: Timeslot5
+	COURSE - index: 4 | desc: CSE4 | num of lectures: 2 | preferred rooms: ['Room5', 'Room15'] | preferred timeslots: ['Timeslot0', 'Timeslot5', 'Timeslot16', 'Timeslot19', 'Timeslot7', 'Timeslot2', 'Timeslot7', 'Timeslot16', 'Timeslot9', 'Timeslot1']
+	INSTRUCTOR - index: 19 | desc: INSTRUCTOR19 | qualified courses: ['CSE3', 'CSE4', 'CSE5'] | available timeslots: ['Timeslot0', 'Timeslot3', 'Timeslot5', 'Timeslot8', 'Timeslot11', 'Timeslot14'] | preferred rooms: ['Room19', 'Room18', 'Room15', 'Room14', 'Room0', 'Room7', 'Room10', 'Room11', 'Room4', 'Room15'] | preferred timeslots: ['Timeslot5', 'Timeslot6', 'Timeslot19', 'Timeslot8', 'Timeslot12', 'Timeslot14', 'Timeslot8', 'Timeslot15', 'Timeslot13', 'Timeslot1']
+  LECTURE 7 
+	ROOM - index: 5 | desc: Room5
+	TIMESLOT - index: 1 | desc: Timeslot1
+	COURSE - index: 4 | desc: CSE4 | num of lectures: 2 | preferred rooms: ['Room5', 'Room15'] | preferred timeslots: ['Timeslot0', 'Timeslot5', 'Timeslot16', 'Timeslot19', 'Timeslot7', 'Timeslot2', 'Timeslot7', 'Timeslot16', 'Timeslot9', 'Timeslot1']
+	INSTRUCTOR - index: 4 | desc: INSTRUCTOR4 | qualified courses: ['CSE1', 'CSE4', 'CSE5', 'CSE7', 'CSE8'] | available timeslots: ['Timeslot1', 'Timeslot2', 'Timeslot3', 'Timeslot5', 'Timeslot6', 'Timeslot9', 'Timeslot10', 'Timeslot11', 'Timeslot13', 'Timeslot14', 'Timeslot15', 'Timeslot17'] | preferred rooms: ['Room11', 'Room0', 'Room5', 'Room19'] | preferred timeslots: ['Timeslot0', 'Timeslot10', 'Timeslot1', 'Timeslot6', 'Timeslot17', 'Timeslot14', 'Timeslot14', 'Timeslot15', 'Timeslot14']
+  LECTURE 8 
+	ROOM - index: 15 | desc: Room15
+	TIMESLOT - index: 19 | desc: Timeslot19
+	COURSE - index: 5 | desc: CSE5 | num of lectures: 1 | preferred rooms: ['Room0', 'Room13', 'Room14', 'Room18', 'Room11', 'Room19', 'Room14', 'Room15'] | preferred timeslots: ['Timeslot2', 'Timeslot14', 'Timeslot13', 'Timeslot12', 'Timeslot8', 'Timeslot19', 'Timeslot0', 'Timeslot1', 'Timeslot17', 'Timeslot14']
+	INSTRUCTOR - index: 8 | desc: INSTRUCTOR8 | qualified courses: ['CSE1', 'CSE3', 'CSE4', 'CSE5', 'CSE6', 'CSE8', 'CSE9'] | available timeslots: ['Timeslot0', 'Timeslot1', 'Timeslot2', 'Timeslot3', 'Timeslot8', 'Timeslot9', 'Timeslot10', 'Timeslot13', 'Timeslot18', 'Timeslot19'] | preferred rooms: ['Room12', 'Room13', 'Room3', 'Room15', 'Room1', 'Room17', 'Room14', 'Room8', 'Room13', 'Room2'] | preferred timeslots: ['Timeslot18', 'Timeslot9', 'Timeslot2', 'Timeslot10', 'Timeslot19', 'Timeslot11']
+  LECTURE 9 
+	ROOM - index: 8 | desc: Room8
+	TIMESLOT - index: 9 | desc: Timeslot9
+	COURSE - index: 6 | desc: CSE6 | num of lectures: 2 | preferred rooms: ['Room1', 'Room10', 'Room14', 'Room5', 'Room2', 'Room17', 'Room3', 'Room11', 'Room9', 'Room12', 'Room8', 'Room6', 'Room5', 'Room3'] | preferred timeslots: ['Timeslot2', 'Timeslot9', 'Timeslot19', 'Timeslot12', 'Timeslot14', 'Timeslot18']
+	INSTRUCTOR - index: 8 | desc: INSTRUCTOR8 | qualified courses: ['CSE1', 'CSE3', 'CSE4', 'CSE5', 'CSE6', 'CSE8', 'CSE9'] | available timeslots: ['Timeslot0', 'Timeslot1', 'Timeslot2', 'Timeslot3', 'Timeslot8', 'Timeslot9', 'Timeslot10', 'Timeslot13', 'Timeslot18', 'Timeslot19'] | preferred rooms: ['Room12', 'Room13', 'Room3', 'Room15', 'Room1', 'Room17', 'Room14', 'Room8', 'Room13', 'Room2'] | preferred timeslots: ['Timeslot18', 'Timeslot9', 'Timeslot2', 'Timeslot10', 'Timeslot19', 'Timeslot11']
+  LECTURE 10 
+	ROOM - index: 3 | desc: Room3
+	TIMESLOT - index: 2 | desc: Timeslot2
+	COURSE - index: 6 | desc: CSE6 | num of lectures: 2 | preferred rooms: ['Room1', 'Room10', 'Room14', 'Room5', 'Room2', 'Room17', 'Room3', 'Room11', 'Room9', 'Room12', 'Room8', 'Room6', 'Room5', 'Room3'] | preferred timeslots: ['Timeslot2', 'Timeslot9', 'Timeslot19', 'Timeslot12', 'Timeslot14', 'Timeslot18']
+	INSTRUCTOR - index: 16 | desc: INSTRUCTOR16 | qualified courses: ['CSE1', 'CSE6', 'CSE7', 'CSE8', 'CSE9'] | available timeslots: ['Timeslot1', 'Timeslot2', 'Timeslot5', 'Timeslot6', 'Timeslot8', 'Timeslot12', 'Timeslot13', 'Timeslot15', 'Timeslot19'] | preferred rooms: ['Room10', 'Room11', 'Room14', 'Room4', 'Room19', 'Room19', 'Room3', 'Room11', 'Room0', 'Room4'] | preferred timeslots: ['Timeslot7', 'Timeslot0', 'Timeslot5', 'Timeslot1', 'Timeslot9', 'Timeslot7', 'Timeslot4', 'Timeslot2', 'Timeslot3']
+  LECTURE 11 
+	ROOM - index: 16 | desc: Room16
+	TIMESLOT - index: 14 | desc: Timeslot14
+	COURSE - index: 7 | desc: CSE7 | num of lectures: 2 | preferred rooms: ['Room3', 'Room19', 'Room16', 'Room2', 'Room9'] | preferred timeslots: ['Timeslot12', 'Timeslot9', 'Timeslot11', 'Timeslot14', 'Timeslot15']
+	INSTRUCTOR - index: 17 | desc: INSTRUCTOR17 | qualified courses: ['CSE0', 'CSE1', 'CSE3', 'CSE4', 'CSE5', 'CSE7'] | available timeslots: ['Timeslot4', 'Timeslot6', 'Timeslot12', 'Timeslot14', 'Timeslot16', 'Timeslot18', 'Timeslot19'] | preferred rooms: ['Room16', 'Room18', 'Room8', 'Room17', 'Room0', 'Room2'] | preferred timeslots: ['Timeslot8', 'Timeslot2', 'Timeslot6', 'Timeslot14', 'Timeslot12', 'Timeslot13', 'Timeslot19']
+  LECTURE 12 
+	ROOM - index: 19 | desc: Room19
+	TIMESLOT - index: 11 | desc: Timeslot11
+	COURSE - index: 7 | desc: CSE7 | num of lectures: 2 | preferred rooms: ['Room3', 'Room19', 'Room16', 'Room2', 'Room9'] | preferred timeslots: ['Timeslot12', 'Timeslot9', 'Timeslot11', 'Timeslot14', 'Timeslot15']
+	INSTRUCTOR - index: 11 | desc: INSTRUCTOR11 | qualified courses: ['CSE0', 'CSE1', 'CSE2', 'CSE3', 'CSE4', 'CSE6', 'CSE7', 'CSE9'] | available timeslots: ['Timeslot1', 'Timeslot2', 'Timeslot4', 'Timeslot8', 'Timeslot11', 'Timeslot12', 'Timeslot13', 'Timeslot16'] | preferred rooms: ['Room12', 'Room12', 'Room10', 'Room2', 'Room4', 'Room16', 'Room14', 'Room4', 'Room6', 'Room13', 'Room18', 'Room10', 'Room19', 'Room14', 'Room12', 'Room16'] | preferred timeslots: ['Timeslot16', 'Timeslot6', 'Timeslot0', 'Timeslot14', 'Timeslot0', 'Timeslot19']
+  LECTURE 13 
+	ROOM - index: 3 | desc: Room3
+	TIMESLOT - index: 5 | desc: Timeslot5
+	COURSE - index: 1 | desc: CSE1 | num of lectures: 1 | preferred rooms: ['Room3', 'Room7', 'Room15'] | preferred timeslots: ['Timeslot11', 'Timeslot12', 'Timeslot3', 'Timeslot11', 'Timeslot14', 'Timeslot17', 'Timeslot6', 'Timeslot5', 'Timeslot12', 'Timeslot14']
+	INSTRUCTOR - index: 16 | desc: INSTRUCTOR16 | qualified courses: ['CSE1', 'CSE6', 'CSE7', 'CSE8', 'CSE9'] | available timeslots: ['Timeslot1', 'Timeslot2', 'Timeslot5', 'Timeslot6', 'Timeslot8', 'Timeslot12', 'Timeslot13', 'Timeslot15', 'Timeslot19'] | preferred rooms: ['Room10', 'Room11', 'Room14', 'Room4', 'Room19', 'Room19', 'Room3', 'Room11', 'Room0', 'Room4'] | preferred timeslots: ['Timeslot7', 'Timeslot0', 'Timeslot5', 'Timeslot1', 'Timeslot9', 'Timeslot7', 'Timeslot4', 'Timeslot2', 'Timeslot3']
+  LECTURE 14 
+	ROOM - index: 1 | desc: Room1
+	TIMESLOT - index: 18 | desc: Timeslot18
+	COURSE - index: 9 | desc: CSE9 | num of lectures: 2 | preferred rooms: ['Room1', 'Room6'] | preferred timeslots: ['Timeslot15', 'Timeslot14', 'Timeslot15', 'Timeslot18', 'Timeslot3', 'Timeslot1', 'Timeslot6', 'Timeslot17', 'Timeslot1', 'Timeslot3']
+	INSTRUCTOR - index: 8 | desc: INSTRUCTOR8 | qualified courses: ['CSE1', 'CSE3', 'CSE4', 'CSE5', 'CSE6', 'CSE8', 'CSE9'] | available timeslots: ['Timeslot0', 'Timeslot1', 'Timeslot2', 'Timeslot3', 'Timeslot8', 'Timeslot9', 'Timeslot10', 'Timeslot13', 'Timeslot18', 'Timeslot19'] | preferred rooms: ['Room12', 'Room13', 'Room3', 'Room15', 'Room1', 'Room17', 'Room14', 'Room8', 'Room13', 'Room2'] | preferred timeslots: ['Timeslot18', 'Timeslot9', 'Timeslot2', 'Timeslot10', 'Timeslot19', 'Timeslot11']
+  LECTURE 15 
+	ROOM - index: 1 | desc: Room1
+	TIMESLOT - index: 1 | desc: Timeslot1
+	COURSE - index: 9 | desc: CSE9 | num of lectures: 2 | preferred rooms: ['Room1', 'Room6'] | preferred timeslots: ['Timeslot15', 'Timeslot14', 'Timeslot15', 'Timeslot18', 'Timeslot3', 'Timeslot1', 'Timeslot6', 'Timeslot17', 'Timeslot1', 'Timeslot3']
+	INSTRUCTOR - index: 14 | desc: INSTRUCTOR14 | qualified courses: ['CSE0', 'CSE4', 'CSE5', 'CSE7', 'CSE8', 'CSE9'] | available timeslots: ['Timeslot1', 'Timeslot3', 'Timeslot5', 'Timeslot6', 'Timeslot12', 'Timeslot15', 'Timeslot16', 'Timeslot17'] | preferred rooms: ['Room8', 'Room13', 'Room0', 'Room12', 'Room12', 'Room17'] | preferred timeslots: ['Timeslot3', 'Timeslot2', 'Timeslot7', 'Timeslot1', 'Timeslot0', 'Timeslot4', 'Timeslot11']
+

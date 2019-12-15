@@ -3,20 +3,21 @@ import numpy as np
 
 np.random.seed(69)
 
-# vairables to alter for randomization
 
+# main pararms to alter for randomization
 NUM_OF_ROOMS = 20
 NUM_OF_TIMELSOTS = 20
 NUM_OF_COURSES = 10
 NUM_OF_INSTRUCTORS = 20
 
+# secondary params
 MAX_NUM_OF_LECS_PER_COURSE = 2
 MIN_NUM_OF_LECS_PER_COURSE = 1
 
 MAX_NUM_OF_QUALIFIED_COURSES_PER_INSTRUCTOR = NUM_OF_COURSES * 0.9
 MIN_NUM_OF_QUALIFIED_COURSES_PER_INSTRUCTOR = 2
 
-MAX_AVAILABLE_TIMESLOTS_PER_INSTRUCTOR = NUM_OF_TIMELSOTS
+R = NUM_OF_TIMELSOTS
 MIN_AVAILABLE_TIMESLOTS_PER_INSTRUCTOR = 2
 
 # SOFT CONSTRAINT PARAMS
@@ -107,7 +108,7 @@ INSTRUCTORS = np.array([
                 np.arange(NUM_OF_TIMELSOTS),
                 size=np.random.randint(
                     low=MIN_AVAILABLE_TIMESLOTS_PER_INSTRUCTOR,
-                    high=MAX_AVAILABLE_TIMESLOTS_PER_INSTRUCTOR+1
+                    high=R+1
                 )
             )
         )),
