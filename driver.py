@@ -52,15 +52,47 @@ def pretty_print_schedule(sch):
     pass
 
 
-def main():
-    sch = GA_for_UCSP(population_size=1024, epochs=100, mutable_pct=30)
-    # sch = Memetic_for_UCSP(population_size=256, epochs=20, mutable_pct=40)
-    # sch = PSO_for_UCSP(epochs=100, total_particles=1024)
-    # sch = Firefly_for_UCSP(population_size=1024, epochs=50)
-    print(sch)
-    print("\nFinal Fitness %f" % fitness(sch))
+def write_results_to_file(fname, results):
+    f = open(fname, "w")
+    for row in results[:, :2]:
+        output = str(row[0]) + "," + str(row[1]) + "\n"
+        f.write(output)
+    f.close()
 
+
+def do_bench(epochs, poplation_size):
+    results = GA_for_UCSP(population_size=poplation_size, epochs=epochs)
+    fname = "results/ga-results-e_%d-pop_%d.txt" % (epochs, poplation_size)
+
+    write_results_to_file(fname, results)
+
+    print("\nFinal Fitness %f" % fitness(results[-1, 2]))
+
+
+def benching():
+    # print_params()
+    # epochs = 150
+    # poplation_size = 1024
+
+    # do_bench(epochs, poplation_size)
+    # for i in range(3):
+    #     do_bench(epochs, poplation_size)
+    #     poplation_size = poplation_size * 2
+        # epochs = epochs #* (i+1) * 2
     pass
+
+
+def main():
+    # print_params()
+    epochs = 20
+    poplation_size = 512
+
+    results = GA_for_UCSP(population_size=poplation_size, epochs=epochs)
+    # results = Memetic_for_UCSP(population_size=poplation_size, epochs=epochs)
+    # results = PSO_for_UCSP(epochs=epochs, total_particles=poplation_size,)
+    # results = Firefly_for_UCSP(population_size=poplation_size, epochs=epochs, )
+
+    print("\nFinal Fitness %f" % fitness(results[-1, 2]))
 
 
 if __name__ == "__main__":

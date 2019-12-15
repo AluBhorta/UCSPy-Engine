@@ -5,22 +5,27 @@ from fitness.fitness import fitness
 from data.generate_random_schedule import generate_random_schedule
 
 
-def GA_for_UCSP(epochs=50, min_acceptable_fitness=0.5, population_size=256, elite_pct=10, mateable_pct=50, mutable_pct=10, total_lectures=L):
+def GA_for_UCSP(epochs=50, min_acceptable_fitness=0.9, population_size=256, elite_pct=10, mateable_pct=50, mutable_pct=10, total_lectures=L):
     population = [None for _ in range(population_size)]
 
     for i in range(population_size):
         population[i] = generate_random_schedule()
 
-    generation_number = 0
-
-    while generation_number < epochs:
+    epoch = 0
+    
+    # 0: Generation, 1: Fitness, 2: Schedule
+    results = np.array([[None, None, None] for i in range(epochs)])
+    while epoch < epochs:
 
         population = sorted(
             population, key=lambda sch: fitness(sch), reverse=True)
 
         best_fitness = fitness(population[0])
         print("Generation: %d \t Fitness: %f " %
-              (generation_number, best_fitness))
+              (epoch, best_fitness))
+        results[epoch][0] = epoch
+        results[epoch][1] = best_fitness
+        results[epoch][2] = population[0]
 
         if best_fitness >= min_acceptable_fitness:
             return population[0]
@@ -71,7 +76,7 @@ def GA_for_UCSP(epochs=50, min_acceptable_fitness=0.5, population_size=256, elit
 
         population = new_population
 
-        generation_number += 1
+        epoch += 1
 
     best_fitness = fitness(population[0])
     best_fit_idx = 0
@@ -82,4 +87,5 @@ def GA_for_UCSP(epochs=50, min_acceptable_fitness=0.5, population_size=256, elit
             best_fitness = f
             best_fit_idx = i
 
-    return population[best_fit_idx]
+    # return population[best_fit_idx]
+    return results
