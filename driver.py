@@ -30,11 +30,10 @@ def check_fitness(iterations=1000):
 
     for i in range(iterations):
         sch = generate_random_schedule()
-
         f = fitness(sch)
-        fitnesses[i] = f
+
         if f > 0:
-            # print(f)
+            print(f)
             counter += 1
 
     print("fitness(sch) > 0: %d times!" % counter)
@@ -131,9 +130,10 @@ def main():
     epochs = 10
     poplation_size = 256
 
-    schedule = GA_for_UCSP(population_size=poplation_size, epochs=epochs)
+    # schedule = GA_for_UCSP(population_size=poplation_size, epochs=epochs)
     # schedule = Memetic_for_UCSP(population_size=poplation_size, epochs=epochs)
-    # schedule = PSO_for_UCSP(epochs=epochs, total_particles=poplation_size,)
+
+    schedule = PSO_for_UCSP(epochs=epochs, total_particles=poplation_size,)
     # schedule = Firefly_for_UCSP(population_size=poplation_size, epochs=epochs,)
 
     print("\nFinal Schedule:\n", get_decoded_schedule(schedule))
@@ -141,4 +141,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    # print_params()
+    check_fitness(10)
+
