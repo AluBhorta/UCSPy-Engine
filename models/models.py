@@ -18,11 +18,12 @@
 
 
 class Room:
-    def __init__(self, room_idx):
+    def __init__(self, room_idx, room_desc):
         self.room_idx = room_idx
+        self.room_desc = room_desc
 
     def __repr__(self):
-        return 'Room (Room-ID: %d)' % self.room_idx
+        return 'Room (idx: %d, desc: %s)' % (self.room_idx, self.room_desc)
 
 
 class Timeslot:
@@ -56,7 +57,6 @@ class Lecture:
         return "Lecture: \n\tRoom: %s,\n\tTimeslot: %s,\n\tCourse: %s,\n\tInstructor: %s\n" % (
             self.room, self.timeslot, self.course, self.instructor
         )
-
 
 
 class HardConstraint:
