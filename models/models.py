@@ -17,46 +17,95 @@
 '''
 
 
-class Room:
-    def __init__(self, room_idx, room_desc):
-        self.room_idx = room_idx
-        self.room_desc = room_desc
+class Timeslot:
+    def __init__(self, idx, desc):
+        self.idx = idx
+        self.desc = desc
 
     def __repr__(self):
-        return 'Room (idx: %d, desc: %s)' % (self.room_idx, self.room_desc)
+        return f"""Timeslot - idx: {self.idx}, desc: {self.desc}"""
 
 
-class Timeslot:
-    def __init__(self, timeslot_idx):
-        self.timeslot_idx = timeslot_idx
+class Room:
+    def __init__(self, idx, desc, allowed_courses):
+        self.idx = idx
+        self.desc = desc
+        self.allowed_courses = allowed_courses
+
+    def __repr__(self):
+        return f"""Room - idx: {self.idx}, desc: {self.desc}"""
 
 
 class Course:
-    def __init__(self, course_idx, num_of_lectures, preferred_rooms):
-        self.course_idx = course_idx
+    def __init__(self, idx, desc, num_of_lectures, preferred_rooms, preferred_timeslots):
+        self.idx = idx
+        self.desc = desc
         self.num_of_lectures = num_of_lectures
         self.preferred_rooms = preferred_rooms
+        self.preferred_timeslots = preferred_timeslots
+
+    def __str__(self):
+        return f"""Course - idx: {self.idx}, desc: {self.desc}"""
+
+    def __repr__(self):
+        return f"""{self.__str__()}, num_of_lecs: {self.num_of_lectures}, preferred_rooms: {self.preferred_rooms}, preferred_timeslots: {self.preferred_timeslots}"""
 
 
 class Instructor:
-    def __init__(self, instuctor_idx, qualified_courses, available_timeslots):
-        self.instuctor_idx = instuctor_idx
+    def __init__(self, idx, desc, qualified_courses, available_in_timeslots, preferred_rooms, preferred_timeslots):
+        self.idx = idx
+        self.desc = desc
         self.qualified_courses = qualified_courses
-        self.available_timeslots = available_timeslots
+        self.available_in_timeslots = available_in_timeslots
+        self.preferred_rooms = preferred_rooms
+        self.preferred_timeslots = preferred_timeslots
+
+    def __str__(self):
+        return f"""Instructor - idx: {self.idx}, desc: {self.desc}"""
+
+    def __repr__(self):
+        return f"""{self.__str__()}, qualified_courses: {self.qualified_courses}, available_in_timeslots: {self.available_in_timeslots}, preferred_rooms: {self.preferred_rooms}, preferred_timeslots: {self.preferred_timeslots} """
 
 
 class Lecture:
-    def __init__(self, encoded_lecture, room, timeslot, course, instructor):
-        self.encoded_lecture = encoded_lecture
-        self.room = room
-        self.timeslot = timeslot
-        self.course = course
-        self.instructor = instructor
+    def __init__(self, room_idx, timeslot_idx, course_idx, instructor_idx):
+        self.room_idx = room_idx
+        self.timeslot_idx = timeslot_idx
+        self.course_idx = course_idx
+        self.instructor_idx = instructor_idx
 
     def __repr__(self):
-        return "Lecture: \n\tRoom: %s,\n\tTimeslot: %s,\n\tCourse: %s,\n\tInstructor: %s\n" % (
-            self.room, self.timeslot, self.course, self.instructor
-        )
+        return f"""Lecture - room_idx: {self.room_idx}, timeslot_idx: {self.timeslot_idx}, course_idx: {self.course_idx}, instructor_idx: {self.instructor_idx} """
+
+    def decoded(self):
+        # R = Room(self.room_idx, )
+        # allow global DAO or pass it around through function args
+        pass
+
+    def encoded(self):
+        return (self.room_idx, self.timeslot_idx, self.course_idx, self.instructor_idx)
+
+
+class DAO:
+    """Data Access Object (DAO) 
+    
+    Singleton Object used to hold/access all input components (i.e. Rooms, Timeslots, Courses, Instructors) and convert components to/from indices (e.g. get Room instance using room_idx, if it exists).
+    """
+    def __init__(self):
+        # 
+        pass
+    
+    def get_room(self, room_idx):
+        pass
+    
+    def get_timeslot(self, timeslot_idx):
+        pass
+    
+    def get_course(self, course_idx):
+        pass
+    
+    def get_instructor(self, instructor_idx):
+        pass
 
 
 class HardConstraint:
