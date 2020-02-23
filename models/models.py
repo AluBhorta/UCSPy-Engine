@@ -74,6 +74,9 @@ class Lecture:
         self.course_idx = course_idx
         self.instructor_idx = instructor_idx
 
+    def __str__(self):
+        return str((self.room_idx, self.timeslot_idx, self.course_idx, self.instructor_idx))
+
     def __repr__(self):
         return f"""Lecture - room_idx: {self.room_idx}, timeslot_idx: {self.timeslot_idx}, course_idx: {self.course_idx}, instructor_idx: {self.instructor_idx} """
 
@@ -86,24 +89,34 @@ class Lecture:
         return (self.room_idx, self.timeslot_idx, self.course_idx, self.instructor_idx)
 
 
+class Schedule:
+    def __init__(self, lectures):
+        self.lectures = lectures
+        self.lecture_count = len(lectures)
+
+    def __str__(self):
+        return str(self.lectures)
+
+
 class DAO:
     """Data Access Object (DAO) 
-    
+
     Singleton Object used to hold/access all input components (i.e. Rooms, Timeslots, Courses, Instructors) and convert components to/from indices (e.g. get Room instance using room_idx, if it exists).
     """
+
     def __init__(self):
-        # 
+        #
         pass
-    
+
     def get_room(self, room_idx):
         pass
-    
+
     def get_timeslot(self, timeslot_idx):
         pass
-    
+
     def get_course(self, course_idx):
         pass
-    
+
     def get_instructor(self, instructor_idx):
         pass
 
