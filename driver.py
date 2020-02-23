@@ -3,6 +3,7 @@ import numpy as np
 
 from data.data import ROOMS as R, TIMESLOTS as T, COURSES as C, INSTRUCTORS as I, NUM_OF_LECS_BEING_OFFERED as L
 from data.generate_random_schedule import generate_random_schedule
+
 from fitness.solution_encoding import encode, decode
 from fitness.fitness import fitness
 
@@ -127,13 +128,13 @@ def main():
 
     tweak the parameters & comment or uncomment whichever algorithm you'd want to use.
     '''
-    epochs = 10
-    poplation_size = 256
+    epochs = 50
+    poplation_size = 128
 
-    # schedule = GA_for_UCSP(population_size=poplation_size, epochs=epochs)
+    schedule = GA_for_UCSP(population_size=poplation_size, epochs=epochs)
     # schedule = Memetic_for_UCSP(population_size=poplation_size, epochs=epochs)
 
-    schedule = PSO_for_UCSP(epochs=epochs, total_particles=poplation_size,)
+    # schedule = PSO_for_UCSP(epochs=epochs, total_particles=poplation_size,)
     # schedule = Firefly_for_UCSP(population_size=poplation_size, epochs=epochs,)
 
     print("\nFinal Schedule:\n", get_decoded_schedule(schedule))
@@ -142,6 +143,5 @@ def main():
 
 if __name__ == "__main__":
     # main()
-    # print_params()
-    check_fitness(10)
-
+    print_params()
+    # check_fitness(10)
