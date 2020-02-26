@@ -2,7 +2,8 @@ import numpy as np
 # from matplotlib import pyplot as plt
 
 from data.data import ROOMS as R, TIMESLOTS as T, COURSES as C, INSTRUCTORS as I, NUM_OF_LECS_BEING_OFFERED as L
-from data.generate_random_schedule import generate_random_schedule
+from data.generate_random_schedule import generate_random_schedule, generate_random_schedule_v2 as grs2
+
 from fitness.solution_encoding import encode, decode
 from fitness.fitness import fitness
 
@@ -24,17 +25,18 @@ def print_params():
     print("\nNUM_OF_LECS_BEING_OFFERED: \n", L)
 
 
-def check_fitness(iterations=1000):
+def check_fitness(iterations=100):
     '''check fitg_best_fitnessssions '''
     counter = 0
 
     for i in range(iterations):
-        sch = generate_random_schedule()
+        sch = grs2()
         f = fitness(sch)
+        print(f)
 
         if f > 0:
-            print(f)
             counter += 1
+        # print(counter)
 
     print("fitness(sch) > 0: %d times!" % counter)
 
@@ -127,13 +129,13 @@ def main():
 
     tweak the parameters & comment or uncomment whichever algorithm you'd want to use.
     '''
-    epochs = 10
-    poplation_size = 256
+    epochs = 50
+    poplation_size = 128
 
-    # schedule = GA_for_UCSP(population_size=poplation_size, epochs=epochs)
+    schedule = GA_for_UCSP(population_size=poplation_size, epochs=epochs)
     # schedule = Memetic_for_UCSP(population_size=poplation_size, epochs=epochs)
 
-    schedule = PSO_for_UCSP(epochs=epochs, total_particles=poplation_size,)
+    # schedule = PSO_for_UCSP(epochs=epochs, total_particles=poplation_size,)
     # schedule = Firefly_for_UCSP(population_size=poplation_size, epochs=epochs,)
 
     print("\nFinal Schedule:\n", get_decoded_schedule(schedule))
@@ -141,7 +143,13 @@ def main():
 
 
 if __name__ == "__main__":
-    # main()
+    print(f"NUM_OF_LECS_BEING_OFFERED: {L}\n")
+    # check_fitness()
+    
+    main()
+    
+    # s = grs2()
+    # print(s)
+    # print(fitness(s))
+    
     # print_params()
-    check_fitness(10)
-

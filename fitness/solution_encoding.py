@@ -8,7 +8,7 @@ from data.data import ROOMS, TIMESLOTS, COURSES, INSTRUCTORS
 
 
 def decode(encoded_lecture):
-    """solution decoder"""
+    """lecture decoder"""
     return (
         ROOMS[encoded_lecture[0]],
         TIMESLOTS[encoded_lecture[1]],
@@ -32,10 +32,10 @@ def decode(encoded_lecture):
 
 
 def encode(decoded_lecture):
-    """solution encoder"""
-    room_idx         = decoded_lecture[0][0]
-    timeslot_idx     = decoded_lecture[1][0]
-    course_idx       = decoded_lecture[2][0]
-    instructor_id   = decoded_lecture[3][0]
+    """lecture encoder"""
+    room_idx = decoded_lecture[0][0]
+    timeslot_idx = decoded_lecture[1][0]
+    course_idx = decoded_lecture[2][0]
+    instructor_id = decoded_lecture[3][0]
 
     return [room_idx, timeslot_idx, course_idx, instructor_id]

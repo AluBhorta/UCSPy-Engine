@@ -12,7 +12,7 @@ else:				return 1
 
 3. Instructors can only take certain courses they are qualified for
 
-4. Instructors are only available at certain timeslots
+4. Instructors are only available at certain timeslots i.e. I.available_timeslots
 
 Schedule: (Room, Timeslot, Course, Instructor)[]
 
@@ -99,5 +99,5 @@ HARD_CONSTRAINTS = [
     violates_hard_constraint_1, 
     violates_hard_constraint_2, 
     violates_hard_constraint_3, 
-    violates_hard_constraint_4
+    # violates_hard_constraint_4
 ]

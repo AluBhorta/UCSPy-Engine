@@ -53,56 +53,119 @@ def generate_random_schedule():
     return np.array(Schedule)
 
 
-def generate_random_schedule2():
-    '''Random schedule generator 2
-    the schedule generated MUST satisfy all the hard constraints
+def _get_qualified_instructors_for(course_idx):
+    qualified_instructors = []
+    for Instructor in INSTRUCTORS:
+        if course_idx in Instructor[2]:
+            qualified_instructors.append(Instructor[0])
+
+    if not qualified_instructors:
+        raise Exception(
+            "Error! No qualified instructors for course_idx %s found!" % course_idx)
+
+    return qualified_instructors
+
+
+def generate_random_schedule_v2():
+    '''Random schedule generator V2
+
+    the schedule if generated without Exception will satisfy all the hard constraints
     '''
     S = []
 
     for Course in COURSES:
         course_idx = Course[0]
-
-        qualified_instructors = []
-        for Instructor in INSTRUCTORS:
-            if course_idx in Instructor[2]:
-                qualified_instructors.append(Instructor[0])
-
-        if not qualified_instructors:
-            raise Exception(
-                "Error! No qualified instructors for Course %s found!" % Course[1])
+        qualified_instructors = _get_qualified_instructors_for(course_idx)
 
         for lec_i in range(Course[2]):
-            instructor_idx, timeslot_idx, room_idx = None, None, None
+            instructor_idx, timeslot_idx, room_idx = _get_unique_I_T_R(
+                qualified_instructors, course_idx, S)
 
-            for qi in qualified_instructors:
-                for ats in qi[3]:    # available_timeslot in I.available_timeslots
-                    # is (I, T) unique in S i.e. unique (qi[0], ats)
-                    if is_unique_I_T(qi[0], ats, S):
-                        #   yes: pick a Room (?allowed for the course) that is avialable at T i.e. unique (R, ats)
-                        r = get_free_room_at(ats, S)
-                        if r:
-                            room_idx = r
-                            timeslot_idx = ats
-                            instructor_idx = qi[0]
-                            
-                    #   no: go to next T (ats) i.e. continue
-
-                # TODO: satisfy HC 2: unique (I, T) in S
-                # TODO: satisfy HC 1: unique (R, T) in S
             S.append(
                 [room_idx, timeslot_idx, course_idx, instructor_idx])
 
     return np.array(S)
 
 
-def is_unique_I_T(I, T, Sch):
-    # TODO: return true if (I,T) does not exist in S
-    pass
+def _get_unique_I_T_R(qualified_instructors, course_idx, Schedule):
+    MAX_RAND_R, MAX_RAND_I_T = 20, 10
+    rand_R_counter, rand_I_T_counter = 0, 0
+
+    instructor_idx, timeslot_idx = _get_unique_I_T(qualified_instructors, course_idx, Schedule)
+    room_idx = np.random.choice(ROOMS[:, 0])
+
+    while True:
+        if _R_T_exists(room_idx, timeslot_idx, Schedule):
+            if rand_R_counter < MAX_RAND_R:
+                timeslot_idx = np.random.choice(ROOMS[:, 0])
+                rand_R_counter += 1
+                continue
+            elif rand_I_T_counter < MAX_RAND_I_T:
+                instructor_idx, timeslot_idx = _get_unique_I_T(
+                    qualified_instructors, course_idx, Schedule)
+                rand_I_T_counter += 1
+                continue
+            else:
+                for instructor_idx in qualified_instructors:
+                    for timeslot_idx in TIMESLOTS[:, 0]:
+                        if not _I_T_exists(instructor_idx, timeslot_idx, Schedule):
+                            for room_idx in ROOMS[:, 0]:
+                                if not _R_T_exists(room_idx, timeslot_idx, Schedule):
+                                    return (instructor_idx, timeslot_idx, room_idx)
+
+                raise Exception(
+                    f"Input Error! No unique (I, T) combination possible for course_idx {course_idx}!")
+        else:
+            return (instructor_idx, timeslot_idx, room_idx)
 
 
-def get_free_room_at(Timeslot, Sch):
-    # TODO: get free room at T
-    no_free_room = True
-    if no_free_room:
-        return False
+def _get_unique_I_T(qualified_instructors, course_idx, Schedule):
+    MAX_RAND_T, MAX_RAND_I = 10, 10
+    rand_T_counter, rand_I_counter = 0, 0
 
+    instructor_idx = np.random.choice(qualified_instructors)
+
+    # not taking I.available_timeslots into account
+    timeslot_idx = np.random.choice(TIMESLOTS[:, 0])
+    # timeslot_idx = np.random.choice(INSTRUCTORS[instructor_idx][3])
+
+    while True:
+        if _I_T_exists(instructor_idx, timeslot_idx, Schedule):
+            if rand_T_counter < MAX_RAND_T:
+                timeslot_idx = np.random.choice(TIMESLOTS[:, 0])
+                rand_T_counter += 1
+                continue
+            elif rand_I_counter < MAX_RAND_I:
+                instructor_idx = np.random.choice(qualified_instructors)
+                rand_I_counter += 1
+                continue
+            else:
+                for instructor_idx in qualified_instructors:
+                    for timeslot_idx in TIMESLOTS[:, 0]:
+                        if not _I_T_exists(instructor_idx, timeslot_idx, Schedule):
+                            return (instructor_idx, timeslot_idx)
+
+                raise Exception(
+                    f"Input Error! No unique (I, T) combination possible for course_idx {course_idx}!")
+        else:
+            return (instructor_idx, timeslot_idx)
+
+
+def _I_T_exists(I, T, S):
+    """ return True if (I, T) exists in S, else false """
+    if S:
+        S = np.array(S)
+        for L in S[:, (3, 1)]:
+            if L[0] == I and L[1] == T:
+                return True
+    return False
+
+
+def _R_T_exists(R, T, S):
+    """ return True if (R, T) exists in S, else false """
+    if S:
+        S = np.array(S)
+        for L in S[:, (0, 1)]:
+            if L[0] == R and L[1] == T:
+                return True
+    return False
