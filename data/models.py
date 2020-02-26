@@ -27,7 +27,7 @@ class Timeslot:
 
 
 class Room:
-    def __init__(self, idx, desc, allowed_courses):
+    def __init__(self, idx, desc, allowed_courses="*"):
         self.idx = idx
         self.desc = desc
         self.allowed_courses = allowed_courses
@@ -75,7 +75,7 @@ class Lecture:
         self.instructor_idx = instructor_idx
 
     def __str__(self):
-        return str((self.room_idx, self.timeslot_idx, self.course_idx, self.instructor_idx))
+        return str(self.encoded())
 
     def __repr__(self):
         return f"""Lecture - room_idx: {self.room_idx}, timeslot_idx: {self.timeslot_idx}, course_idx: {self.course_idx}, instructor_idx: {self.instructor_idx} """
@@ -83,6 +83,7 @@ class Lecture:
     def decoded(self):
         # R = Room(self.room_idx, )
         # allow global DAO or pass it around through function args
+
         pass
 
     def encoded(self):
@@ -98,27 +99,29 @@ class Schedule:
         return str(self.lectures)
 
 
-class DAO:
+class DataAccessObject:
     """Data Access Object (DAO) 
 
     Singleton Object used to hold/access all input components (i.e. Rooms, Timeslots, Courses, Instructors) and convert components to/from indices (e.g. get Room instance using room_idx, if it exists).
     """
 
-    def __init__(self):
-        #
-        pass
+    def __init__(self, rooms, timeslots, courses, instructors):
+        self.rooms = rooms
+        self.timeslots = timeslots
+        self.courses = courses
+        self.instructors = instructors
 
     def get_room(self, room_idx):
-        pass
+        return self.rooms[room_idx]
 
     def get_timeslot(self, timeslot_idx):
-        pass
+        return self.timeslots[timeslot_idx]
 
     def get_course(self, course_idx):
-        pass
+        return self.courses[course_idx]
 
     def get_instructor(self, instructor_idx):
-        pass
+        return self.instructors[instructor_idx]
 
 
 class HardConstraint:
@@ -130,4 +133,5 @@ class SoftConstraint:
     def __init__(self):
         pass
 
-# WEEKDAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+
+WEEKDAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]

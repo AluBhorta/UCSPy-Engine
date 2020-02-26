@@ -2,16 +2,18 @@ import numpy as np
 
 from data.data import NUM_OF_ROOMS as R, NUM_OF_TIMELSOTS as T, NUM_OF_COURSES as C, NUM_OF_INSTRUCTORS as I, NUM_OF_LECS_BEING_OFFERED as L
 from fitness.fitness import fitness
-from data.generate_random_schedule import generate_random_schedule
+from data.generate_random_schedule import generate_random_schedule_v2 as grs2
 
 
 def GA_for_UCSP(epochs=50, min_acceptable_fitness=0.9, population_size=256, elite_pct=10, mateable_pct=50, mutable_pct=10, total_lectures=L):
     population = [None for _ in range(population_size)]
 
     for i in range(population_size):
-        population[i] = generate_random_schedule()
+        population[i] = grs2()
 
     epoch = 0
+
+    new_population = [None for _ in range(population_size)]
     
     # 0: Generation, 1: Fitness, 2: Schedule
     results = np.array([[None, None, None] for i in range(epochs)])
@@ -29,8 +31,6 @@ def GA_for_UCSP(epochs=50, min_acceptable_fitness=0.9, population_size=256, elit
 
         if best_fitness >= min_acceptable_fitness:
             return population[0]
-
-        new_population = [None for _ in range(population_size)]
 
         # Selection (of elites)
         elite_count = (elite_pct * population_size)//100

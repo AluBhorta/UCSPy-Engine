@@ -35,3 +35,4 @@ python driver.py
 ## Todo 
 
 * add `args parser` for running
+* input components could be parsed and stored in memory/cache via redis

@@ -1,4 +1,3 @@
-from models.models import Lecture
 from data.data import ROOMS, TIMESLOTS, COURSES, INSTRUCTORS
 
 

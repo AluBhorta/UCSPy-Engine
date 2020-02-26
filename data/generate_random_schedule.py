@@ -53,19 +53,6 @@ def generate_random_schedule():
     return np.array(Schedule)
 
 
-def _get_qualified_instructors_for(course_idx):
-    qualified_instructors = []
-    for Instructor in INSTRUCTORS:
-        if course_idx in Instructor[2]:
-            qualified_instructors.append(Instructor[0])
-
-    if not qualified_instructors:
-        raise Exception(
-            "Error! No qualified instructors for course_idx %s found!" % course_idx)
-
-    return qualified_instructors
-
-
 def generate_random_schedule_v2():
     '''Random schedule generator V2
 
@@ -87,11 +74,25 @@ def generate_random_schedule_v2():
     return np.array(S)
 
 
+def _get_qualified_instructors_for(course_idx):
+    qualified_instructors = []
+    for Instructor in INSTRUCTORS:
+        if course_idx in Instructor[2]:
+            qualified_instructors.append(Instructor[0])
+
+    if not qualified_instructors:
+        raise Exception(
+            "Error! No qualified instructors for course_idx %s found!" % course_idx)
+
+    return qualified_instructors
+
+
 def _get_unique_I_T_R(qualified_instructors, course_idx, Schedule):
     MAX_RAND_R, MAX_RAND_I_T = 20, 10
     rand_R_counter, rand_I_T_counter = 0, 0
 
-    instructor_idx, timeslot_idx = _get_unique_I_T(qualified_instructors, course_idx, Schedule)
+    instructor_idx, timeslot_idx = _get_unique_I_T(
+        qualified_instructors, course_idx, Schedule)
     room_idx = np.random.choice(ROOMS[:, 0])
 
     while True:
