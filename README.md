@@ -4,9 +4,8 @@ Python Prototype of UCSP Engine by AluBhorta.
 
 ## Deps
 
--   Python 3.6
--   virtualenv
-
+- Python 3.6
+- virtualenv
 
 ## Usage
 
@@ -32,7 +31,8 @@ update the `main` function of `driver.py` according to your requirements and run
 python driver.py
 ```
 
-## Todo 
+## Todo
 
-* add `args parser` for running
-* input components could be parsed and stored in memory/cache via redis
+- add `args parser` for running
+- schedule-params could be parsed and stored in memory/cache via redis
+- check licensing of vulkan and cuda before implementing parallel algos

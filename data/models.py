@@ -33,7 +33,7 @@ class Room:
         self.allowed_courses = allowed_courses
 
     def __repr__(self):
-        return f"""Room - idx: {self.idx}, desc: {self.desc}"""
+        return f"""Room - idx: {self.idx}, desc: {self.desc}\n"""
 
 
 class Course:
@@ -124,14 +124,16 @@ class DataAccessObject:
         return self.instructors[instructor_idx]
 
 
-class HardConstraint:
-    def __init__(self):
-        pass
+# TODO: implement hard and soft constraints as classes to extend the current fitness calculation more intuitively
+# class HardConstraint:
+#     def __init__(self):
+#         pass
 
 
-class SoftConstraint:
-    def __init__(self):
-        pass
+# class SoftConstraint:
+#     def __init__(self):
+#         pass
 
 
 WEEKDAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+DAILY_SLOTS = [0, 1, 2, 3, 4]

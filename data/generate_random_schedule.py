@@ -170,3 +170,17 @@ def _R_T_exists(R, T, S):
             if L[0] == R and L[1] == T:
                 return True
     return False
+
+
+# def grs3():
+#     S = []
+
+#     for C in COURSES:
+#         qualified_instructors = _get_qualified_instructors_for(C.id)
+
+#         for sec in C.sections:
+#             instructor, timeslot, room = _get_unique_I_T_R_v3(qualified_instructors, C.id, S)
+
+#             S.append(Class(instructor, timeslot, room, sec))
+
+#     return Schedule(S)
