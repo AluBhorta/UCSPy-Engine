@@ -15,11 +15,12 @@ def run_ucsp(epochs=50, population_size=128, algo="ga", **kwargs):
     print("\nFinal Fitness %f" % fitness(schedule))
 
 
-def init():
+def init(): 
+    pass
     # from data.models import Room, Timeslot, Course, Instructor, DAO
-    from data.objects import LOCAL_DAO as Dao
+    # from data.objects import LOCAL_DAO as state_manager
 
-    print(Dao.rooms)
+    # print(Dao.rooms)
     # print(Dao.timeslots)
     # print(repr(Dao.courses))
     # print(repr(Dao.instructors[0]))

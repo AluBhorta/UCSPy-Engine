@@ -1,115 +1,131 @@
 
-'''Encoded_Lecture: (Room, Timeslot, Course, Instructor)
-    (int room_idx, int timeslot_idx, int course_idx, int instructor_id)
-'''
-
-'''Decoded_Lecture: (Room, Timeslot, Course, Instructor)
-(
-  Room:       
-    (int room_idx, str room_desc) 
-  Timeslot:
-    (int timeslot_idx, str timeslot_desc) 
-  Course:
-    (int course_idx, str course_desc, int num_of_lectures, int[] preferred_rooms, int[] preferred_timeslots)
-  Instructor:
-   (int instuctor_idx, str instuctor_desc, int[] qualified_courses, int[] available_timeslots, int[] preferred_rooms, int[] preferred_timeslots)
-)
-'''
-
-
 class Timeslot:
-    def __init__(self, idx, desc):
+    _daily_slot_mapping = {
+        0: '8:00-9:30',
+        1: '09:40-11:10',
+        2: '11:20-12:50',
+        3: '12:50-13:40',
+        4: '13:40-15:10',
+        5: '15:20-16:50',
+        6: '17:00-18:30',
+        7: '18:30-20:00',
+        8: '20:00-21:30',
+    }
+
+    def __init__(self, idx, weekday, daily_slot):
         self.idx = idx
-        self.desc = desc
+        self.weekday = weekday
+        self.daily_slot = daily_slot
+        self.desc = self._generate_desc()
+
+    def __str__(self):
+        return f"""Timeslot - idx: {self.idx}, desc: {self.desc}"""
 
     def __repr__(self):
-        return f"""Timeslot - idx: {self.idx}, desc: {self.desc}"""
+        return f"""{self.__str__()}, daily_slot: {self.daily_slot}"""
+
+    def _generate_desc(self):
+        return f"{self.weekday} {self._daily_slot_mapping.get(self.daily_slot)}"
 
 
 class Room:
-    def __init__(self, idx, desc, allowed_courses="*"):
+    def __init__(self, idx, desc, seat_capacity, allowed_courses=[]):
         self.idx = idx
         self.desc = desc
+        self.seat_capacity = seat_capacity
         self.allowed_courses = allowed_courses
 
-    def __repr__(self):
-        return f"""Room - idx: {self.idx}, desc: {self.desc}\n"""
+    def __str__(self):
+        return f"""Room - idx: {self.idx}, desc: {self.desc}"""
 
 
 class Course:
-    def __init__(self, idx, desc, num_of_lectures, preferred_rooms, preferred_timeslots):
+    def __init__(self, idx, desc, num_of_sections, timeslots_per_class, classes_per_week, course_type):
         self.idx = idx
         self.desc = desc
-        self.num_of_lectures = num_of_lectures
-        self.preferred_rooms = preferred_rooms
-        self.preferred_timeslots = preferred_timeslots
+        self.num_of_sections = num_of_sections
+        self.timeslots_per_class = timeslots_per_class
+        self.classes_per_week = classes_per_week
+        self.course_per_week = course_per_week
+        self.sections = self._generate_sections()
 
     def __str__(self):
         return f"""Course - idx: {self.idx}, desc: {self.desc}"""
 
     def __repr__(self):
-        return f"""{self.__str__()}, num_of_lecs: {self.num_of_lectures}, preferred_rooms: {self.preferred_rooms}, preferred_timeslots: {self.preferred_timeslots}"""
+        return f"""
+            {self.__str__()},
+            num_of_sections: {self.num_of_sections},
+            timeslots_per_class: {self.timeslots_per_class},
+            classes_per_week: {self.classes_per_week},
+            course_per_week: {self.course_per_week},
+            sections: {self.sections}
+        """
+
+    def _generate_sections(self):
+        return [Section(self, (i+1)) for i in range(self.num_of_sections)]
 
 
 class Instructor:
-    def __init__(self, idx, desc, qualified_courses, available_in_timeslots, preferred_rooms, preferred_timeslots):
+    def __init__(self, idx, desc, qualified_courses, preferred_timeslots):
         self.idx = idx
         self.desc = desc
         self.qualified_courses = qualified_courses
-        self.available_in_timeslots = available_in_timeslots
-        self.preferred_rooms = preferred_rooms
         self.preferred_timeslots = preferred_timeslots
 
     def __str__(self):
         return f"""Instructor - idx: {self.idx}, desc: {self.desc}"""
 
     def __repr__(self):
-        return f"""{self.__str__()}, qualified_courses: {self.qualified_courses}, available_in_timeslots: {self.available_in_timeslots}, preferred_rooms: {self.preferred_rooms}, preferred_timeslots: {self.preferred_timeslots} """
+        return f"""{self.__str__()}, qualified_courses: {self.qualified_courses}, preferred_timeslots: {self.preferred_timeslots} \n"""
 
 
-class Lecture:
-    def __init__(self, room_idx, timeslot_idx, course_idx, instructor_idx):
-        self.room_idx = room_idx
-        self.timeslot_idx = timeslot_idx
-        self.course_idx = course_idx
-        self.instructor_idx = instructor_idx
+class Batch:
+    def __init__(self, idx, desc, courses, preferred_timeslots):
+        self.idx = idx
+        self.desc = desc
+        self.courses = courses
+        self.preferred_timeslots = preferred_timeslots
 
-    def __str__(self):
-        return str(self.encoded())
 
-    def __repr__(self):
-        return f"""Lecture - room_idx: {self.room_idx}, timeslot_idx: {self.timeslot_idx}, course_idx: {self.course_idx}, instructor_idx: {self.instructor_idx} """
+class Section:
+    def __init__(self, course, sec_number):
+        self.course = course
+        self.sec_number = sec_number
 
-    def decoded(self):
-        # R = Room(self.room_idx, )
-        # allow global DAO or pass it around through function args
 
-        pass
-
-    def encoded(self):
-        return (self.room_idx, self.timeslot_idx, self.course_idx, self.instructor_idx)
+class Class:
+    def __init__(self, room, timeslots, section, instructor):
+        self.room = room
+        self.timeslots = timeslots
+        self.section = section
+        self.instructor = instructor
 
 
 class Schedule:
-    def __init__(self, lectures):
-        self.lectures = lectures
-        self.lecture_count = len(lectures)
-
-    def __str__(self):
-        return str(self.lectures)
+    def __init__(self, classes):
+        self.classes = classes
 
 
-class DataAccessObject:
-    """Data Access Object (DAO) 
+class StateManager:
+    """State Manager
 
-    Singleton Object used to hold/access all input components (i.e. Rooms, Timeslots, Courses, Instructors) and convert components to/from indices (e.g. get Room instance using room_idx, if it exists).
+    Singleton Object used to hold & access all Schedule-Params (i.e. Rooms, Timeslots, Courses, Instructors, Batches) and Sections.
     """
 
-    def __init__(self, rooms, timeslots, courses, instructors):
+    def __init__(self, rooms, timeslots, courses, instructors, batches):
         self.rooms = rooms
         self.timeslots = timeslots
         self.courses = courses
         self.instructors = instructors
+        self.batches = batches
+        self.sections = self._get_sections()
+
+    def _get_sections(self):
+        sections = []
+        for c in self.courses:
+            sections.append(c.sections)
+        return sections
 
     def get_room(self, room_idx):
         return self.rooms[room_idx]
@@ -133,7 +149,3 @@ class DataAccessObject:
 # class SoftConstraint:
 #     def __init__(self):
 #         pass
-
-
-WEEKDAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
-DAILY_SLOTS = [0, 1, 2, 3, 4]
