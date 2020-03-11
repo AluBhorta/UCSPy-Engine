@@ -35,9 +35,13 @@ python driver.py
 
 urgent:
 
-- make the OO-data-model functional
+- parse CSVs to generate param-objects
 - update GRS
 - using GA, solve - IUB Autumn 19 - UCSP instance
+
+Done:
+
+- make the OO-data-model functional
 
 later:
 
@@ -45,7 +49,3 @@ later:
 - make classes for defining constraints
 - schedule-params could be parsed and stored in memory/cache via redis
 - check licensing of vulkan and cuda before implementing parallel algos
-
-## To Query
-
-- should Batches be described like: `Core Year 1` or `Core 100`

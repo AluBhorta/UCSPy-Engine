@@ -67,25 +67,17 @@ class Course:
 
 
 class Instructor:
-    def __init__(self, idx, desc, qualified_courses, preferred_timeslots):
+    def __init__(self, idx, desc, assigned_courses, preferred_timeslots):
         self.idx = idx
         self.desc = desc
-        self.qualified_courses = qualified_courses
+        self.assigned_courses = assigned_courses
         self.preferred_timeslots = preferred_timeslots
 
     def __str__(self):
         return f"""Instructor - idx: {self.idx}, desc: {self.desc}"""
 
     def __repr__(self):
-        return f"""{self.__str__()}, qualified_courses: {self.qualified_courses}, preferred_timeslots: {self.preferred_timeslots} \n"""
-
-
-class Batch:
-    def __init__(self, idx, desc, courses, preferred_timeslots):
-        self.idx = idx
-        self.desc = desc
-        self.courses = courses
-        self.preferred_timeslots = preferred_timeslots
+        return f"""{self.__str__()}, assigned_courses: {self.assigned_courses}, preferred_timeslots: {self.preferred_timeslots} \n"""
 
 
 class Section:
@@ -107,18 +99,26 @@ class Schedule:
         self.classes = classes
 
 
+class CourseGroup:
+    def __init__(self, idx, desc, courses, preferred_timeslots):
+        self.idx = idx
+        self.desc = desc
+        self.courses = courses
+        self.preferred_timeslots = preferred_timeslots
+
+
 class StateManager:
     """State Manager
 
-    Singleton Object used to hold & access all Schedule-Params (i.e. Rooms, Timeslots, Courses, Instructors, Batches) and Sections.
+    Singleton Object used to hold & access all Schedule-Params (i.e. Rooms, Timeslots, Courses, Instructors, CourseGroups) and Sections.
     """
 
-    def __init__(self, rooms, timeslots, courses, instructors, batches):
+    def __init__(self, rooms, timeslots, courses, instructors, course_groups):
         self.rooms = rooms
         self.timeslots = timeslots
         self.courses = courses
         self.instructors = instructors
-        self.batches = batches
+        self.course_groups = course_groups
         self.sections = self._get_sections()
 
     def _get_sections(self):

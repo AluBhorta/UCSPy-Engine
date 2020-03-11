@@ -1,32 +1,30 @@
 
-from data.generate_random_schedule import generate_random_schedule_v2 as grs2
+# from data.generate_random_schedule import generate_random_schedule_v2 as grs2
 
-from fitness.fitness import fitness
+# from fitness.fitness import fitness
 
-from utility import get_algo
+# from utility import get_algo
+import numpy as np
+
+# def run_ucsp(epochs=50, population_size=128, algo="ga", **kwargs):
+
+#     _algo = get_algo(algo)
+#     schedule = _algo(epochs=50, population_size=128, **kwargs)
+
+#     print(schedule)  # TODO: Pretty Print the final schedule
+#     print("\nFinal Fitness %f" % fitness(schedule))
 
 
-def run_ucsp(epochs=50, population_size=128, algo="ga", **kwargs):
-
-    _algo = get_algo(algo)
-    schedule = _algo(epochs=50, population_size=128, **kwargs)
-
-    print(schedule)  # TODO: Pretty Print the final schedule
-    print("\nFinal Fitness %f" % fitness(schedule))
-
-
-def init(): 
+def init():
     pass
-    # from data.models import Room, Timeslot, Course, Instructor, DAO
-    # from data.objects import LOCAL_DAO as state_manager
-
-    # print(Dao.rooms)
-    # print(Dao.timeslots)
-    # print(repr(Dao.courses))
-    # print(repr(Dao.instructors[0]))
 
 
 if __name__ == "__main__":
-    init()
+    # init()
     # run_ucsp(epochs=50, population_size=128, algo="ga")
-    pass
+
+    from data.input_as_csv.parse_csv import get_param_objects_from_csv
+
+    x = get_param_objects_from_csv()
+
+    print(x)
