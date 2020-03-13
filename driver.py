@@ -23,8 +23,9 @@ if __name__ == "__main__":
     # init()
     # run_ucsp(epochs=50, population_size=128, algo="ga")
 
-    from data.input_as_csv.parse_csv import get_param_objects_from_csv
+    from data.input_as_csv.parse_csv import generate_state_from_csv
 
-    x = get_param_objects_from_csv()
+    state = generate_state_from_csv()
 
-    print(x)
+    # print(state)
+    print(len(state.sections))
