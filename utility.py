@@ -8,6 +8,17 @@ from data.generate_random_schedule import generate_random_schedule, generate_ran
 
 from fitness.fitness import fitness
 
+""" v DEPRECATED v """
+
+
+def run_ucsp(epochs=50, population_size=128, algo="ga", **kwargs):
+
+    _algo = get_algo(algo)
+    schedule = _algo(epochs=50, population_size=128, **kwargs)
+
+    print(schedule)  # TODO: Pretty Print the final schedule
+    print("\nFinal Fitness %f" % fitness(schedule))
+
 
 def get_algo(algo_name="ga"):
     if algo_name == "ga":
@@ -20,9 +31,6 @@ def get_algo(algo_name="ga"):
         return Firefly_for_UCSP
     else:
         raise Exception("Error! algo_name not defined!")
-
-
-""" v DEPRECATED v """
 
 
 def print_params():

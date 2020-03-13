@@ -4,12 +4,12 @@ from pandas import read_csv
 from data.models import Room, Timeslot, Course, Instructor, CourseGroup, StateManager
 
 
-def generate_state_from_csv(_dir="data/input_as_csv/iub/autumn_19_demo/") -> StateManager:
-    R_DF = read_csv(_dir + "Rooms.csv")
-    T_DF = read_csv(_dir + "Timeslots.csv")
-    C_DF = read_csv(_dir + "Courses.csv")
-    I_DF = read_csv(_dir + "Instructors.csv")
-    CG_DF = read_csv(_dir + "CourseGroups.csv")
+def generate_state_from_csv(_dir="data/input_as_csv/iub/autumn19_v0.3/", file_prefix="schedule_params-autumn19 - ") -> StateManager:
+    R_DF = read_csv(_dir + file_prefix + "Rooms.csv")
+    T_DF = read_csv(_dir + file_prefix + "Timeslots.csv")
+    C_DF = read_csv(_dir + file_prefix + "Courses.csv")
+    I_DF = read_csv(_dir + file_prefix + "Instructors.csv")
+    CG_DF = read_csv(_dir + file_prefix + "CourseGroups.csv")
 
     ROOMS = R_DF.to_numpy()
     TIMESLOTS = T_DF.to_numpy()
@@ -70,7 +70,11 @@ def generate_state_from_csv(_dir="data/input_as_csv/iub/autumn_19_demo/") -> Sta
 
 
 def str_to_array(str_values):
-    return np.array([int(i) for i in str_values.split(",")])
+    values = []
+    for i in str_values.split(","):
+        if i is not '':
+            values.append(int(i))
+    return np.array(values)
 
 
 def print_params(ROOMS, TIMESLOTS, COURSES, INSTRUCTORS, COURSE_GROUPS):
