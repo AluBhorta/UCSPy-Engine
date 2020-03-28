@@ -64,9 +64,8 @@ def generate_state_from_csv(_dir="data/input_as_csv/iub/autumn19_v0.3/", file_pr
 
     # print_params(Rooms, Timeslots, Courses, Instructors, CourseGroups)
 
-    state_manager = StateManager(
+    return StateManager(
         Rooms, Timeslots, Courses, Instructors, CourseGroups)
-    return state_manager
 
 
 def str_to_array(str_values):

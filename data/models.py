@@ -79,6 +79,15 @@ class Course:
         return [Section(self, (i+1)) for i in range(self.num_of_sections)]
 
 
+class Section:
+    def __init__(self, course: Course, sec_number: int):
+        self.course = course
+        self.sec_number = sec_number
+
+    def __repr__(self):
+        return f'Section - course_idx: {self.course.idx}, section: {self.sec_number} \n'
+
+
 class Instructor:
     def __init__(self, idx, desc, assigned_courses, preferred_timeslots):
         self.idx = idx
@@ -96,28 +105,6 @@ class Instructor:
             preferred_timeslots: {self.preferred_timeslots} 
             \n
         """
-
-
-class Section:
-    def __init__(self, course, sec_number):
-        self.course = course
-        self.sec_number = sec_number
-
-    def __repr__(self):
-        return f'Section - course_idx: {self.course.idx}, section: {self.sec_number} \n'
-
-
-class Class:
-    def __init__(self, room, timeslots, section, instructor):
-        self.room = room
-        self.timeslots = timeslots
-        self.section = section
-        self.instructor = instructor
-
-
-class Schedule:
-    def __init__(self, classes):
-        self.classes = classes
 
 
 class CourseGroup:
@@ -180,6 +167,19 @@ class StateManager:
 
     def get_instructor(self, instructor_idx):
         return self.instructors[instructor_idx]
+
+
+class Class:
+    def __init__(self, timeslots: List[Timeslot], room: Room, section: Section, instructor: Instructor):
+        self.timeslots = timeslots
+        self.room = room
+        self.section = section
+        self.instructor = instructor
+
+
+class Schedule:
+    def __init__(self, classes: List[Class]):
+        self.classes = classes
 
 
 # TODO: implement hard and soft constraints as classes to extend the current fitness calculation more intuitively

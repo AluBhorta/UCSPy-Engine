@@ -35,12 +35,14 @@ python driver.py
 
 urgent:
 
+- add new GRS
+- define constraints
+- new fitness func
+- add new PSO
+
+done:
+
 - parse CSVs to generate param-objects
-- update GRS
-- using GA, solve - IUB Autumn 19 - UCSP instance
-
-Done:
-
 - make the OO-data-model functional
 
 later:
