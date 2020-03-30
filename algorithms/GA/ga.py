@@ -2,14 +2,14 @@ import numpy as np
 
 from data.data import NUM_OF_ROOMS as R, NUM_OF_TIMELSOTS as T, NUM_OF_COURSES as C, NUM_OF_INSTRUCTORS as I, NUM_OF_LECS_BEING_OFFERED as L
 from fitness.fitness import fitness
-from data.generate_random_schedule import generate_random_schedule_v2 as grs2
+from data.rand_schedule_generators.grs_v1 import generate_random_schedule as grs
 
 
 def GA_for_UCSP(epochs=50, min_acceptable_fitness=0.9, population_size=256, elite_pct=10, mateable_pct=50, mutable_pct=10, total_lectures=L):
     population = [None for _ in range(population_size)]
 
     for i in range(population_size):
-        population[i] = grs2()
+        population[i] = grs()
 
     epoch = 0
 

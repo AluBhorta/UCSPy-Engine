@@ -2,8 +2,7 @@ import numpy as np
 
 from data.data import NUM_OF_ROOMS as R, NUM_OF_TIMELSOTS as T, NUM_OF_COURSES as C, NUM_OF_INSTRUCTORS as I, NUM_OF_LECS_BEING_OFFERED as L
 from fitness.fitness import fitness
-from data.generate_random_schedule import generate_random_schedule
-
+from data.rand_schedule_generators.grs_v1 import generate_random_schedule as grs
 
 # get brightest firefly from population
 def get_max_bright_idx(population_size, fireflies, _max_bright_idx):
@@ -28,7 +27,7 @@ def Firefly_for_UCSP(epochs=100, min_acceptable_fitness=0.5, population_size=256
 
     # set each firefly as [X, f(X)]
     for i in range(population_size):
-        fireflies[i][0] = generate_random_schedule()
+        fireflies[i][0] = grs()
         fireflies[i][1] = fitness(fireflies[i][0])
 
     max_bright_idx = get_max_bright_idx(population_size, fireflies, 0)

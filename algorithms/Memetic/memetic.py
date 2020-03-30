@@ -2,7 +2,7 @@ import numpy as np
 
 from data.data import NUM_OF_ROOMS as R, NUM_OF_TIMELSOTS as T, NUM_OF_COURSES as C, NUM_OF_INSTRUCTORS as I, NUM_OF_LECS_BEING_OFFERED as L
 from fitness.fitness import fitness
-from data.generate_random_schedule import generate_random_schedule
+from data.rand_schedule_generators.grs_v1 import generate_random_schedule as grs
 
 
 def individual_local_search(sch, max_iter=50, total_lectures=L):
@@ -34,7 +34,7 @@ def Memetic_for_UCSP(epochs=20, min_acceptable_fitness=0.5, population_size=256,
     population = [None for _ in range(population_size)]
 
     for i in range(population_size):
-        population[i] = generate_random_schedule()
+        population[i] = grs()
 
     generation_number = 0
 

@@ -2,7 +2,7 @@ import numpy as np
 
 from data.data import NUM_OF_ROOMS as R, NUM_OF_TIMELSOTS as T, NUM_OF_COURSES as C, NUM_OF_INSTRUCTORS as I, NUM_OF_LECS_BEING_OFFERED as L
 from fitness.fitness import fitness
-from data.generate_random_schedule import generate_random_schedule
+from data.rand_schedule_generators.grs_v1 import generate_random_schedule as grs
 
 
 def PSO_for_UCSP(epochs=100, total_particles=256, min_acceptable_fitness=0.5, w0=0.9, wf=0.2, c1=2, c2=2):
@@ -14,7 +14,7 @@ def PSO_for_UCSP(epochs=100, total_particles=256, min_acceptable_fitness=0.5, w0
 
     # each particle consists of [X_current, P_best, Velocity]
     for i in range(total_particles):
-        particles[i][0] = generate_random_schedule()
+        particles[i][0] = grs()
         particles[i][1] = particles[i][0]
         particles[i][2] = np.random.randn(L, 4) % v_max
 

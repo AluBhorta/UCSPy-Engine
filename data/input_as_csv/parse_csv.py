@@ -64,6 +64,7 @@ def generate_state_from_csv(_dir="data/input_as_csv/iub/autumn19_v0.3/", file_pr
 
     # print_params(Rooms, Timeslots, Courses, Instructors, CourseGroups)
 
+    # TODO: do a sanity check that the arrays are not empty and contain the objects contain the right attributes
     return StateManager(
         Rooms, Timeslots, Courses, Instructors, CourseGroups)
 

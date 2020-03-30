@@ -1,5 +1,5 @@
 from data.data import ROOMS as R, TIMESLOTS as T, COURSES as C, INSTRUCTORS as I, NUM_OF_LECS_BEING_OFFERED as L
-from data.generate_random_schedule import generate_random_schedule, generate_random_schedule_v2 as grs2
+
 
 from fitness.solution_encoding import encode, decode
 from fitness.fitness import fitness

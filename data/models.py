@@ -3,7 +3,7 @@ from typing import List
 
 class Timeslot:
     _daily_slot_mapping = {
-        0: '8:00-9:30',
+        0: '08:00-09:30',
         1: '09:40-11:10',
         2: '11:20-12:50',
         3: '12:50-13:40',
@@ -34,6 +34,11 @@ class Timeslot:
 
 
 class Room:
+    """Room
+
+    a room with `allowed_courses == []` means all courses are allowed in that room.
+    """
+
     def __init__(self, idx, desc, seat_capacity, allowed_courses=[]):
         self.idx = idx
         self.desc = desc
@@ -89,11 +94,11 @@ class Section:
 
 
 class Instructor:
-    def __init__(self, idx, desc, assigned_courses, preferred_timeslots):
+    def __init__(self, idx, desc, assigned_course_idxs, preferred_timeslot_idxs):
         self.idx = idx
         self.desc = desc
-        self.assigned_courses = assigned_courses
-        self.preferred_timeslots = preferred_timeslots
+        self.assigned_course_idxs = assigned_course_idxs
+        self.preferred_timeslot_idxs = preferred_timeslot_idxs
 
     def __str__(self):
         return f"""Instructor - idx: {self.idx}, desc: {self.desc}"""
@@ -101,18 +106,18 @@ class Instructor:
     def __repr__(self):
         return f"""
             {self.__str__()}, 
-            assigned_courses: {self.assigned_courses}, 
-            preferred_timeslots: {self.preferred_timeslots} 
+            assigned_course_idxs: {self.assigned_course_idxs}, 
+            preferred_timeslot_idxs: {self.preferred_timeslot_idxs} 
             \n
         """
 
 
 class CourseGroup:
-    def __init__(self, idx, desc, courses, preferred_timeslots):
+    def __init__(self, idx, desc, courses, preferred_timeslot_idxs):
         self.idx = idx
         self.desc = desc
         self.courses = courses
-        self.preferred_timeslots = preferred_timeslots
+        self.preferred_timeslot_idxs = preferred_timeslot_idxs
 
     def __str__(self):
         return f"CourseGroup - idx: {self.idx}, desc: {self.desc}"
@@ -120,7 +125,7 @@ class CourseGroup:
     def __repr__(self):
         return f"""{self.__str__()},
             courses: {self.courses},
-            preferred_timeslots: {self.preferred_timeslots}
+            preferred_timeslot_idxs: {self.preferred_timeslot_idxs}
             \n
         """
 
@@ -138,6 +143,7 @@ class StateManager:
         self.courses = courses
         self.course_groups = course_groups
         self.sections = self._get_sections()
+        self.num_of_daily_slots = len(Timeslot._daily_slot_mapping)
 
     def __repr__(self):
         return f"""StateManager - 

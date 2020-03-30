@@ -4,7 +4,7 @@ from algorithms.PSO.pso import PSO_for_UCSP
 from algorithms.Firefly.firefly import Firefly_for_UCSP
 
 from data.data import ROOMS as R, TIMESLOTS as T, COURSES as C, INSTRUCTORS as I, NUM_OF_LECS_BEING_OFFERED as L
-from data.generate_random_schedule import generate_random_schedule, generate_random_schedule_v2 as grs2
+from data.rand_schedule_generators.grs_v1 import generate_random_schedule as grs
 
 from fitness.fitness import fitness
 
@@ -50,7 +50,7 @@ def check_fitness(iterations=100):
     counter = 0
 
     for i in range(iterations):
-        sch = grs2()
+        sch = grs()
         f = fitness(sch)
         print(f)
 

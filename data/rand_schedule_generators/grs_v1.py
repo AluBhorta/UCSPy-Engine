@@ -53,8 +53,8 @@ def generate_random_schedule():
     return np.array(Schedule)
 
 
-def generate_random_schedule_v2():
-    '''Random schedule generator V2
+def generate_random_schedule_v1():
+    '''Random schedule generator V1
 
     the schedule if generated without Exception will satisfy all the hard constraints
     '''
