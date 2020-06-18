@@ -1,6 +1,5 @@
 from data.models import StateManager, Schedule, Class, Section, Course, Instructor, Timeslot, Room
 from typing import List
-import numpy as np
 import random
 
 
@@ -42,9 +41,9 @@ def _get_unique_I_Ts_R(assigned_instructors: List[Instructor], course: Course, c
     """get unique - `instructor, timeslots, room` - for a new `Class` of given Course
 
     utility function that, if possible - returns a unique set of `instructor, timeslots, room` that does not conflict with any such set of `instructor, timeslots, room` of any `class` in `classes`.
-    if not possible - it raises Exception
+    raises Exception if not possible
     """
-    MAX_RAND_R, MAX_RAND_I_Ts, MAX_RAND_Ts = 30, 10, 10
+    MAX_RAND_R, MAX_RAND_I_Ts, MAX_RAND_Ts = 300, 100, 50
     rand_R_counter, rand_I_T_counter = 0, 0
 
     instructor, timeslots = _get_unique_I_Ts(
@@ -64,7 +63,8 @@ def _get_unique_I_Ts_R(assigned_instructors: List[Instructor], course: Course, c
                 rand_I_T_counter += 1
                 continue
             else:  # brute force
-                for instructor in assigned_instructors:
+                # print("brute force searching ._.")
+                for instructor in state.instructors:
                     if not _I_Ts_conflicts(instructor, timeslots, classes):
                         for room in state.rooms:
                             if not _R_Ts_conflicts(room, timeslots, classes):
@@ -86,7 +86,7 @@ def _get_unique_I_Ts_R(assigned_instructors: List[Instructor], course: Course, c
 def _get_unique_I_Ts(assigned_instructors: List[Instructor], course: Course, classes: List[Class], state: StateManager):
     """function to get unique Instructor and Timeslots for given Course, if it exists.
 
-    NOTE: must satisfy _I_Ts_conflicts
+    NOTE: must satisfy _I_Ts_conflicts == False
     """
     MAX_RAND_Ts, MAX_RAND_I = 10, 30
     rand_I_counter = 0
@@ -96,28 +96,6 @@ def _get_unique_I_Ts(assigned_instructors: List[Instructor], course: Course, cla
 
     return (instructor, timeslots)
 
-    # while True:
-    #     if _I_Ts_conflicts(instructor, timeslots, classes):
-    #         if rand_I_counter < MAX_RAND_I:
-    #             instructor = random.choice(assigned_instructors)
-    #             rand_I_counter += 1
-    #             continue
-    #         else:
-    #             for instructor in assigned_instructors:
-    #                 if not _I_Ts_conflicts(instructor, timeslots, classes):
-    #                     return (instructor, timeslots)
-    #                 else:
-    #                     for _ in range(MAX_RAND_Ts):
-    #                         timeslots = _get_timeslots_for_C_I(
-    #                             course, instructor, classes, state)
-    #                         if not _I_Ts_conflicts(instructor, timeslots, classes):
-    #                             return (instructor, timeslots)
-
-    #             raise Exception(
-    #                 f"Input Error! No unique (I, Ts) combination possible for course_idx {course.idx}!")
-    #     else:
-    #         return (instructor, timeslots)
-
 
 def _get_timeslots_for_C_I(
     course: Course,
@@ -126,7 +104,7 @@ def _get_timeslots_for_C_I(
     state: StateManager
 ) -> List[Timeslot]:
     """
-        NOTE: must satisfy (_I_Ts_conflicts == False)
+        NOTE: satisfies (_I_Ts_conflicts == False)
     """
 
     def _get_ts_for_a_class_on(weekday, _tpc, t_idxs):
@@ -167,49 +145,9 @@ def _get_timeslots_for_C_I(
         raise Exception(
             f"ERROR! Not enough timeslots found by `_get_timeslots_for_C_I` for course: {course}.")
 
-    # num_of_weekdays = len(state.timeslots) // state.num_of_daily_slots
-
-    # timeslot_idxs = []
-
-    # # for each class (per week), get `course.timeslots_per_class` number of timeslots
-    # for cls_i in range(course.classes_per_week):
-    #     for weekday in range(num_of_weekdays):
-    #         start_t_idx = _get_start_t_idx(weekday)
-    #         end_t_idx = _get_end_t_idx(weekday)
-
-    #         consecutive_timeslot_idxs = _get_n_consecutive_timeslot_idxs(
-    #             course.timeslots_per_class,
-    #             start_t_idx,
-    #             end_t_idx,
-    #             classes)
-    #         if consecutive_timeslot_idxs != []:
-    #             timeslot_idxs.extend(consecutive_timeslot_idxs)
-    #             break
-
-    # if len(timeslot_idxs) != (course.timeslots_per_class * course.classes_per_week):
-    #     raise Exception(
-    #         f"""Error! Not enough suitable timeslots found for course: {course.desc}.
-    #             timeslot_idxs: {timeslot_idxs}
-    #             len(timeslot_idxs): {len(timeslot_idxs)}
-    #             course.timeslots_per_class: {course.timeslots_per_class}
-    #             course.classes_per_week: {course.classes_per_week}
-    #         """)
-    #     # might need repair mechanism e.g. via shifting single timeslot classes for making room for consecutive classes
-
-    # timeslots = [state.get_timeslot(t_idx) for t_idx in timeslot_idxs]
-    # return timeslots
-
-
-# def _get_n_consecutive_timeslot_idxs(n: int, start_t_idx: int, end_t_idx: int, classes: List[Class]):
-#     for i in range(start_t_idx, end_t_idx+1):   # TODO
-#         pass
-
 
 def _I_Ts_conflicts(given_I: Instructor, given_Ts: List[Timeslot], classes: List[Class]):
     """ return True if (given_I, given_Ts) exists in classes, else False """
-    # if not classes:
-    #     raise Exception("ERROR! No Classes provided!")
-
     for c in classes:
         if c.instructor.idx == given_I.idx:
             for t in c.timeslots:
@@ -221,9 +159,6 @@ def _I_Ts_conflicts(given_I: Instructor, given_Ts: List[Timeslot], classes: List
 
 def _R_Ts_conflicts(given_R: Room, given_Ts: List[Timeslot], classes: List[Class]):
     """ return True if (given_R, given_Ts) exists in classes, else False """
-    # if not classes:
-    #     raise Exception("ERROR! No Classes provided!")
-
     for c in classes:
         if c.room.idx == given_R.idx:
             for t in c.timeslots:

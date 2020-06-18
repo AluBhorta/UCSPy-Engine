@@ -24,9 +24,7 @@ class Timeslot:
         return f"""Timeslot - idx: {self.idx}, desc: {self.desc}"""
 
     def __repr__(self):
-        return f"""{self.__str__()}, 
-            daily_slot: {self.daily_slot}
-            \n
+        return f"""{self.__str__()}, daily_slot: {self.daily_slot} ;
         """
 
     def _generate_desc(self):
@@ -90,7 +88,7 @@ class Section:
         self.sec_number = sec_number
 
     def __repr__(self):
-        return f'Section - course_idx: {self.course.idx}, section: {self.sec_number} \n'
+        return f'Section - course_idx: {self.course.idx}, section: {self.sec_number}'
 
 
 class Instructor:
@@ -181,6 +179,18 @@ class Class:
         self.room = room
         self.section = section
         self.instructor = instructor
+
+    # def __str__(self):
+    def __repr__(self):
+        return f"""### CLASS ###
+            Instructor:\t{self.instructor}
+            Course:\t{self.section.course}
+            Section:\t{self.section}
+            Room:\t{self.room}
+            Timeslots:\t{self.timeslots}
+            \n
+        """
+
 
 
 class Schedule:

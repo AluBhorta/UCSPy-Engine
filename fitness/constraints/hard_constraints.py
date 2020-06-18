@@ -10,9 +10,8 @@ else:				return 1
 
 2. No instructor can take more than one lecture at a given Timeslot. i.e. unique 2-tuple (I, T)
 
-3. Instructors can only take certain courses they are qualified for
+3. Instructors can only take certain courses they are assigned to
 
-4. Instructors are only available at certain timeslots i.e. I.available_timeslots
 
 Schedule: (Room, Timeslot, Course, Instructor)[]
 
@@ -24,80 +23,73 @@ Schedule: (Room, Timeslot, Course, Instructor)[]
 - add your func to the list HARD_CONSTRAINTS at the end
 
 """
-import numpy as np
-from fitness.solution_encoding import decode
+from data.models import Schedule
 
 
-def violates_hard_constraint_1(schedule):
+def violates_hard_constraint_1(schedule: Schedule):
     """
     Hard Constraint 1: No two lectures can take place in the same room at the same Timeslot
+    (R, T)
     """
+    # (int room_idx, int[] timeslot_idxs)[]
     unique_room_timeslots = []
 
-    for room_timeslot in schedule[:, 0:2]:
-        for unique_room_timeslot in unique_room_timeslots:
-            if np.array_equal(room_timeslot, unique_room_timeslot):
-                return True
-
-        unique_room_timeslots.append(room_timeslot)
+    for c in schedule.classes:
+        for u_RTs in unique_room_timeslots:
+            if c.room.idx == u_RTs[0]:
+                c_t_idxs = set(t.idx for t in c.timeslots)
+                intersection = list(c_t_idxs.intersection(u_RTs[1]))
+                if len(intersection) > 0:
+                    return True
+        
+        unique_room_timeslots.append((c.room.idx, [t.idx for t in c.timeslots]))
 
     return False
 
 
-def violates_hard_constraint_2(schedule):
+def violates_hard_constraint_2(schedule: Schedule):
     """
     Hard Constraint 2: No instructor can take more than one lecture at a given Timeslot
+    (I, T)
     """
+    # (int instr_idx, int[] timeslot_idxs)[]
     unique_instr_timeslots = []
 
-    for instr_slot in schedule[:, [1, 3]]:
-        for unique_instr_slot in unique_instr_timeslots:
-            if np.array_equal(instr_slot, unique_instr_slot):
-                return True
+    for c in schedule.classes:
+        for u_ITs in unique_instr_timeslots:
+            if c.instructor.idx == u_ITs[0]:
+                c_t_idxs = set(t.idx for t in c.timeslots)
+                intersection = list(c_t_idxs.intersection(u_ITs[1]))
+                if len(intersection) > 0:
+                    return True
 
-        unique_instr_timeslots.append(instr_slot)
-
-    return False
-
-
-def violates_hard_constraint_3(schedule):
-    """
-    Hard Constraint 3: Instructors can only take certain courses they are qualified for
-    """
-    for lec in schedule:
-        course_idx = lec[2]
-
-        decoded_lec = decode(lec)
-        qualified_courses = decoded_lec[3][2]
-
-        if course_idx not in qualified_courses:
-            return True
+        unique_instr_timeslots.append((c.instructor.idx, [t.idx for t in c.timeslots]))
 
     return False
 
 
-def violates_hard_constraint_4(schedule):
-    """
-    Hard Constraint 4: Instructors are only available at certain timeslots
-    """
-    for lec in schedule:
-        timeslot_idx = lec[1]
+# def violates_hard_constraint_3(schedule: Schedule):
+#     """
+#     Hard Constraint 3: Instructors can only take certain courses they are assigned to
+#     """
+#     for lec in schedule:
+#         course_idx = lec[2]
 
-        decoded_lec = decode(lec)
-        available_timeslots = decoded_lec[3][3]
+#         decoded_lec = decode(lec)
+#         qualified_courses = decoded_lec[3][2]
 
-        if timeslot_idx not in available_timeslots:
-            return True
+#         if course_idx not in qualified_courses:
+#             return True
 
-    return False
+#     return False
+
 
 
 """
 Contains all the hard-constraint-funcs
 """
 HARD_CONSTRAINTS = [
-    violates_hard_constraint_1, 
-    violates_hard_constraint_2, 
-    violates_hard_constraint_3, 
-    # violates_hard_constraint_4
+    violates_hard_constraint_1,
+    violates_hard_constraint_2,
+    # violates_hard_constraint_3,
 ]
