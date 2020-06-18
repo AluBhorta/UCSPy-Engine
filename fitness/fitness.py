@@ -1,8 +1,9 @@
+from data.models import Schedule
 from fitness.constraints.hard_constraints import HARD_CONSTRAINTS
 from fitness.constraints.soft_constraints import SOFT_CONSTRAINTS
 
 
-def violates_a_hard_constraint(schedule) -> bool:
+def violates_a_hard_constraint(schedule: Schedule) -> bool:
     for violates_hard_constraint in HARD_CONSTRAINTS:
         if violates_hard_constraint(schedule):
             return True
@@ -10,14 +11,14 @@ def violates_a_hard_constraint(schedule) -> bool:
     return False
 
 
-def hard_penalty_multiplier(schedule) -> int:
+def hard_penalty_multiplier(schedule: Schedule) -> int:
     if violates_a_hard_constraint(schedule):
         return 0
     else:
         return 1
 
 
-def total_soft_penalty(schedule):
+def total_soft_penalty(schedule: Schedule):
     total_penalty = 0
 
     for soft_penalty_i_of in SOFT_CONSTRAINTS:
@@ -26,7 +27,7 @@ def total_soft_penalty(schedule):
     return total_penalty
 
 
-def fitness(schedule):
+def fitness(schedule: Schedule):
     hpm = hard_penalty_multiplier(schedule)
     tsp = total_soft_penalty(schedule)
 

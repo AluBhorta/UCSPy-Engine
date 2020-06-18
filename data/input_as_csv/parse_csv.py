@@ -24,19 +24,19 @@ def generate_state_from_csv(_dir="data/input_as_csv/iub/autumn19_v0.3/", file_pr
 
     # Rooms - col 3: allowed_courses
     for i in range(len(ROOMS)):
-        allowed_courses = ROOMS[i][3]
-        if allowed_courses == "ALL_THEORY":
-            allowed_courses = all_theory_course_indices
-        elif allowed_courses[:4] == "NOT:":
+        allowed_course_idxs = ROOMS[i][3]
+        if allowed_course_idxs == "ALL_THEORY":
+            allowed_course_idxs = all_theory_course_indices
+        elif allowed_course_idxs[:4] == "NOT:":
             not_allowed_courses = [int(i)
-                                   for i in allowed_courses[4:].split(',')]
-            allowed_courses = []
+                                   for i in allowed_course_idxs[4:].split(',')]
+            allowed_course_idxs = []
             for c in range(len(COURSES)):
                 if c not in not_allowed_courses:
-                    allowed_courses.append(c)
+                    allowed_course_idxs.append(c)
         else:
-            allowed_courses = [int(i) for i in allowed_courses.split(',')]
-        ROOMS[i][3] = allowed_courses
+            allowed_course_idxs = [int(i) for i in allowed_course_idxs.split(',')]
+        ROOMS[i][3] = allowed_course_idxs
 
     # Instructors - col 2, 3
     for i in range(len(INSTRUCTORS)):

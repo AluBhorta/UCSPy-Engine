@@ -1,90 +1,96 @@
 """
 unit_penalty: the penalty for violating a particular soft_constraint once. Also 
-1 <= unit_penalty <= 10
+0 <= unit_penalty <= 1
 
-Encoded_Lecture: (Room, Timeslot, Course, Instructor)
-    (int room_idx, int timeslot_idx, int course_idx, int instructor_id)
+1. [0.9] Instructors should only take certain courses they are are assigned to
+(I.assigned_course_idxs)
 
-1. Some Courses have Room preferences. (i.e. Course.prefered_rooms)
-- N.B: some courses might have 0 preffered_rooms, in that case, allow any room
+2. [0.85] A particular Room should only allows Classes of certain Courses		
+(R.allowed_course_idxs)
 
-2. Some Instructors have Room preferences.
+3. [0.6] CourseGroups have Timeslot preferences. 
+(CG.preferred_timeslot_idxs)
 
-3. Some Courses have Timeslot preferences.
+4. [0.5] Instructors have Timeslot preferences.
+(I.preferred_timeslot_idxs)
 
-4. Some Instructors have Timeslot preferences.
 
 ### How to add a soft constraint
 
-- write a func that takes param: (Schedule S, int unit_penalty)
+- write a func that takes param: (Schedule S, float unit_penalty)
 - perform desired violation check on Schedule
 - count (e.g. n) the number of times S violates your constraint
 - return (n * unit_penalty) from your func
 - add your func to the list SOFT_CONSTRAINTS at the end
 
 """
-from fitness.solution_encoding import decode
+from data.models import Schedule
 
 
-def penalty_of_soft_constraint_1(schedule, unit_penalty=8):
+
+def penalty_of_soft_constraint_1(schedule: Schedule, unit_penalty=0.9):
     """
-    [unit_penalty=7] Some Courses have Room preferences.
+    1. Instructors should only take certain courses they are are assigned to
+    (I.assigned_course_idxs)
     """
     violation_count = 0
-    for lec in schedule:
-        room_idx = lec[0]
-        preferred_rooms = decode(lec)[2][3]
-
-        if room_idx not in preferred_rooms:
+    for c in schedule.classes:
+        if c.section.course.idx not in c.instructor.assigned_course_idxs:
             violation_count += 1
 
     return violation_count * unit_penalty
 
 
-def penalty_of_soft_constraint_2(schedule, unit_penalty=4):
+def penalty_of_soft_constraint_2(schedule: Schedule, unit_penalty=0.85):
     """
-    [unit_penalty=7] Some Instructors have Room preferences.
+    2. A particular Room should only allow Classes of certain Courses		
+    (R.allowed_course_idxs)
     """
     violation_count = 0
-    for lec in schedule:
-        room_idx = lec[0]
-        preferred_rooms = decode(lec)[3][4]
-
-        if room_idx not in preferred_rooms:
+    for c in schedule.classes:
+        if c.section.course.idx not in c.room.allowed_course_idxs:
             violation_count += 1
 
     return violation_count * unit_penalty
 
 
-def penalty_of_soft_constraint_3(schedule, unit_penalty=9):
+def penalty_of_soft_constraint_3(schedule: Schedule, unit_penalty=0.6):
     """
-    [unit_penalty=9] Some Courses have Timeslot preferences.
+    3. CourseGroups have Timeslot preferences. 
+    (CG.preferred_timeslot_idxs)
     """
     violation_count = 0
-    for lec in schedule:
-        timeslot_idx = lec[1]
-        preferred_timeslots = decode(lec)[2][4]
-
-        if timeslot_idx not in preferred_timeslots:
-            violation_count += 1
+    for c in schedule.classes:
+        cg_idx = None
+        for cg in schedule.course_groups: 
+            if c.section.course.idx in cg.course_idxs:
+                cg_idx = cg.idx
+                break
+        if cg_idx:
+            c_t_idxs = [t.idx for t in c.timeslots]
+            for ct in c_t_idxs:
+                if ct not in schedule.course_groups[cg_idx].preferred_timeslot_idxs:
+                    violation_count += 1
+                    break
 
     return violation_count * unit_penalty
 
 
-def penalty_of_soft_constraint_4(schedule, unit_penalty=6):
+def penalty_of_soft_constraint_4(schedule: Schedule, unit_penalty=0.5):
     """
-    [unit_penalty=6] Instructors have Timeslot preferences. 
+    4. Instructors have Timeslot preferences.
+    (I.preferred_timeslot_idxs)
+
     """
     violation_count = 0
-    for lec in schedule:
-        timeslot_idx = lec[1]
-        preferred_timeslots = decode(lec)[3][5]
-
-        if timeslot_idx not in preferred_timeslots:
-            violation_count += 1
+    for c in schedule.classes:
+        c_t_idxs = [t.idx for t in c.timeslots]
+        for ct in c_t_idxs:
+            if ct not in c.instructor.preferred_timeslot_idxs:
+                violation_count += 1
+                break
 
     return violation_count * unit_penalty
-
 
 """
 Contains all the soft-constraint-funcs

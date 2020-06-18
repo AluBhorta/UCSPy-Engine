@@ -34,14 +34,14 @@ class Timeslot:
 class Room:
     """Room
 
-    a room with `allowed_courses == []` means all courses are allowed in that room.
+    a room with `allowed_course_idxs == []` means all courses are allowed in that room.
     """
 
-    def __init__(self, idx, desc, seat_capacity, allowed_courses=[]):
+    def __init__(self, idx, desc, seat_capacity, allowed_course_idxs=[]):
         self.idx = idx
         self.desc = desc
         self.seat_capacity = seat_capacity
-        self.allowed_courses = allowed_courses
+        self.allowed_course_idxs = allowed_course_idxs
 
     def __str__(self):
         return f"""Room - idx: {self.idx}, desc: {self.desc}"""
@@ -49,7 +49,7 @@ class Room:
     def __repr__(self):
         return f"""{self.__str__()},
             seat_capacity: {self.seat_capacity},
-            allowed_courses: {self.allowed_courses}
+            allowed_course_idxs: {self.allowed_course_idxs}
             \n        
         """
 
@@ -111,10 +111,10 @@ class Instructor:
 
 
 class CourseGroup:
-    def __init__(self, idx, desc, courses, preferred_timeslot_idxs):
+    def __init__(self, idx, desc, course_idxs: List[Course], preferred_timeslot_idxs: List[int]):
         self.idx = idx
         self.desc = desc
-        self.courses = courses
+        self.course_idxs = course_idxs
         self.preferred_timeslot_idxs = preferred_timeslot_idxs
 
     def __str__(self):
@@ -122,7 +122,7 @@ class CourseGroup:
 
     def __repr__(self):
         return f"""{self.__str__()},
-            courses: {self.courses},
+            course_idxs: {self.course_idxs},
             preferred_timeslot_idxs: {self.preferred_timeslot_idxs}
             \n
         """
@@ -192,13 +192,20 @@ class Class:
         """
 
 
-
 class Schedule:
-    def __init__(self, classes: List[Class]):
+    def __init__(self, classes: List[Class], course_groups: List[CourseGroup]):
         self.classes = classes
+        self.course_groups = course_groups
+
+    def __str__(self):
+        return f""" 
+            Classes:\n {self.classes}
+            \n
+            CourseGroups:\n {self.course_groups}
+        """
 
 
-# TODO: implement hard and soft constraints as classes to extend the current fitness calculation more intuitively
+# TODO: implement hard and soft constraints as classes to extend the current fitness calculation more 'objectively'
 # class HardConstraint:
 #     def __init__(self):
 #         pass

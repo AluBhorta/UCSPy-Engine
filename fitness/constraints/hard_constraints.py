@@ -10,11 +10,6 @@ else:				return 1
 
 2. No instructor can take more than one lecture at a given Timeslot. i.e. unique 2-tuple (I, T)
 
-3. Instructors can only take certain courses they are assigned to
-
-
-Schedule: (Room, Timeslot, Course, Instructor)[]
-
 ### How to add a hard constraint
 
 - write a func that takes a Schedule as param
@@ -41,8 +36,9 @@ def violates_hard_constraint_1(schedule: Schedule):
                 intersection = list(c_t_idxs.intersection(u_RTs[1]))
                 if len(intersection) > 0:
                     return True
-        
-        unique_room_timeslots.append((c.room.idx, [t.idx for t in c.timeslots]))
+
+        unique_room_timeslots.append(
+            (c.room.idx, [t.idx for t in c.timeslots]))
 
     return False
 
@@ -63,26 +59,10 @@ def violates_hard_constraint_2(schedule: Schedule):
                 if len(intersection) > 0:
                     return True
 
-        unique_instr_timeslots.append((c.instructor.idx, [t.idx for t in c.timeslots]))
+        unique_instr_timeslots.append(
+            (c.instructor.idx, [t.idx for t in c.timeslots]))
 
     return False
-
-
-# def violates_hard_constraint_3(schedule: Schedule):
-#     """
-#     Hard Constraint 3: Instructors can only take certain courses they are assigned to
-#     """
-#     for lec in schedule:
-#         course_idx = lec[2]
-
-#         decoded_lec = decode(lec)
-#         qualified_courses = decoded_lec[3][2]
-
-#         if course_idx not in qualified_courses:
-#             return True
-
-#     return False
-
 
 
 """
@@ -91,5 +71,4 @@ Contains all the hard-constraint-funcs
 HARD_CONSTRAINTS = [
     violates_hard_constraint_1,
     violates_hard_constraint_2,
-    # violates_hard_constraint_3,
 ]

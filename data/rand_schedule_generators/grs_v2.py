@@ -18,7 +18,7 @@ def generate_random_schedule_v2(state: StateManager) -> Schedule:
             section = Section(C, sec_i+1)
             classes.append(Class(timeslots, room, section, instructor))
 
-    return Schedule(classes)
+    return Schedule(classes, state.course_groups)
 
 
 def _get_assigned_instructors_for(course: Course, state: StateManager):
