@@ -1,31 +1,5 @@
-"""
-unit_penalty: the penalty for violating a particular soft_constraint once. Also 
-0 <= unit_penalty <= 1
 
-1. [0.9] Instructors should only take certain courses they are are assigned to
-(I.assigned_course_idxs)
-
-2. [0.85] A particular Room should only allows Classes of certain Courses		
-(R.allowed_course_idxs)
-
-3. [0.6] CourseGroups have Timeslot preferences. 
-(CG.preferred_timeslot_idxs)
-
-4. [0.5] Instructors have Timeslot preferences.
-(I.preferred_timeslot_idxs)
-
-
-### How to add a soft constraint
-
-- write a func that takes param: (Schedule S, float unit_penalty)
-- perform desired violation check on Schedule
-- count (e.g. n) the number of times S violates your constraint
-- return (n * unit_penalty) from your func
-- add your func to the list SOFT_CONSTRAINTS at the end
-
-"""
 from data.models import Schedule
-
 
 
 def penalty_of_soft_constraint_1(schedule: Schedule, unit_penalty=0.9):
@@ -62,7 +36,7 @@ def penalty_of_soft_constraint_3(schedule: Schedule, unit_penalty=0.6):
     violation_count = 0
     for c in schedule.classes:
         cg_idx = None
-        for cg in schedule.course_groups: 
+        for cg in schedule.course_groups:
             if c.section.course.idx in cg.course_idxs:
                 cg_idx = cg.idx
                 break
@@ -91,6 +65,7 @@ def penalty_of_soft_constraint_4(schedule: Schedule, unit_penalty=0.5):
                 break
 
     return violation_count * unit_penalty
+
 
 """
 Contains all the soft-constraint-funcs

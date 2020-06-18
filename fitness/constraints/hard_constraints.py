@@ -1,23 +1,4 @@
-"""
-# Hard Constraints
 
-if violatesHard:	return 0
-else:				return 1 
-
-## Constraints 
-
-1. No two lectures can take place in the same room at the same Timeslot. i.e. unique 2-tuple (R, T)
-
-2. No instructor can take more than one lecture at a given Timeslot. i.e. unique 2-tuple (I, T)
-
-### How to add a hard constraint
-
-- write a func that takes a Schedule as param
-- perform desired violation check on Schedule
-- if violates, return True else return False
-- add your func to the list HARD_CONSTRAINTS at the end
-
-"""
 from data.models import Schedule
 
 
