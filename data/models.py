@@ -1,19 +1,19 @@
 from typing import List
 
+DAILY_SLOT_MAPPING = {
+    0: '08:00-09:30',
+    1: '09:40-11:10',
+    2: '11:20-12:50',
+    3: '12:50-13:40',
+    4: '13:40-15:10',
+    5: '15:20-16:50',
+    6: '17:00-18:30',
+    7: '18:30-20:00',
+    8: '20:00-21:30',
+}
+
 
 class Timeslot:
-    _daily_slot_mapping = {
-        0: '08:00-09:30',
-        1: '09:40-11:10',
-        2: '11:20-12:50',
-        3: '12:50-13:40',
-        4: '13:40-15:10',
-        5: '15:20-16:50',
-        6: '17:00-18:30',
-        7: '18:30-20:00',
-        8: '20:00-21:30',
-    }
-
     def __init__(self, idx, weekday, daily_slot):
         self.idx = idx
         self.weekday = weekday
@@ -30,7 +30,7 @@ class Timeslot:
         """
 
     def _generate_desc(self):
-        return f"{self.weekday} {self._daily_slot_mapping.get(self.daily_slot)}"
+        return f"{self.weekday} {DAILY_SLOT_MAPPING.get(self.daily_slot)}"
 
 
 class Room:
@@ -143,7 +143,7 @@ class StateManager:
         self.courses = courses
         self.course_groups = course_groups
         self.sections = self._get_sections()
-        self.num_of_daily_slots = len(Timeslot._daily_slot_mapping)
+        self.num_of_daily_slots = len(DAILY_SLOT_MAPPING)
 
     def __repr__(self):
         return f"""StateManager - 
