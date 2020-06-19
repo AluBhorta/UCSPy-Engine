@@ -1,5 +1,5 @@
 
-from data.models import Schedule
+from core.models.models import Schedule
 
 
 def violates_hard_constraint_1(schedule: Schedule):

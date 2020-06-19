@@ -87,9 +87,3 @@ def write_final_schedules(epochs=110, poplation_size=256):
     print(last2)
 
     write_data_to_file(fname, data)
-
-
-if __name__ == "__main__":
-    check_fitness()
-    # print_params()
-    pass

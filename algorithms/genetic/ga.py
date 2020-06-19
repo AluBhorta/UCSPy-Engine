@@ -1,12 +1,12 @@
 import numpy as np
 import random
-
-from data.rand_schedule_generators.grs_v2 import generate_random_schedule_v2 as grs
-from fitness.fitness import fitness
-from data.models import StateManager, Schedule
 from copy import deepcopy
 
-def genetic_algorithm_v2(
+from core.schedule_generators.grs import generate_random_schedule as grs
+from core.fitness.fitness import fitness
+from core.models.models import StateManager, Schedule
+
+def genetic_algorithm(
     state: StateManager,
     epochs=100,
     min_acceptable_fitness=0.9,

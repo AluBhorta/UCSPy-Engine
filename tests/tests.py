@@ -1,24 +1,21 @@
-
-from data.input_as_csv.parse_csv import generate_state_from_csv
-
-from data.rand_schedule_generators.grs_v2 import generate_random_schedule_v2
-from fitness.fitness import fitness
-
 from statistics import mean
 from concurrent import futures
 
 
-state = generate_state_from_csv()
+from core.parsers.parse_csv import generate_state_from_csv
+from core.schedule_generators.grs import generate_random_schedule
+from core.fitness.fitness import fitness
+from core.models.models import StateManager
 
 
-def job(state):
-    sch = generate_random_schedule_v2(state)
+def fitness_job(state: StateManager):
+    sch = generate_random_schedule(state)
     return fitness(sch)
 
 
-def test_process_pool(n=500):
+def test_process_pool(job, *args, n=100):
     with futures.ProcessPoolExecutor() as e:
-        fs = [e.submit(job, state) for _ in range(n)]
+        fs = [e.submit(job, *args) for _ in range(n)]
 
         res = []
 

@@ -1,6 +1,6 @@
-from data.models import Schedule
-from fitness.constraints.hard_constraints import HARD_CONSTRAINTS
-from fitness.constraints.soft_constraints import SOFT_CONSTRAINTS
+from core.models.models import Schedule
+from core.fitness.constraints.hard_constraints import HARD_CONSTRAINTS
+from core.fitness.constraints.soft_constraints import SOFT_CONSTRAINTS
 
 
 def hard_penalty_multiplier(schedule: Schedule) -> int:

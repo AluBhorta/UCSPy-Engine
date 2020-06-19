@@ -1,4 +1,4 @@
-# TODO: make a func that takes in the changeable variables and returns the genrated random inputs
+""" DEPRECATED """
 import numpy as np
 
 np.random.seed(69)

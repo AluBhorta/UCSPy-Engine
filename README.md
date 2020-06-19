@@ -63,8 +63,8 @@ install the requirements using pip
 pip install -r requirements.txt
 ```
 
-update the `main` function of `driver.py` according to your requirements and run it.
+update the `main` function of `main.py` according to your requirements and run it.
 
 ```bash
-python driver.py
+python main.py
 ```

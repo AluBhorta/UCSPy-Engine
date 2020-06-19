@@ -1,9 +1,10 @@
-from data.models import StateManager, Schedule, Class, Section, Course, Instructor, Timeslot, Room
 from typing import List
 import random
 
+from core.models.models import StateManager, Schedule, Class, Section, Course, Instructor, Timeslot, Room
 
-def generate_random_schedule_v2(state: StateManager) -> Schedule:
+
+def generate_random_schedule(state: StateManager) -> Schedule:
     '''Random schedule generator V2
     '''
     classes = []

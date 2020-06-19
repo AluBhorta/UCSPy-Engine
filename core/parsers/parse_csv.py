@@ -1,15 +1,29 @@
 import numpy as np
 from pandas import read_csv
 
-from data.models import Room, Timeslot, Course, Instructor, CourseGroup, StateManager
+from core.models.models import Room, Timeslot, Course, Instructor, CourseGroup, StateManager
 
 
-def generate_state_from_csv(_dir="data/input_as_csv/iub/autumn19_v0.3/", file_prefix="schedule_params-autumn19 - ") -> StateManager:
-    R_DF = read_csv(_dir + file_prefix + "Rooms.csv")
-    T_DF = read_csv(_dir + file_prefix + "Timeslots.csv")
-    C_DF = read_csv(_dir + file_prefix + "Courses.csv")
-    I_DF = read_csv(_dir + file_prefix + "Instructors.csv")
-    CG_DF = read_csv(_dir + file_prefix + "CourseGroups.csv")
+def generate_state_from_csv(
+    _dir="data/schedule_params/iub/autumn19/",
+    _rooms_file=None,
+    _timeslots_file=None,
+    _courses_file=None,
+    _instructors_file=None,
+    _course_groups_file=None,
+) -> StateManager:
+    if _dir:
+        R_DF = read_csv(_dir + "rooms.csv")
+        T_DF = read_csv(_dir + "timeslots.csv")
+        C_DF = read_csv(_dir + "courses.csv")
+        I_DF = read_csv(_dir + "instructors.csv")
+        CG_DF = read_csv(_dir + "course_groups.csv")
+    else:
+        R_DF = read_csv(_rooms_file)
+        T_DF = read_csv(_timeslots_file)
+        C_DF = read_csv(_courses_file)
+        I_DF = read_csv(_instructors_file)
+        CG_DF = read_csv(_course_groups_file)
 
     ROOMS = R_DF.to_numpy()
     TIMESLOTS = T_DF.to_numpy()
@@ -35,7 +49,8 @@ def generate_state_from_csv(_dir="data/input_as_csv/iub/autumn19_v0.3/", file_pr
                 if c not in not_allowed_courses:
                     allowed_course_idxs.append(c)
         else:
-            allowed_course_idxs = [int(i) for i in allowed_course_idxs.split(',')]
+            allowed_course_idxs = [int(i)
+                                   for i in allowed_course_idxs.split(',')]
         ROOMS[i][3] = allowed_course_idxs
 
     # Instructors - col 2, 3
