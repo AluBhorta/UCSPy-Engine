@@ -54,7 +54,6 @@ def penalty_of_soft_constraint_4(schedule: Schedule, unit_penalty=0.5):
     """
     4. Instructors have Timeslot preferences.
     (I.preferred_timeslot_idxs)
-
     """
     violation_count = 0
     for c in schedule.classes:
