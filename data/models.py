@@ -157,7 +157,7 @@ class StateManager:
     def _get_sections(self) -> List[Section]:
         sections = []
         for c in self.courses:
-            sections.append(c.sections)
+            sections.extend(c.sections)
         return sections
 
     def get_room(self, room_idx):

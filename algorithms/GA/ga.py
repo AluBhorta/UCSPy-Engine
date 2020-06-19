@@ -16,7 +16,7 @@ def GA_for_UCSP(epochs=50, min_acceptable_fitness=0.9, population_size=256, elit
     new_population = [None for _ in range(population_size)]
     
     # 0: Generation, 1: Fitness, 2: Schedule
-    results = np.array([[None, None, None] for i in range(epochs)])
+    # results = np.array([[None, None, None] for i in range(epochs)])
     while epoch < epochs:
 
         population = sorted(
@@ -25,9 +25,9 @@ def GA_for_UCSP(epochs=50, min_acceptable_fitness=0.9, population_size=256, elit
         best_fitness = fitness(population[0])
         print("Generation: %d \t Fitness: %f " %
               (epoch, best_fitness))
-        results[epoch][0] = epoch
-        results[epoch][1] = best_fitness
-        results[epoch][2] = population[0]
+        # results[epoch][0] = epoch
+        # results[epoch][1] = best_fitness
+        # results[epoch][2] = population[0]
 
         if best_fitness >= min_acceptable_fitness:
             return population[0]
