@@ -3,8 +3,8 @@ import random
 from copy import deepcopy
 
 from core.schedule_generators.grs import generate_random_schedule as grs
-from core.fitness.fitness import fitness
-from core.models.models import StateManager, Schedule
+from core.fitness import fitness
+from core.models import StateManager, Schedule
 
 def genetic_algorithm(
     state: StateManager,

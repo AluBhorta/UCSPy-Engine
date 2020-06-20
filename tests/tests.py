@@ -4,8 +4,8 @@ from concurrent import futures
 
 from core.parsers.parse_csv import generate_state_from_csv
 from core.schedule_generators.grs import generate_random_schedule
-from core.fitness.fitness import fitness
-from core.models.models import StateManager
+from core.fitness import fitness
+from core.models import StateManager
 
 
 def fitness_job(state: StateManager):

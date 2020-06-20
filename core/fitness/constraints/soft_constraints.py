@@ -1,5 +1,5 @@
 
-from core.models.models import Schedule
+from core.models import Schedule
 
 
 def penalty_of_soft_constraint_1(schedule: Schedule, unit_penalty=0.9):

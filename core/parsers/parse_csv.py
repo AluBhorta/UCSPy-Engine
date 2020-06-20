@@ -1,7 +1,7 @@
 import numpy as np
 from pandas import read_csv
 
-from core.models.models import Room, Timeslot, Course, Instructor, CourseGroup, StateManager
+from core.models import Room, Timeslot, Course, Instructor, CourseGroup, StateManager
 
 
 def generate_state_from_csv(

@@ -2,7 +2,7 @@
 from core.runner import run_ucsp
 from core.parsers.parse_csv import generate_state_from_csv
 from core.schedule_generators.grs import generate_random_schedule as grs
-from core.fitness.fitness import fitness
+from core.fitness import fitness
 from algorithms.genetic.ga import genetic_algorithm
 
 
@@ -15,7 +15,7 @@ def test():
 
 
 if __name__ == "__main__":
-    sch = run_ucsp(algo="genetic")
+    sch = run_ucsp(algo="pso")
     print(sch)
 
     # test()

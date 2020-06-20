@@ -53,8 +53,8 @@ initialize and activate new `python 3.6` environment with virtualenv (for gnu/li
 
 ```bash
 # for Linux/Unix systems
-virtualenv -p `which python3.6` .env
-source .env/bin/activate
+virtualenv -p `which python3.6` .venv
+source .venv/bin/activate
 ```
 
 install the requirements using pip

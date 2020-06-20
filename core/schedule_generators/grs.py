@@ -1,7 +1,7 @@
 from typing import List
 import random
 
-from core.models.models import StateManager, Schedule, Class, Section, Course, Instructor, Timeslot, Room
+from core.models import StateManager, Schedule, Class, Section, Course, Instructor, Timeslot, Room
 
 
 def generate_random_schedule(state: StateManager) -> Schedule:
