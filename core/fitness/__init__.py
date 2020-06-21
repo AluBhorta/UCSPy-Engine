@@ -8,7 +8,6 @@ def hard_penalty_multiplier(schedule: Schedule) -> int:
         for violates_hard_constraint in HARD_CONSTRAINTS:
             if violates_hard_constraint(schedule):
                 return True
-
         return False
 
     if violates_a_hard_constraint(schedule):

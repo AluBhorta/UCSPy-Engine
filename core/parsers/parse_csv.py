@@ -1,29 +1,26 @@
 import numpy as np
 from pandas import read_csv
+import os
 
 from core.models import Room, Timeslot, Course, Instructor, CourseGroup, StateManager
 
 
-def generate_state_from_csv(
-    _dir="data/schedule_params/iub/autumn19/",
-    _rooms_file=None,
-    _timeslots_file=None,
-    _courses_file=None,
-    _instructors_file=None,
-    _course_groups_file=None,
-) -> StateManager:
-    if _dir:
-        R_DF = read_csv(_dir + "rooms.csv")
-        T_DF = read_csv(_dir + "timeslots.csv")
-        C_DF = read_csv(_dir + "courses.csv")
-        I_DF = read_csv(_dir + "instructors.csv")
-        CG_DF = read_csv(_dir + "course_groups.csv")
-    else:
-        R_DF = read_csv(_rooms_file)
-        T_DF = read_csv(_timeslots_file)
-        C_DF = read_csv(_courses_file)
-        I_DF = read_csv(_instructors_file)
-        CG_DF = read_csv(_course_groups_file)
+def generate_state_from_csv(_dir="data/schedule_params/default") -> StateManager:
+    r_fname = "rooms.csv"
+    t_fname = "timeslots.csv"
+    c_fname = "courses.csv"
+    i_fname = "instructors.csv"
+    cg_fname = "course_groups.csv"
+    try:
+        R_DF = read_csv(os.path.join(os.getcwd(), _dir, r_fname))
+        T_DF = read_csv(os.path.join(os.getcwd(), _dir, t_fname))
+        C_DF = read_csv(os.path.join(os.getcwd(), _dir, c_fname))
+        I_DF = read_csv(os.path.join(os.getcwd(), _dir, i_fname))
+        CG_DF = read_csv(os.path.join(os.getcwd(), _dir, cg_fname))
+    except:
+        raise Exception(
+            f"ERROR! Required files not found in {_dir}. They should be names as follows: {r_fname, t_fname, c_fname, i_fname, cg_fname}"
+        )
 
     ROOMS = R_DF.to_numpy()
     TIMESLOTS = T_DF.to_numpy()

@@ -13,7 +13,6 @@ def memetic_algorithm(
     population_size=100,
     elite_pct=10,
     mateable_pct=50,
-    # mutable_pct=5,
     lcl_search_pct=10,
     lcl_search_iters=30,
 ):

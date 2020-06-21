@@ -1,5 +1,6 @@
 autopep8==1.4.4
 cycler==0.10.0
+fire==0.3.1
 kiwisolver==1.1.0
 matplotlib==3.1.1
 numpy==1.17.4
@@ -10,3 +11,4 @@ python-dateutil==2.8.1
 pytz==2019.3
 rope==0.14.0
 six==1.13.0
+termcolor==1.1.0

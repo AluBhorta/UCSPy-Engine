@@ -1,9 +1,6 @@
 
 import numpy as np
-import random
 from copy import deepcopy
-from pprint import pprint
-import math
 
 from core.schedule_generators.grs import generate_random_schedule as grs
 from core.fitness import fitness
@@ -13,7 +10,7 @@ from core.models import StateManager, Schedule
 def particle_swarm_optimization(
     state: StateManager,
     epochs=100,
-    population_size=20,
+    population_size=100,
     min_acceptable_fitness=1,
     w0=0.8, wf=0.2, c1=1, c2=2, vmax_pct=5
 ):
@@ -63,12 +60,12 @@ def particle_swarm_optimization(
             )
             # print(current_fitness, p_best_fitness)
             if current_fitness > p_best_fitness:
-                print(f"nice cf: {current_fitness} \tpf: {p_best_fitness}")
+                # print(f"nice cf: {current_fitness} \tpf: {p_best_fitness}")
                 particles[i][1] = deepcopy(particles[i][0])
                 p_best_fitness = current_fitness
 
             if p_best_fitness > g_best_fitness:
-                print(f"GG! pf: {p_best_fitness} \tgf: {g_best_fitness}")
+                # print(f"GG! pf: {p_best_fitness} \tgf: {g_best_fitness}")
                 g_best_fitness = p_best_fitness
                 g_best_idx = i
 
@@ -97,6 +94,6 @@ def particle_swarm_optimization(
         # print(particles[0][2][10:30])
 
     final_sch = state.numeric_to_sch(particles[g_best_idx][1])
-    print(f"Final fitness: {fitness(final_sch)}")
+    # print(f"Final fitness: {fitness(final_sch)}")
 
     return final_sch

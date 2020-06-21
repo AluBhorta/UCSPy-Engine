@@ -131,3 +131,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .vscode/settings.json
+
+*.csv
+data/results/schedules/**/*.csv
+!data/schedule_params/default/*.csv

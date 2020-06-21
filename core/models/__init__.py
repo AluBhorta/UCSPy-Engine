@@ -158,7 +158,7 @@ class StateManager:
     def numeric_to_sch(self, num_repr):
         """ 
         returns a Schedule from `num_repr`
-        
+
         NOTE: `num_repr` is of type np.array<(C, S, I, R, Ts[])>
         """
         return Schedule(
@@ -238,6 +238,22 @@ class Schedule:
             c.room.idx,
             array([t.idx for t in c.timeslots]),
         ) for c in self.classes])
+
+    def to_csv(self):
+        out = "Course,Section,Instructor,Room,Timeslots\n"
+        nr = self.get_numeric_repr()
+        for c in nr:
+            ts = '"'
+            l = len(c[4])
+            for i in range(l):
+                if i == l-1:
+                    ts += str(c[4][i]) + '"'
+                else:
+                    ts += str(c[4][i]) + ','
+
+            out += f"{c[0]},{c[1]},{c[2]},{c[3]},{ts}\n"
+
+        return out
 
 
 # TODO: implement hard and soft constraints as classes to extend the current fitness calculation more 'objectively'
