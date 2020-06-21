@@ -1,4 +1,5 @@
 from typing import List
+from numpy import array
 
 DAILY_SLOT_MAPPING = {
     0: '08:00-09:30',
@@ -154,6 +155,24 @@ class StateManager:
             \n
         """
 
+    def numeric_to_sch(self, num_repr):
+        """ 
+        returns a Schedule from `num_repr`
+        
+        NOTE: `num_repr` is of type np.array<(C, S, I, R, Ts[])>
+        """
+        return Schedule(
+            classes=[(
+                Class(
+                    Section(self.get_course(i[0]), i[1]),
+                    self.get_instructor(i[2]),
+                    self.get_room(i[3]),
+                    [self.get_timeslot(j) for j in i[4]]
+                )
+            ) for i in num_repr],
+            course_groups=self.course_groups
+        )
+
     def _get_sections(self) -> List[Section]:
         sections = []
         for c in self.courses:
@@ -174,18 +193,24 @@ class StateManager:
 
 
 class Class:
-    def __init__(self, timeslots: List[Timeslot], room: Room, section: Section, instructor: Instructor):
-        self.timeslots = timeslots
-        self.room = room
+    def __init__(
+        self,
+        section: Section,
+        instructor: Instructor,
+        room: Room,
+        timeslots: List[Timeslot]
+    ):
         self.section = section
         self.instructor = instructor
+        self.room = room
+        self.timeslots = timeslots
 
     # def __str__(self):
     def __repr__(self):
         return f"""### CLASS ###
-            Instructor:\t{self.instructor}
             Course:\t{self.section.course}
             Section:\t{self.section}
+            Instructor:\t{self.instructor}
             Room:\t{self.room}
             Timeslots:\t{self.timeslots}
             \n
@@ -203,6 +228,16 @@ class Schedule:
             \n
             CourseGroups:\n {self.course_groups}
         """
+
+    def get_numeric_repr(self):
+        """ NOTE: returns schedule in np.array<(C, S, I, R, Ts[])> format """
+        return array([(
+            c.section.course.idx,
+            c.section.sec_number,
+            c.instructor.idx,
+            c.room.idx,
+            array([t.idx for t in c.timeslots]),
+        ) for c in self.classes])
 
 
 # TODO: implement hard and soft constraints as classes to extend the current fitness calculation more 'objectively'

@@ -44,16 +44,16 @@ UCSP Engine by AluBhorta & Jbeans.
 
 ## Dependencies
 
-- Python 3.6 or 3.7
+- Python 3.7
 - virtualenv
 
 ## Usage
 
-initialize and activate new `python 3.6` environment with virtualenv (for gnu/linux systems)
+initialize and activate new `python 3.7` environment with virtualenv (for gnu/linux systems)
 
 ```bash
 # for Linux/Unix systems
-virtualenv -p `which python3.6` .venv
+virtualenv -p `which python3.7` .venv
 source .venv/bin/activate
 ```
 

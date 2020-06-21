@@ -1,15 +1,14 @@
 
 from core.parsers.parse_csv import generate_state_from_csv
 from algorithms.genetic.ga import genetic_algorithm
+from algorithms.pso.pso import particle_swarm_optimization
 
 ALGO_MAPPINGS = {
     "genetic": genetic_algorithm,
-    # "pso": "",
+    "pso": particle_swarm_optimization,
     # "firefly": "",
     # "memetic": "",
 }
-
-state = generate_state_from_csv()
 
 
 def run_ucsp(
@@ -18,6 +17,7 @@ def run_ucsp(
     population_size=100,
     *args, **kwargs
 ):
+    state = generate_state_from_csv()
     _algo_func = ALGO_MAPPINGS.get(algo)
     if not _algo_func:
         raise Exception(
