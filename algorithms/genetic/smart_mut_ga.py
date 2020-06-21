@@ -6,14 +6,14 @@ from core.schedule_generators.grs import generate_random_schedule as grs
 from core.fitness import fitness
 from core.models import StateManager, Schedule
 
-def genetic_algorithm(
+def smart_mut_genetic_algorithm(
     state: StateManager,
     epochs=100,
-    min_acceptable_fitness=1,
     population_size=100,
+    min_acceptable_fitness=1,
     elite_pct=10,
     mateable_pct=50,
-    mutable_pct=5
+    mutable_pct=20
 ):
     """ initial population """
     population = [grs(state) for _ in range(population_size)]
@@ -64,23 +64,31 @@ def genetic_algorithm(
         """ Mutation """
         mutable_count = (mutable_pct * population_size)//100
         for i in range(mutable_count):
-            schedule_idx = np.random.randint(elite_count, population_size)
+            # NOTE: research on optimal choice of `schedule_idx` range
+            schedule_idx = np.random.randint(population_size)
+            # schedule_idx = np.random.randint(elite_count, population_size)
+
             class_idx = np.random.randint(total_classes)
 
             param_idx = np.random.randint(3)
+            
+            tmp_sch = deepcopy(new_population[schedule_idx])
 
             if param_idx == 0:
                 """ mutate room """
-                new_population[schedule_idx].classes[class_idx].room = random.choice(state.rooms)
+                tmp_sch.classes[class_idx].room = random.choice(state.rooms)
             elif param_idx == 1:
                 """ mutate instructor """
-                new_population[schedule_idx].classes[class_idx].instructor = \
+                tmp_sch.classes[class_idx].instructor = \
                     random.choice(state.instructors)
             else: # param_idx == 2
                 """ mutate timeslots """
-                l = len(new_population[schedule_idx].classes[class_idx].timeslots)
-                new_population[schedule_idx].classes[class_idx].timeslots = \
+                l = len(tmp_sch.classes[class_idx].timeslots)
+                tmp_sch.classes[class_idx].timeslots = \
                     random.choices(state.timeslots, k=l)
+            
+            if fitness(tmp_sch) > fitness(new_population[schedule_idx]):
+                new_population[schedule_idx] = tmp_sch
 
         population = new_population
 

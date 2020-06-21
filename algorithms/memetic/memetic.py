@@ -6,14 +6,16 @@ from core.schedule_generators.grs import generate_random_schedule as grs
 from core.fitness import fitness
 from core.models import StateManager, Schedule
 
-def genetic_algorithm(
+def memetic_algorithm(
     state: StateManager,
     epochs=100,
     min_acceptable_fitness=1,
     population_size=100,
     elite_pct=10,
     mateable_pct=50,
-    mutable_pct=5
+    # mutable_pct=5,
+    lcl_search_pct=10,
+    lcl_search_iters=30,
 ):
     """ initial population """
     population = [grs(state) for _ in range(population_size)]
@@ -61,26 +63,33 @@ def genetic_algorithm(
                 population[i].course_groups
             )
 
-        """ Mutation """
-        mutable_count = (mutable_pct * population_size)//100
-        for i in range(mutable_count):
-            schedule_idx = np.random.randint(elite_count, population_size)
+        """ Local Search using Smart Mutation """
+        lcl_search_count = (lcl_search_pct * population_size)//100
+        for i in range(lcl_search_count):
+            schedule_idx = np.random.randint(population_size)
             class_idx = np.random.randint(total_classes)
+            
+            tmp_sch = deepcopy(new_population[schedule_idx])
 
-            param_idx = np.random.randint(3)
+            for j in range(lcl_search_iters):
+                param_idx = np.random.randint(3)
 
-            if param_idx == 0:
-                """ mutate room """
-                new_population[schedule_idx].classes[class_idx].room = random.choice(state.rooms)
-            elif param_idx == 1:
-                """ mutate instructor """
-                new_population[schedule_idx].classes[class_idx].instructor = \
-                    random.choice(state.instructors)
-            else: # param_idx == 2
-                """ mutate timeslots """
-                l = len(new_population[schedule_idx].classes[class_idx].timeslots)
-                new_population[schedule_idx].classes[class_idx].timeslots = \
-                    random.choices(state.timeslots, k=l)
+                if param_idx == 0:
+                    """ mutate room """
+                    tmp_sch.classes[class_idx].room = random.choice(state.rooms)
+                elif param_idx == 1:
+                    """ mutate instructor """
+                    tmp_sch.classes[class_idx].instructor = \
+                        random.choice(state.instructors)
+                else: # param_idx == 2
+                    """ mutate timeslots """
+                    l = len(tmp_sch.classes[class_idx].timeslots)
+                    tmp_sch.classes[class_idx].timeslots = \
+                        random.choices(state.timeslots, k=l)
+                
+                if fitness(tmp_sch) > fitness(new_population[schedule_idx]):
+                    new_population[schedule_idx] = tmp_sch
+                    break
 
         population = new_population
 

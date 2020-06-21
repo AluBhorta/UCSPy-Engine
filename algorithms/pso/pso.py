@@ -13,8 +13,8 @@ from core.models import StateManager, Schedule
 def particle_swarm_optimization(
     state: StateManager,
     epochs=100,
-    min_acceptable_fitness=1,
     population_size=20,
+    min_acceptable_fitness=1,
     w0=0.8, wf=0.2, c1=1, c2=2, vmax_pct=5
 ):
     def c_velo(w, V): return w * V
@@ -55,7 +55,7 @@ def particle_swarm_optimization(
             current_fitness = fitness(
                 state.numeric_to_sch(particles[i][0])
             )
-            if current_fitness > min_acceptable_fitness:
+            if current_fitness >= min_acceptable_fitness:
                 return particles[i][0]
 
             p_best_fitness = fitness(
