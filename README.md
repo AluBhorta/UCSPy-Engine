@@ -1,22 +1,23 @@
-# UCSP Engine
+# UCSPy Engine
 
-UCSP Engine by AluBhorta & Jbeans.
+UCSPy Engine by AluBhorta & Jbeans.
 
 ## Usage
 
 ### Dependencies
 
-- python 3
+- python 3.6 (or above)
 - pip
 - virtualenv
 
 ### Installation
 
-initialize and activate new `python 3` environment with virtualenv (for gnu/linux systems)
+initialize and activate new python environment with virtualenv
+ 
+For Linux/Unix:
 
 ```bash
-# for Linux/Unix
-virtualenv -p `which python3` .venv
+virtualenv -p `which python3.6` .venv
 source .venv/bin/activate
 ```
 
@@ -40,10 +41,16 @@ python main.py <command>
 | memetic | Memetic Algorithm           |
 | pso     | Particle Swarm Optimization |
 
-For example:
+To run Genetic Algorithm for example, run:
 
 ```bash
 python main.py ga
+```
+
+The default schedule_params are in `data/schedule_params/default/`. To specify your own schedule params, use:
+
+```bash
+python main.py --params_folder=path/to/your/schedule/params ga
 ```
 
 For help or synopsis:
@@ -56,7 +63,7 @@ python main.py <command> --help
 
 **NB:**
 
-- all `.csv` files are ignored by git, except for default schedule_params in `data/schedule_params/default/`.
+- all `.csv` files are ignored by .gitignore, except for the default schedule_params.
 
 ---
 

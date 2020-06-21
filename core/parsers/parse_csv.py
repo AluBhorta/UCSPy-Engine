@@ -19,7 +19,7 @@ def generate_state_from_csv(_dir="data/schedule_params/default") -> StateManager
         CG_DF = read_csv(os.path.join(os.getcwd(), _dir, cg_fname))
     except:
         raise Exception(
-            f"ERROR! Required files not found in {_dir}. They should be names as follows: {r_fname, t_fname, c_fname, i_fname, cg_fname}"
+            f"ERROR! Required files not found in {_dir}. They should be named as follows: {r_fname, t_fname, c_fname, i_fname, cg_fname}"
         )
 
     ROOMS = R_DF.to_numpy()
