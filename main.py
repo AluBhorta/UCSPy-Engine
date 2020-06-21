@@ -32,13 +32,13 @@ class UCSPEngine:
         min_acceptable_fitness=1,
         elite_pct=10,
         mateable_pct=50,
-        mutable_pct=20
+        mutable_pct=25
     ):
         """ Genetic Algorithm """
         print("Running Genetic Algorithm...\n")
         sch = smart_mut_genetic_algorithm(
             self._state,
-            epochs_,
+            epochs,
             population_size,
             min_acceptable_fitness,
             elite_pct,
@@ -51,7 +51,7 @@ class UCSPEngine:
         self,
         epochs=100,
         min_acceptable_fitness=1,
-        population_size=100,
+        population_size=50,
         elite_pct=10,
         mateable_pct=50,
         lcl_search_pct=10,
@@ -61,20 +61,20 @@ class UCSPEngine:
         print("Running Memetic Algorithm...\n")
         sch = memetic_algorithm(
             self._state,
-            epochs=_100,
-            min_acceptable_fitness=1,
-            population_size=100,
-            elite_pct=10,
-            mateable_pct=50,
-            lcl_search_pct=10,
-            lcl_search_iters=30,
+            epochs,
+            min_acceptable_fitness,
+            population_size,
+            elite_pct,
+            mateable_pct,
+            lcl_search_pct,
+            lcl_search_iters,
         )
         self._write_schedule(sch)
 
     def pso(
         self,
         epochs=100,
-        population_size=20,
+        population_size=100,
         min_acceptable_fitness=1,
         w0=0.8, wf=0.2, c1=1, c2=2, vmax_pct=5
     ):
@@ -82,7 +82,7 @@ class UCSPEngine:
         print("Running Particle Swarm Optimization...\n")
         sch = particle_swarm_optimization(
             self._state,
-            epochs_,
+            epochs,
             population_size,
             min_acceptable_fitness,
             w0, wf, c1, c2, vmax_pct
