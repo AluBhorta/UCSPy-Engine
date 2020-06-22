@@ -64,6 +64,8 @@ python main.py <command> --help
 **NB:**
 
 - all `.csv` files are ignored by .gitignore, except for the default schedule_params.
+- whe running in 
+when recording results
 
 ---
 

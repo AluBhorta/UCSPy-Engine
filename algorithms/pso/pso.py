@@ -5,9 +5,11 @@ from copy import deepcopy
 from core.schedule_generators.grs import generate_random_schedule as grs
 from core.fitness import fitness
 from core.models import StateManager, Schedule
+from core.logging import UCSPLogger
 
 
 def particle_swarm_optimization(
+    logger: UCSPLogger,
     state: StateManager,
     epochs=100,
     population_size=100,
@@ -47,6 +49,7 @@ def particle_swarm_optimization(
     g_best_idx = 0
     g_best_fitness = 0.0
 
+    logger.write(f"Generation\t\tFitness")
     for epoch in range(epochs):
         for i in range(len(particles)):
             current_fitness = fitness(
@@ -69,7 +72,7 @@ def particle_swarm_optimization(
                 g_best_fitness = p_best_fitness
                 g_best_idx = i
 
-        print("Epoch: %d \t G_BEST fitness: %f" % (epoch, g_best_fitness))
+        logger.write(f"{epoch}\t\t{g_best_fitness}")
         weight = update_w(epoch)
 
         for i in range(len(particles)):

@@ -5,8 +5,11 @@ from copy import deepcopy
 from core.schedule_generators.grs import generate_random_schedule as grs
 from core.fitness import fitness
 from core.models import StateManager, Schedule
+from core.logging import UCSPLogger
+
 
 def smart_mut_genetic_algorithm(
+    logger: UCSPLogger,
     state: StateManager,
     epochs=100,
     population_size=100,
@@ -20,7 +23,7 @@ def smart_mut_genetic_algorithm(
     new_population = [None for _ in range(population_size)]
 
     total_classes = len(state.sections)
-
+    logger.write(f"Generation\t\tFitness")
     for epoch in range(epochs):
         """ Sort by its fitness in DESC order """
         population = sorted(
@@ -29,7 +32,7 @@ def smart_mut_genetic_algorithm(
             reverse=True)
 
         best_fitness = fitness(population[0])
-        print(f"Generation: {epoch} \t\t Fitness: {best_fitness}")
+        logger.write(f"{epoch}\t\t{best_fitness}")
 
         if best_fitness >= min_acceptable_fitness:
             return population[0]
@@ -71,7 +74,7 @@ def smart_mut_genetic_algorithm(
             class_idx = np.random.randint(total_classes)
 
             param_idx = np.random.randint(3)
-            
+
             tmp_sch = deepcopy(new_population[schedule_idx])
 
             if param_idx == 0:
@@ -81,12 +84,12 @@ def smart_mut_genetic_algorithm(
                 """ mutate instructor """
                 tmp_sch.classes[class_idx].instructor = \
                     random.choice(state.instructors)
-            else: # param_idx == 2
+            else:  # param_idx == 2
                 """ mutate timeslots """
                 l = len(tmp_sch.classes[class_idx].timeslots)
                 tmp_sch.classes[class_idx].timeslots = \
                     random.choices(state.timeslots, k=l)
-            
+
             if fitness(tmp_sch) > fitness(new_population[schedule_idx]):
                 new_population[schedule_idx] = tmp_sch
 

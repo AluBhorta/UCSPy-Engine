@@ -15,12 +15,14 @@ def genetic_algorithm(
     mateable_pct=50,
     mutable_pct=5
 ):
-    """ initial population """
+    """ DEPRECATED: as it gives infeasible results. please refer to `algorithms/genetic/smart_mut_ga.py` for a workable verison of genetic_algorithm """
+    
     population = [grs(state) for _ in range(population_size)]
     new_population = [None for _ in range(population_size)]
 
     total_classes = len(state.sections)
 
+    print(f"Generation\t\tFitness")
     for epoch in range(epochs):
         """ Sort by its fitness in DESC order """
         population = sorted(
@@ -29,7 +31,7 @@ def genetic_algorithm(
             reverse=True)
 
         best_fitness = fitness(population[0])
-        print(f"Generation: {epoch} \t\t Fitness: {best_fitness}")
+        print(f"{epoch}\t\t{best_fitness}")
 
         if best_fitness >= min_acceptable_fitness:
             return population[0]

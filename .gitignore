@@ -133,5 +133,5 @@ dmypy.json
 .vscode/settings.json
 
 *.csv
-data/results/schedules/**/*.csv
+data/schedules/**/*.csv
 !data/schedule_params/default/*.csv
