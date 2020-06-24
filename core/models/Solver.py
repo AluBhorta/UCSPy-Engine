@@ -1,5 +1,6 @@
 import os
 import datetime
+from time import perf_counter
 
 from core.parsers.parse_csv import generate_state_from_csv
 from core.models import Schedule
@@ -61,8 +62,9 @@ class UCSPSolver:
         \n
         """
         self._logger.write(
-            f"""Running Genetic Algorithm with - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {min_acceptable_fitness}; elite_pct: {elite_pct}; mateable_pct: {mateable_pct}; mutable_pct: {mutable_pct};\n"""
+            f"""Running Genetic Algorithm - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {min_acceptable_fitness}; elite_pct: {elite_pct}; mateable_pct: {mateable_pct}; mutable_pct: {mutable_pct};\n"""
         )
+        t1 = perf_counter()
         sch = smart_mut_genetic_algorithm(
             self._logger,
             self._state,
@@ -73,7 +75,9 @@ class UCSPSolver:
             mateable_pct,
             mutable_pct
         )
+        t2 = perf_counter()
         self._write_schedule(sch)
+        self._logger.write(f"\nTime taken: {t2-t1} s")
 
     def memetic(
         self,
@@ -103,8 +107,10 @@ class UCSPSolver:
         \n
         """
         self._logger.write(
-            f"""Running Memetic Algorithm with - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {min_acceptable_fitness}; elite_pct: {elite_pct}; mateable_pct: {mateable_pct}; lcl_search_pct: {lcl_search_pct}; lcl_search_iters: {lcl_search_iters};\n"""
+            f"""Running Memetic Algorithm - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {min_acceptable_fitness}; elite_pct: {elite_pct}; mateable_pct: {mateable_pct}; lcl_search_pct: {lcl_search_pct}; lcl_search_iters: {lcl_search_iters};\n"""
         )
+
+        t1 = perf_counter()
         sch = memetic_algorithm(
             self._logger,
             self._state,
@@ -116,7 +122,9 @@ class UCSPSolver:
             lcl_search_pct,
             lcl_search_iters,
         )
+        t2 = perf_counter()
         self._write_schedule(sch)
+        self._logger.write(f"\nTime taken: {t2-t1} s")
 
     def pso(
         self,
@@ -145,8 +153,9 @@ class UCSPSolver:
         \n
         """
         self._logger.write(
-            f"""Running Particle Swarm Optimization with - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {min_acceptable_fitness}; w0: {w0}; wf: {wf}; c1: {c1}; c2: {c2}; vmax_pct: {vmax_pct};\n"""
+            f"""Running Particle Swarm Optimization - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {min_acceptable_fitness}; w0: {w0}; wf: {wf}; c1: {c1}; c2: {c2}; vmax_pct: {vmax_pct};\n"""
         )
+        t1 = perf_counter()
         sch = particle_swarm_optimization(
             self._logger,
             self._state,
@@ -155,7 +164,9 @@ class UCSPSolver:
             min_acceptable_fitness,
             w0, wf, c1, c2, vmax_pct
         )
+        t2 = perf_counter()
         self._write_schedule(sch)
+        self._logger.write(f"\nTime taken: {t2-t1} s")
 
     def _write_schedule(self, sch: Schedule):
         if self._save_sch:
@@ -166,7 +177,7 @@ class UCSPSolver:
             with open(fname, "w") as f:
                 f.write(sch.to_csv())
 
-            print(
+            self._logger.write(
                 f"\nEncoded schedule successfully saved to {fname}")
         else:
             print("\nFinal Schedule: \n")

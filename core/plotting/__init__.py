@@ -20,7 +20,7 @@ def make_line_plot(log_file, avg_mp=5):
     \n
     """
     with open(log_file) as f:
-        data = f.read().split('\n')[3:-1]
+        data = f.read().split('\n')[3:-5]
         plot_data = np.array([i.split('\t\t') for i in data])
 
         x, y = plot_data[:, 0], plot_data[:, 1]

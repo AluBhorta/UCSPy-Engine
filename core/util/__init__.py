@@ -1,7 +1,8 @@
 from time import perf_counter
 
 
-def bench_time(func):
+def bench_time(func, l):
+    print(func, l)
     def inner(*args, **kwargs):
         t1 = perf_counter()
         r = func(*args, **kwargs)
