@@ -1,24 +1,12 @@
 
-""" 
-
---save_sch=True
-will save encoded final sch in 'data/sch' in a csv
-which can then be used as the schedule by the org/uni
-
---save_logs
-will record logs on screen
-will auto 'save_sch' = True
-
---save_logs=True
-
-transition results could be used for plotting and analysis using another cmd/flag?
-
-"""
-
 import sys
 import datetime
 
 class UCSPLogger(object):
+    """  UCSPLogger
+    
+        used for logging to the console or to the log file and console.
+    """
     def __init__(self, save_logs=False):
         self.terminal = sys.stdout
         if save_logs:

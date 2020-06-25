@@ -271,14 +271,3 @@ class Schedule:
             out += f"{c[0]},{c[1]},{c[2]},{c[3]},{ts}\n"
 
         return out
-
-
-# TODO: implement hard and soft constraints as classes to extend the current fitness calculation more 'objectively'
-# class HardConstraint:
-#     def __init__(self):
-#         pass
-
-
-# class SoftConstraint:
-#     def __init__(self):
-#         pass
