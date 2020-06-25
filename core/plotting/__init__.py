@@ -4,6 +4,7 @@ import matplotlib.ticker as plticker
 import bisect
 
 
+# avg_mp could be called: 'gaps' or 'tg'
 def make_line_plot(log_file, avg_mp=5):
     """
     Plotter
@@ -20,6 +21,7 @@ def make_line_plot(log_file, avg_mp=5):
     \n
     """
     with open(log_file) as f:
+        # NOTE: the slicing indices could vary, and thus could be taken as args
         data = f.read().split('\n')[3:-5]
         plot_data = np.array([i.split('\t\t') for i in data])
 
