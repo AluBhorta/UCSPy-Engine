@@ -4,8 +4,7 @@ import matplotlib.ticker as plticker
 import bisect
 
 
-# avg_mp could be called: 'gaps' or 'tg'
-def make_line_plot(log_file, avg_mp=5):
+def make_line_plot(log_file, ygap=5):
     """
     Plotter
 
@@ -13,7 +12,7 @@ def make_line_plot(log_file, avg_mp=5):
 
     :param log_file: path to the log file.
     \n
-    :param avg_mp: Average multiplier of Y-axis ticks. A higher value gives less frequent ticks. (default: 5)
+    :param ygap: Amount of gap in the Y-axis ticks, as a mutiple of the average gap. A higher value gives less frequent ticks. (default: 5)
 
     N.B:
 
@@ -34,7 +33,7 @@ def make_line_plot(log_file, avg_mp=5):
         ax.xaxis.set_major_locator(
             plticker.MultipleLocator(base=len(x)/10)
         )
-        ybase = (min(y) + max(y)) / (len(y)) * avg_mp
+        ybase = (min(y) + max(y)) / (len(y)) * ygap
         # print(ybase)
         ax.yaxis.set_major_locator(
             plticker.MultipleLocator(base=ybase)
@@ -45,5 +44,4 @@ def make_line_plot(log_file, avg_mp=5):
         plt.ylabel("Fitness")
 
         plt.grid()
-
         plt.show()

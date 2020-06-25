@@ -19,7 +19,6 @@ class UCSPEngine:
         self.solver = UCSPSolver
 
 
-
 if __name__ == "__main__":
     fire.Fire(UCSPEngine)
     pass

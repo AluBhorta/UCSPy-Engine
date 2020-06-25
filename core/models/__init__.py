@@ -29,7 +29,7 @@ class Timeslot:
         """
 
     def _generate_desc(self):
-        return f"{self.weekday} {DAILY_SLOT_MAPPING.get(self.daily_slot)}"
+        return f"{self.weekday}: {DAILY_SLOT_MAPPING.get(self.daily_slot)}"
 
 
 class Room:
@@ -240,6 +240,23 @@ class Schedule:
         ) for c in self.classes])
 
     def to_csv(self):
+        """ to human-readable csv format """
+        out = "Course,Section,Instructor,Room,Timeslots\n"
+        for c in self.classes:
+            ts = '"'
+            l = len(c.timeslots)
+            for i in range(l):
+                if i == l-1:
+                    ts += c.timeslots[i].desc + '"'
+                else:
+                    ts += c.timeslots[i].desc + ','
+
+            out += f"{c.section.course.desc},{c.section.sec_number},{c.instructor.desc},{c.room.desc},{ts}\n"
+
+        return out
+
+    def to_num_csv(self):
+        """ To numeric csv format """
         out = "Course,Section,Instructor,Room,Timeslots\n"
         nr = self.get_numeric_repr()
         for c in nr:

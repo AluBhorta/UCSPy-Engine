@@ -2,7 +2,7 @@ import os
 import datetime
 from time import perf_counter
 
-from core.parsers.parse_csv import generate_state_from_csv
+from core.parsers.parse_schedule_params import generate_state_from_csv
 from core.models import Schedule
 from algorithms.genetic.smart_mut_ga import smart_mut_genetic_algorithm
 from algorithms.memetic.memetic import memetic_algorithm

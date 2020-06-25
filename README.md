@@ -191,9 +191,9 @@ To save the final schedule, run:
 python main.py solver --save-sch=True <algo>
 ```
 
-The final schedule will be encoded in `csv` format, and saved in `data/schedules/`.
+The final schedule will be saved in `data/schedules/` as `csv`. That's because if you're reading this, you probably love `csv`. ;)
 
-To save logs generated while running, as well as the final schedule use:
+To save the logs generated while running, as well as the final schedule use:
 
 ```sh
 python main.py solver --save_logs=True <algo>
@@ -244,7 +244,7 @@ python main.py - <command> <subcommand> --help
 **NB:**
 
 - it is very important that your schedule_params follow the standard order and notation mentioned above
-- all `.csv` files are ignored by git as mentioned in the `.gitignore` rules, except for the default schedule_params.
+- all `.csv` files are ignored by git as mentioned in the `.gitignore` patterns, except for the default schedule_params.
 
 ---
 

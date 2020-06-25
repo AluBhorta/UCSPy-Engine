@@ -2,7 +2,7 @@ from statistics import mean
 from concurrent import futures
 
 
-from core.parsers.parse_csv import generate_state_from_csv
+from core.parsers.parse_schedule_params import generate_state_from_csv
 from core.schedule_generators.grs import generate_random_schedule
 from core.fitness import fitness
 from core.models import StateManager
