@@ -8,7 +8,7 @@ Every semester a university has to deal with the time consuming and error-prone 
 
 The task of assigning every Section of a Course - a Classroom for a given Instructor and Timeslots is a difficult challenge on its own. The difficulty is greatly heightened with the addition of constraints like preferred rooms for a course, or preferred timeslots for an instructor, etc. The list of these (soft) constraints can be enormous for a university, making the task much more difficult.
 
-> The task or problem of scheduling courses of a university is known as the _University Course Scheduling Problem or _UCSP_.
+> The task or problem of scheduling courses of a university is known as the _University Course Scheduling Problem_ or _UCSP_.
 
 UCSP is, in fact, an NP-Complete optimization problem, meaning that figuring out the best possible schedule that satisfies all the constraints is practically impossible most of the time. That is because of the sheer number of possibilities in which a Schedule can be formed increases exponentially with the addition of a new parameter: a new room, or course, etc.
 
@@ -105,7 +105,7 @@ An Instructor consists of:
 
 ##### CourseGroup
 
-A group of courses, to no one’s surprise.
+A group of courses, to no ones surprise.
 
 A CourseGroup consists of:
 
@@ -144,7 +144,7 @@ The following are the current constraints that UCSPy-Engine holds, which are mos
 
 ##### Soft Constraints
 
-The penalty for violation of a soft constraint once is in shown in the square brackets.
+The penalty for violation of a soft constraint once is shown in the square brackets.
 
 1. [0.9] Instructors should only take certain courses they are assigned to
    (I.assigned_course_idxs)
