@@ -4,25 +4,25 @@ An extensible framework for solving UCSP.
 
 ## What Is UCSP?
 
-Every semester a university has to deal with the time consuming and error prone task of scheduling courses.
+Every semester a university has to deal with the time consuming and error-prone task of scheduling courses.
 
-The task of assigning every Section of a Course - a Classroom for a given Instructor and Timeslots is a difficult challenge on its own. The difficulty is greatly heightened with the addition of constraints like: preferred rooms for a course, or preferred timeslots for an instructor etc. The list of these (soft) constraints can be enormous for a university, making the task much more difficult.
+The task of assigning every Section of a Course - a Classroom for a given Instructor and Timeslots is a difficult challenge on its own. The difficulty is greatly heightened with the addition of constraints like preferred rooms for a course, or preferred timeslots for an instructor, etc. The list of these (soft) constraints can be enormous for a university, making the task much more difficult.
 
-> The task or problem of scheduling courses of a university is known as the _University Course Scheduling Problem_, or _UCSP_.
+> The task or problem of scheduling courses of a university is known as the _University Course Scheduling Problem or _UCSP_.
 
-UCSP is, in fact, an NP-Complete optimization problem, meaning that figuring out the best possible schedule that satisfies all the constraints is practically impossible most of the time. That is because the sheer number of possibilities in which a Schedule can be formed, increases exponentially with the addition of a new parameter: a new room, or course etc.
+UCSP is, in fact, an NP-Complete optimization problem, meaning that figuring out the best possible schedule that satisfies all the constraints is practically impossible most of the time. That is because of the sheer number of possibilities in which a Schedule can be formed increases exponentially with the addition of a new parameter: a new room, or course, etc.
 
-For this reason, standard searching algorithms are incapable of finding a suffciently good solution. This is a headache for a universities and educational institutions.
+For this reason, standard searching algorithms are incapable of finding a sufficiently good solution. This is a headache for universities and educational institutions.
 
-Fortnately, we are blessed to be living in an age with metaheuristics and other smart searching algorithms. Some examples of smart algorithms include - Genetic Algorithm, Particle Swarm Optimization, Simulated Annealing, Artificial Bee Colony Algorithm, and many others.
+Fortunately, we are blessed to be living in an age with metaheuristics and other smart searching algorithms. Some examples of smart algorithms include - Genetic Algorithm, Particle Swarm Optimization, Simulated Annealing, Artificial Bee Colony Algorithm, and many others.
 
 ### What Is The Point Of UCSPy-Engine?
 
-> The goal of UCSPy-Engine is, to democratize access of smart and easy scheduling solutions & to facilitate innovation towards finding new and improved algorithms.
+> The goal of UCSPy-Engine is, to democratize access to smart and easy scheduling solutions & to facilitate innovation towards finding new and improved algorithms.
 
-It does that by doing the heavy lifting of formulating, encoding and generating the problem into a neat application.
+It does that by doing the heavy lifting of formulating, encoding, and generating the problem into a neat application.
 
-UCSPy-Engine should (in theory) allow any university or educational-institution to plug in the parameters and constraints of their semester, and solve their scheduling problem (as long as their schedule parameters are encoded in the form accepted by the engine).
+UCSPy-Engine should (in theory) allow any university or educational institution to plug in the parameters and constraints of their semester, and solve their scheduling problem (as long as their schedule parameters are encoded in the form accepted by the engine).
 
 It also allows any smart individuals (like you) who like solving challenging problems - to plug in their own algorithms and achieve better or faster solutions than the algorithms currently available. This gives innovators the platform and possibility to publish their own solutions, at the same time contributing to a worthwhile and interesting problem.
 
@@ -30,7 +30,7 @@ It also allows any smart individuals (like you) who like solving challenging pro
 
 ### How It Works?
 
-This section describes how UCSPy-Engine formulates and encodes UCSP into a set of models that can be understood by a computer. This allows us to generate, store or manipulate schedules, as well as measure and analyze their performance.
+This section describes how UCSPy-Engine formulates and encodes UCSP into a set of models that can be understood by a computer. This allows us to generate, store, or manipulate schedules, as well as to measure and analyze their performance.
 
 Our target is to find an optimal Schedule that satisfies our constraints best. But, in order to get a Schedule as output, we need to provide the necessary input.
 
@@ -54,7 +54,7 @@ Represents a particular course (of a subject) in a university e.g. CSE101 is a c
 A course consists of:
 
 - `idx`: unique index.
-- `desc`: detail description. Can contain meta information.
+- `desc`: detail description. Can contain meta-information.
 - `num_of_sections`: number of sections of that course to be offered.
 - `timeslots_per_class`: how many timeslots will be offered in a class. The concept of a class is defined below in `Class` component.
 - `classes_per_week`: how many classes are offered in a week.
@@ -77,9 +77,9 @@ Room is a location where a particular section of a course is held (e.g. CSELAB1,
 A Room consists of:
 
 - `idx`: unique index.
-- `desc`: detail description. Can contain meta information.
+- `desc`: detail description. Can contain meta-information.
 - `seat_capacity`: you already understand what it is.
-- `allowed_course_idxs`: collection of course indices that are allowed in this room.
+- `allowed_course_idxs`: a collection of course indices that are allowed in this room.
 
 ##### Timeslot
 
@@ -88,8 +88,8 @@ A particular period/interval of time in a week.
 A Timeslot consists of:
 
 - `idx`: unique index.
-- `desc`: detail description. Can contain meta information.
-- `weekday`: The day of week (Sun-Sat).
+- `desc`: detail description. Can contain meta-information.
+- `weekday`: The day of the week (Sun-Sat).
 - `daily_slot`: A workday is usually divided up into periods or slots e.g. '08:00-09:30' or 'period 1' etc. If there are 7 periods for example, then daily_slot takes a value from 0 to 6.
 
 ##### Instructor
@@ -99,24 +99,24 @@ The teacher/professor/faculty that takes a particular class.
 An Instructor consists of:
 
 - `idx`: unique index.
-- `desc`: detail description. Can contain meta information.
+- `desc`: detail description. Can contain meta-information.
 - `assigned_course_idxs`: the collection of courses that they are assigned.
-- `preferred_timeslot_idxs`: timelsots they prefer.
+- `preferred_timeslot_idxs`: timeslots they prefer.
 
 ##### CourseGroup
 
-A group of courses, to no ones surprise.
+A group of courses, to no one’s surprise.
 
-An CourseGroup consists of:
+A CourseGroup consists of:
 
 - `idx`: unique index.
-- `desc`: detail description. Can contain meta information.
-- `course_idxs`: collection of Course indices.
-- `preferred_timeslot_idxs`: collection of Timeslot indices, which are preferred for the courses.
+- `desc`: detail description. Can contain meta-information.
+- `course_idxs`: a collection of Course indices.
+- `preferred_timeslot_idxs`: a collection of Timeslot indices, which are preferred for the courses.
 
 ##### Class
 
-A Class is the base unit of a schedule which defines a particular event, in space and time i.e. in room and timeslot(s).
+A Class is the base unit of a schedule that defines a particular event, in space and time i.e. in room and timeslot(s).
 
 A Class consists of:
 
@@ -144,9 +144,9 @@ The following are the current constraints that UCSPy-Engine holds, which are mos
 
 ##### Soft Constraints
 
-The penaty for violation of a soft constraint once is in shown in the sqaure brackets.
+The penalty for violation of a soft constraint once is in shown in the square brackets.
 
-1. [0.9] Instructors should only take certain courses they are are assigned to
+1. [0.9] Instructors should only take certain courses they are assigned to
    (I.assigned_course_idxs)
 
 1. [0.85] A particular Room should only allow Classes of allowed Courses
@@ -160,7 +160,7 @@ The penaty for violation of a soft constraint once is in shown in the sqaure bra
 
 NOTE:
 
-- institutions can and should adjust the penalties to thier needs.
+- institutions can and should adjust the penalties to their needs.
 
 ### The Output
 
@@ -169,11 +169,11 @@ NOTE:
 A Schedule represents a solution of the UCSP inputs provided, which consists of:
 
 - `classes`: the collection of all classes. You might realize that the total number of classes is equal to the total number of sections, as they have a 1 to 1 mapping.
-- `course_groups`: the CourseGroups. This propery was optional, but turned out useful for our fitness calculation of individual schedules.
+- `course_groups`: the CourseGroups. This property was optional but turned out useful for our fitness calculation of individual schedules.
 
 ### Fitness Calculation
 
-The fitness of a schdule determines how desirable it is, and how much a Schedule violates the constraints determines its fitness.
+The fitness of a schedule determines how desirable it is, and how much a Schedule violates the constraints determines its fitness.
 
 The fitness of Schedule `s` is calculated as follows:
 
@@ -181,9 +181,9 @@ The fitness of Schedule `s` is calculated as follows:
 
 Where:
 
-- `f(s)` is the fitnes of `s`.
-- `P_soft(s)` is the total aggregate soft constaint violation penalty.
-- and `M_hard(s)` is the `hard penalty mutiplier`, which is 1 if `s` does not violate any hard constraints, else 0.
+- `f(s)` is the fitness of `s`.
+- `P_soft(s)` is the total aggregate soft constraint violation penalty.
+- and `M_hard(s)` is the `hard penalty multiplier`, which is 1 if `s` does not violate any hard constraints, else 0.
 
 Therefore, following our fitness function - a Schedule of 0 fitness is infeasible, while a fitness of 1 is a perfect solution.
 
@@ -248,13 +248,13 @@ The available algorithms as of now are:
 | meme               | Memetic Algorithm           |
 | pso                | Particle Swarm Optimization |
 
-To use Genetic Algorithm for example, run:
+To use a Genetic Algorithm, for example, run:
 
 ```sh
 python main.py solver ga
 ```
 
-This will run Genetic Algorithm using the default parameters, and print out the final schedule.
+This will run the Genetic Algorithm using the default parameters, and print out the final schedule.
 
 To save the final schedule, run:
 
@@ -270,7 +270,7 @@ To save the logs generated while running, as well as the final schedule use:
 python main.py solver --save_logs=True <algo>
 ```
 
-The logs can be used to aumatically generate performance plots like this:
+The logs can be used to automatically generate performance plots like this:
 
 ![sample-log-plot](data/img/sample-log-plot.png)
 
@@ -280,7 +280,7 @@ And it is done by using the `plot` command, which takes the path of the log file
 python main.py plot data/logs/<filename>
 ```
 
-To plot from the sample log file for example, run:
+To plot from the sample log file, for example, run:
 
 ```sh
 python main.py plot data/logs/sample.log
@@ -317,7 +317,7 @@ python main.py - <command> <subcommand> --help
 
 ## How To Contribute To UCSPy-Engine?
 
-UCSPy-Engine is open sourced under the MIT license. So feel free to hack, modify or encode your own way or add new algorithms.
+UCSPy-Engine is open sourced under the MIT license. So feel free to hack, modify, or encode your own way or add new algorithms.
 
 Contributions to UCSPy-Engine are welcome! You can make pull requests to the `master` branch.
 
@@ -346,3 +346,4 @@ Hope you learn from our grossly inefficient algorithms and implement some better
 ## License
 
 MIT.
+
