@@ -16,17 +16,17 @@ def hard_penalty_multiplier(schedule: Schedule) -> int:
         return 1
 
 
-def total_soft_penalty(schedule: Schedule):
+def total_soft_penalty(schedule: Schedule, _inspect):
     total_penalty = 0
 
     for soft_penalty_i_of in SOFT_CONSTRAINTS:
-        total_penalty += soft_penalty_i_of(schedule)
+        total_penalty += soft_penalty_i_of(schedule, _inspect=_inspect)
 
     return total_penalty
 
 
-def fitness(schedule: Schedule):
+def fitness(schedule: Schedule, _inspect=False):
     hpm = hard_penalty_multiplier(schedule)
-    tsp = total_soft_penalty(schedule)
+    tsp = total_soft_penalty(schedule, _inspect)
 
     return hpm / (1 + tsp)

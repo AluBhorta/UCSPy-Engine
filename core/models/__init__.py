@@ -205,7 +205,9 @@ class Class:
         self.room = room
         self.timeslots = timeslots
 
-    # def __str__(self):
+    def __str__(self):
+        return f"""Class: ({self.section.course.desc, self.section.sec_number, self.instructor.desc, self.room.desc, str([t.desc for t in self.timeslots])})\n"""
+
     def __repr__(self):
         return f"""### CLASS ###
             Course:\t{self.section.course}

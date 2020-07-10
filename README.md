@@ -296,6 +296,12 @@ To specify your own schedule_params, collect/generate the data for each componen
 python main.py solver --params_folder=path/to/your/schedule_params/ <algo>
 ```
 
+To inspect the fitness of the final schedule, use the `--inspect_final_sch` flag like so:
+
+```bash
+python main.py solver --inspect_final_sch=True <algo>
+```
+
 For help or synopsis:
 
 ```bash
@@ -346,4 +352,3 @@ Hope you learn from our grossly inefficient algorithms and implement some better
 ## License
 
 MIT.
-

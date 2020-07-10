@@ -8,6 +8,7 @@ from algorithms.genetic.smart_mut_ga import smart_mut_genetic_algorithm
 from algorithms.memetic.memetic import memetic_algorithm
 from algorithms.pso.pso import particle_swarm_optimization
 from core.logging import UCSPLogger
+from core.fitness import fitness
 
 
 class UCSPSolver:
@@ -22,7 +23,9 @@ class UCSPSolver:
     \n
     :param params_folder: Path to the folder containing schedule_params to be used to generate the final schedule. To learn more about the schedule_params, refer to `README.md` or the whitepaper. (default: "data/schedule_params/default/")
     \n
-    
+    :param inspect_final_sch: Boolean to determine whether to inspect the fitness of the final schedule or not. (default: False)
+    \n
+
     """
 
     def __init__(
@@ -30,12 +33,14 @@ class UCSPSolver:
         save_sch=False,
         save_logs=False,
         params_folder="data/schedule_params/default/",
+        inspect_final_sch=False
     ):
         self._state = generate_state_from_csv(params_folder)
         self._logger = UCSPLogger(save_logs)
         self._save_sch = save_sch
         if save_logs:
             self._save_sch = True
+        self._inspect_final_sch = inspect_final_sch
 
     def ga(
         self,
@@ -184,4 +189,6 @@ class UCSPSolver:
             print("\nFinal Schedule: \n")
             print(sch)
 
-    pass
+        if self._inspect_final_sch:
+            fit = fitness(sch, _inspect=True)
+            print(f"Final fitness: {fit}")
