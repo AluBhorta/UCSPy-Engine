@@ -46,57 +46,64 @@ def particle_swarm_optimization(
 
     weight = w0  # current weight
 
-    g_best_idx = 0
+    g_best = particles[0][0]
     g_best_fitness = 0.0
+    # g_best_idx = 0
 
     logger.write(f"Generation\t\tFitness")
     for epoch in range(epochs):
-        for i in range(len(particles)):
-            current_fitness = fitness(
-                state.numeric_to_sch(particles[i][0])
-            )
-            if current_fitness >= min_acceptable_fitness:
-                return particles[i][0]
+        try:
+            for i in range(len(particles)):
+                current_fitness = fitness(
+                    state.numeric_to_sch(particles[i][0])
+                )
+                if current_fitness >= min_acceptable_fitness:
+                    return particles[i][0]
 
-            p_best_fitness = fitness(
-                state.numeric_to_sch(particles[i][1])
-            )
-            # print(current_fitness, p_best_fitness)
-            if current_fitness > p_best_fitness:
-                # print(f"nice cf: {current_fitness} \tpf: {p_best_fitness}")
-                particles[i][1] = deepcopy(particles[i][0])
-                p_best_fitness = current_fitness
+                p_best_fitness = fitness(
+                    state.numeric_to_sch(particles[i][1])
+                )
+                # print(current_fitness, p_best_fitness)
+                if current_fitness > p_best_fitness:
+                    # print(f"nice cf: {current_fitness} \tpf: {p_best_fitness}")
+                    particles[i][1] = deepcopy(particles[i][0])
+                    p_best_fitness = current_fitness
 
-            if p_best_fitness > g_best_fitness:
-                # print(f"GG! pf: {p_best_fitness} \tgf: {g_best_fitness}")
-                g_best_fitness = p_best_fitness
-                g_best_idx = i
+                if p_best_fitness > g_best_fitness:
+                    # print(f"GG! pf: {p_best_fitness} \tgf: {g_best_fitness}")
+                    g_best_fitness = p_best_fitness
+                    g_best = deepcopy(particles[i][1])
+                    # g_best_idx = i
 
-        logger.write(f"{epoch}\t\t{g_best_fitness}")
-        weight = update_w(epoch)
+            logger.write(f"{epoch}\t\t{g_best_fitness}")
+            weight = update_w(epoch)
 
-        for i in range(len(particles)):
-            particles[i][2] = c_velo(weight, particles[i][2]) + \
-                c_indi(particles[i][1], particles[i][0]) + \
-                c_glob(particles[g_best_idx][1], particles[i][0])
+            for i in range(len(particles)):
+                particles[i][2] = c_velo(weight, particles[i][2]) + \
+                    c_indi(particles[i][1], particles[i][0]) + \
+                    c_glob(g_best, particles[i][0])
+                # c_glob(particles[g_best_idx][1], particles[i][0])
 
-            particles[i][2] = particles[i][2] % vmax_lim  # limit
+                particles[i][2] = particles[i][2] % vmax_lim  # limit
 
-            a = particles[i][2][:, :-1].astype(int)
-            b = particles[i][2][:, -1]
+                a = particles[i][2][:, :-1].astype(int)
+                b = particles[i][2][:, -1]
 
-            o = []
-            for j in range(len(b)):
-                o.append([*a[j], b[j].astype(int)])
-            particles[i][2] = np.array(o)
+                o = []
+                for j in range(len(b)):
+                    o.append([*a[j], b[j].astype(int)])
+                particles[i][2] = np.array(o)
 
-            particles[i][0] = (
-                particles[i][0] + particles[i][2]
-            ) % part_max_lim
+                particles[i][0] = (
+                    particles[i][0] + particles[i][2]
+                ) % part_max_lim
+        except KeyboardInterrupt:
+            print("Solver stopped by user")
+            break
 
         # print(particles[0][2][10:30])
 
-    final_sch = state.numeric_to_sch(particles[g_best_idx][1])
+    final_sch = state.numeric_to_sch(g_best)
     # print(f"Final fitness: {fitness(final_sch)}")
 
     return final_sch

@@ -189,6 +189,5 @@ class UCSPSolver:
             print("\nFinal Schedule: \n")
             print(sch)
 
-        if self._inspect_final_sch:
-            fit = fitness(sch, _inspect=True)
-            print(f"Final fitness: {fit}")
+        fit = fitness(sch, _inspect=self._inspect_final_sch)
+        print(f"Final fitness: {fit}")

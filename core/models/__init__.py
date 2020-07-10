@@ -225,11 +225,12 @@ class Schedule:
         self.course_groups = course_groups
 
     def __str__(self):
-        return f""" 
-            Classes:\n {self.classes}
-            \n
-            CourseGroups:\n {self.course_groups}
-        """
+        return self.to_csv()
+        # return f"""
+        #     Classes:\n {self.classes}
+        #     \n
+        #     CourseGroups:\n {self.course_groups}
+        # """
 
     def get_numeric_repr(self):
         """ NOTE: returns schedule in np.array<(C, S, I, R, Ts[])> format """
