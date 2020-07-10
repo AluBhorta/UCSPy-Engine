@@ -34,12 +34,17 @@ This section describes how UCSPy-Engine formulates and encodes UCSP into a set o
 
 Our target is to find an optimal Schedule that satisfies our constraints best. But, in order to get a Schedule as output, we need to provide the necessary input.
 
+![](img/UCSP_flowchart.PNG)
+
 ### The Inputs
 
 To define a UCSP, we need 2 main inputs:
 
 - the `schedule params`: which are the required data needed to form a schedule
 - and `constraints`: which are what we want to satisfy
+
+The following represents a class diagram of the inputs- Course, Instructor, Room, Timeslot and CourseGroup:
+![](img/UCSPinput.PNG)
 
 #### Schedule Params
 
@@ -117,6 +122,7 @@ A CourseGroup consists of:
 ##### Class
 
 A Class is the base unit of a schedule that defines a particular event, in space and time i.e. in room and timeslot(s).
+![](img/UCSPclass.PNG)
 
 A Class consists of:
 
@@ -144,7 +150,7 @@ The following are the current constraints that UCSPy-Engine holds, which are mos
 
 ##### Soft Constraints
 
-The penalty for violation of a soft constraint once is shown in the square brackets.
+The Default penalty values for violation of a soft constraint once is shown in the square brackets.
 
 1. [0.9] Instructors should only take certain courses they are assigned to
    (I.assigned_course_idxs)
@@ -159,7 +165,6 @@ The penalty for violation of a soft constraint once is shown in the square brack
    (I.preferred_timeslot_idxs)
 
 NOTE:
-
 - institutions can and should adjust the penalties to their needs.
 
 ### The Output
