@@ -2,7 +2,7 @@ autopep8==1.4.4
 cycler==0.10.0
 fire==0.3.1
 kiwisolver==1.1.0
-matplotlib==3.1.1
+matplotlib==3.2.2
 numpy==1.17.4
 pandas==0.25.3
 pycodestyle==2.5.0

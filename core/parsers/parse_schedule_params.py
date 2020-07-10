@@ -84,7 +84,7 @@ def generate_state_from_csv(_dir="data/schedule_params/default") -> StateManager
 def str_to_array(str_values):
     values = []
     for i in str_values.split(","):
-        if i is not '':
+        if i != '':
             values.append(int(i))
     return np.array(values)
 

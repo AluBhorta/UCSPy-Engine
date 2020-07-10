@@ -108,7 +108,7 @@ def _get_timeslots_for_C_I(
         NOTE: satisfies (_I_Ts_conflicts == False)
     """
 
-    def _get_ts_for_a_class_on(weekday, _tpc, t_idxs):
+    def _get_ts_for_a_class_on(weekday, _tpl, t_idxs):
         tmp_idxs = []
 
         for ds in range(state.num_of_daily_slots):
@@ -118,28 +118,28 @@ def _get_timeslots_for_C_I(
             else:
                 tmp_idxs.append(ts)
 
-            if len(tmp_idxs) == _tpc:
+            if len(tmp_idxs) == _tpl:
                 return tmp_idxs
 
-        return tmp_idxs if len(tmp_idxs) == _tpc else []
+        return tmp_idxs if len(tmp_idxs) == _tpl else []
 
-    cpw = course.classes_per_week
-    tpc = course.timeslots_per_class
+    lpw = course.lectures_per_week
+    tpl = course.timeslots_per_lecture
     total_weekdays = len(state.timeslots) // state.num_of_daily_slots
 
     t_idxs = []
 
-    for _ in range(cpw):
+    for _ in range(lpw):
         weekday = 0
         while weekday < total_weekdays:
-            _ts = _get_ts_for_a_class_on(weekday, tpc, t_idxs)
-            if len(_ts) == tpc:
+            _ts = _get_ts_for_a_class_on(weekday, tpl, t_idxs)
+            if len(_ts) == tpl:
                 t_idxs.extend(_ts)
                 break
             else:
                 weekday += 1
 
-    if len(t_idxs) == cpw * tpc:
+    if len(t_idxs) == lpw * tpl:
         return [state.get_timeslot(ti) for ti in t_idxs]
 
     else:

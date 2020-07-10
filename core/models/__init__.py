@@ -56,12 +56,12 @@ class Room:
 
 
 class Course:
-    def __init__(self, idx, desc, num_of_sections, timeslots_per_class, classes_per_week, course_type):
+    def __init__(self, idx, desc, num_of_sections, timeslots_per_lecture, lectures_per_week, course_type):
         self.idx = idx
         self.desc = desc
         self.num_of_sections = num_of_sections
-        self.timeslots_per_class = timeslots_per_class
-        self.classes_per_week = classes_per_week
+        self.timeslots_per_lecture = timeslots_per_lecture
+        self.lectures_per_week = lectures_per_week
         self.course_type = course_type
         self.sections = self._generate_sections()
 
@@ -72,8 +72,8 @@ class Course:
         return f"""
             {self.__str__()},
             num_of_sections: {self.num_of_sections},
-            timeslots_per_class: {self.timeslots_per_class},
-            classes_per_week: {self.classes_per_week},
+            timeslots_per_lecture: {self.timeslots_per_lecture},
+            lectures_per_week: {self.lectures_per_week},
             course_type: {self.course_type},
             sections: {self.sections}
             \n

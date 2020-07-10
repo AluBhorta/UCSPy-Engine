@@ -56,8 +56,8 @@ A course consists of:
 - `idx`: unique index.
 - `desc`: detail description. Can contain meta-information.
 - `num_of_sections`: number of sections of that course to be offered.
-- `timeslots_per_class`: how many timeslots will be offered in a class. The concept of a class is defined below in `Class` component.
-- `classes_per_week`: how many classes are offered in a week.
+- `timeslots_per_lecture`: how many timeslots will be offered in a lecture. A `lecture` represents a physical event in the real world that has consecutive timeslots.
+- `lectures_per_week`: how many lectures are offered in a week.
 - `course_type`: Lab or Theory (more types can be used).
 - `sections`: Reference to the collection of all the Sections.
 
