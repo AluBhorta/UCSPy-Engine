@@ -269,7 +269,7 @@ python main.py solver --save-sch=True <algo>
 
 The final schedule will be saved in `data/schedules/` as `csv`. That's because if you're reading this, you probably like `csv`, amiryt? ;)
 
-To save the logs generated while running, as well as the final schedule use:
+To save the logs generated while running, use:
 
 ```sh
 python main.py solver --save_logs=True <algo>

@@ -46,7 +46,7 @@ def particle_swarm_optimization(
 
     weight = w0  # current weight
 
-    g_best = particles[0][0]
+    g_best = deepcopy(particles[0][0])
     g_best_fitness = 0.0
     # g_best_idx = 0
 
@@ -54,13 +54,13 @@ def particle_swarm_optimization(
     for epoch in range(epochs):
         try:
             for i in range(len(particles)):
-                current_fitness = fitness(
+                current_fitness = state.fitness(
                     state.numeric_to_sch(particles[i][0])
                 )
                 if current_fitness >= min_acceptable_fitness:
                     return particles[i][0]
 
-                p_best_fitness = fitness(
+                p_best_fitness = state.fitness(
                     state.numeric_to_sch(particles[i][1])
                 )
                 # print(current_fitness, p_best_fitness)
@@ -104,6 +104,6 @@ def particle_swarm_optimization(
         # print(particles[0][2][10:30])
 
     final_sch = state.numeric_to_sch(g_best)
-    # print(f"Final fitness: {fitness(final_sch)}")
+    # print(f"Final fitness: {state.fitness(final_sch)}")
 
     return final_sch

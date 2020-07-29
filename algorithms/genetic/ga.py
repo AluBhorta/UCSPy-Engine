@@ -27,10 +27,10 @@ def genetic_algorithm(
         """ Sort by its fitness in DESC order """
         population = sorted(
             population,
-            key=lambda sch: fitness(sch),
+            key=lambda sch: state.fitness(sch),
             reverse=True)
 
-        best_fitness = fitness(population[0])
+        best_fitness = state.fitness(population[0])
         print(f"{epoch}\t\t{best_fitness}")
 
         if best_fitness >= min_acceptable_fitness:
@@ -86,10 +86,10 @@ def genetic_algorithm(
 
         population = new_population
 
-    best_fitness = fitness(population[0])
+    best_fitness = state.fitness(population[0])
     best_fit_idx = 0
     for i in range(1, len(population)):
-        f = fitness(population[i])
+        f = state.fitness(population[i])
         if f > best_fitness:
             best_fitness = f
             best_fit_idx = i

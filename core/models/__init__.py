@@ -135,7 +135,7 @@ class StateManager:
     Singleton Object used to hold & access all Schedule-Params (i.e. Rooms, Timeslots, Courses, Instructors, CourseGroups) and Sections.
     """
 
-    def __init__(self, rooms: List[Room], timeslots: List[Timeslot], courses: List[Course], instructors: List[Instructor], course_groups: List[CourseGroup]):
+    def __init__(self, rooms: List[Room], timeslots: List[Timeslot], courses: List[Course], instructors: List[Instructor], course_groups: List[CourseGroup], fit_func):
         self.rooms = rooms
         self.timeslots = timeslots
         self.instructors = instructors
@@ -143,6 +143,7 @@ class StateManager:
         self.course_groups = course_groups
         self.sections = self._get_sections()
         self.num_of_daily_slots = len(DAILY_SLOT_MAPPING)
+        self.fitness = fit_func
 
     def __repr__(self):
         return f"""StateManager - 

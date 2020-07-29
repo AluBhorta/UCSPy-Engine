@@ -1,0 +1,52 @@
+{
+  "version": 0.1,
+
+  "save_logs": false,
+  "save_schedule": false,
+  "inspect_final_schedule": false,
+  "schedule_params_folder": "data/schedule_params/default/",
+  "fitness": {
+    "functions": ["default"],
+    "use": "default"
+  },
+  "constraints": {
+    "soft_constraints": {
+      "constraints": [
+        {
+          "id": 1,
+          "unit_penalty": 0.9,
+          "desc": "Instructors should only take certain courses they are are assigned to"
+        },
+        {
+          "id": 2,
+          "unit_penalty": 0.85,
+          "desc": "A particular Room should only allow Classes of certain Courses"
+        },
+        {
+          "id": 3,
+          "unit_penalty": 0.6,
+          "desc": "CourseGroups have Timeslot preferences"
+        },
+        {
+          "id": 4,
+          "unit_penalty": 0.5,
+          "desc": "Instructors have Timeslot preferences"
+        }
+      ],
+      "use_ids": [1, 2, 3, 4]
+    },
+    "hard_constraints": {
+      "constraints": [
+        {
+          "id": 1,
+          "desc": "No two lectures can take place in the same room at the same Timeslot"
+        },
+        {
+          "id": 2,
+          "desc": "No instructor can take more than one lecture at a given Timeslot"
+        }
+      ],
+      "use_ids": [1, 2]
+    }
+  }
+}

@@ -3,9 +3,10 @@ from pandas import read_csv
 import os
 
 from core.models import Room, Timeslot, Course, Instructor, CourseGroup, StateManager
+from core.fitness import FITNESS_FUNCS
 
 
-def generate_state_from_csv(_dir="data/schedule_params/default") -> StateManager:
+def generate_state_from_csv(_dir="data/schedule_params/default", fit_func_name="default") -> StateManager:
     r_fname = "rooms.csv"
     t_fname = "timeslots.csv"
     c_fname = "courses.csv"
@@ -77,8 +78,9 @@ def generate_state_from_csv(_dir="data/schedule_params/default") -> StateManager
     # print_params(Rooms, Timeslots, Courses, Instructors, CourseGroups)
 
     # TODO: do a sanity check that the arrays are not empty and contain the objects contain the right attributes
+    FITNESS_FUNCS.get(fit_func_name)
     return StateManager(
-        Rooms, Timeslots, Courses, Instructors, CourseGroups)
+        Rooms, Timeslots, Courses, Instructors, CourseGroups, FITNESS_FUNCS.get(fit_func_name))
 
 
 def str_to_array(str_values):

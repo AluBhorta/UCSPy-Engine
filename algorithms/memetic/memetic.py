@@ -31,10 +31,10 @@ def memetic_algorithm(
             """ Sort by its fitness in DESC order """
             population = sorted(
                 population,
-                key=lambda sch: fitness(sch),
+                key=lambda sch: state.fitness(sch),
                 reverse=True)
 
-            best_fitness = fitness(population[0])
+            best_fitness = state.fitness(population[0])
             logger.write(f"{epoch}\t\t{best_fitness}")
 
             if best_fitness >= min_acceptable_fitness:
@@ -92,7 +92,7 @@ def memetic_algorithm(
                         tmp_sch.classes[class_idx].timeslots = \
                             random.choices(state.timeslots, k=l)
 
-                    if fitness(tmp_sch) > fitness(new_population[schedule_idx]):
+                    if state.fitness(tmp_sch) > state.fitness(new_population[schedule_idx]):
                         new_population[schedule_idx] = tmp_sch
                         break
 
@@ -102,10 +102,10 @@ def memetic_algorithm(
             break
 
 
-    best_fitness = fitness(population[0])
+    best_fitness = state.fitness(population[0])
     best_fit_idx = 0
     for i in range(1, len(population)):
-        f = fitness(population[i])
+        f = state.fitness(population[i])
         if f > best_fitness:
             best_fitness = f
             best_fit_idx = i
