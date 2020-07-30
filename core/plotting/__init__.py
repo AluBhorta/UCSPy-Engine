@@ -4,7 +4,7 @@ import matplotlib.ticker as plticker
 import bisect
 
 
-def make_line_plot(log_file, ygap=5):
+def make_line_plot(log_file="data/logs/sample.log", ygap=5):
     """
     Plotter
 

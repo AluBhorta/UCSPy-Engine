@@ -10,7 +10,6 @@ from algorithms.genetic.smart_mut_ga import smart_mut_genetic_algorithm
 from algorithms.memetic.memetic import memetic_algorithm
 from algorithms.pso.pso import particle_swarm_optimization
 from core.logging import UCSPLogger
-from core.fitness import fitness
 
 
 class UCSPSolver:
@@ -21,7 +20,7 @@ class UCSPSolver:
 
     The `config_file` should provide enough configurable options for most use cases. Additional (optional) flags can be used to overwrite the configs in `config_file`.
 
-    :param config_file: The JSON file used to configure UCSP solver.  (default: 'solver.config.json')
+    :param config_file: The JSON file used to configure UCSP solver.  (default: 'ucsp.config.json')
     \n
     :param save_sch: (optional) Boolean to decide whether to save the final schedule or to just display it in console. If `True`, the final encoded schedule is saved in `data/schedules/` with the datetime of when the schedule was generated.
     \n
@@ -36,7 +35,7 @@ class UCSPSolver:
 
     def __init__(
         self,
-        config_file="solver.config.json",
+        config_file="ucsp.config.json",
         save_sch=None,
         save_logs=None,
         params_folder=None,
@@ -44,15 +43,14 @@ class UCSPSolver:
     ):
         self._config = self._parse_config_file(config_file)
 
-        sc_ids = self._config['constraints']['soft_constraints']['use_ids'] or []
-        hc_ids = self._config['constraints']['hard_constraints']['use_ids'] or []
-
-        print(sc_ids, hc_ids)
-
+        soft_constr_ids = self._config['constraints']['soft_constraints']['use_ids'] or []
+        hard_constr_ids = self._config['constraints']['hard_constraints']['use_ids'] or []
+        
+        constraints_config = self._config['constraints']
         fit_func_name = self._config['fitness']['use'] or "default"
         params_folder = params_folder or self._config['schedule_params_folder']
 
-        self._state = generate_state_from_csv(params_folder, fit_func_name)
+        self._state = generate_state_from_csv(params_folder, fit_func_name, constraints_config)
 
         self._logger = UCSPLogger(save_logs or self._config['save_logs'])
         self._save_sch = save_sch or self._config['save_schedule']
@@ -204,10 +202,10 @@ class UCSPSolver:
                 f.write(sch.to_csv())
 
             self._logger.write(
-                f"\nEncoded schedule successfully saved to {fname}")
+                f"\nSchedule successfully saved to {fname}")
         else:
             print("\nFinal Schedule: \n")
             print(sch)
 
-        fit = fitness(sch, _inspect=self._inspect_final_sch)
+        fit = self._state.fitness(sch, _inspect=self._inspect_final_sch)
         print(f"Final fitness: {fit}")

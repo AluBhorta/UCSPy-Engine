@@ -17,6 +17,7 @@ class UCSPyEngine:
         Path("data/schedules").mkdir(parents=True, exist_ok=True)
         self.solver = UCSPSolver
         self.plot = make_line_plot
+        # self.inspect = None   # TODO
 
 
 if __name__ == "__main__":

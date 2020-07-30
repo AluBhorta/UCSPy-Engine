@@ -1,8 +1,12 @@
 # Modify Constraints
 
+<!-- TODO -->
+
+you can: add, update or delete constaints. although we recommend you to not delete, instead to not include it on the ucsp config file.
+
 ## To add a new hard constraint
 
-- write a func that takes a Schedule as param
+- write a new violates func that takes a Schedule as param
 - perform desired violation check on Schedule
 - if violates, return True else return False
 - add your func to the list HARD_CONSTRAINTS at the end

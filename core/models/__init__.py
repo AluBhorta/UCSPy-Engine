@@ -1,6 +1,7 @@
 from typing import List
 from numpy import array
 
+
 DAILY_SLOT_MAPPING = {
     0: '08:00-09:30',
     1: '09:40-11:10',
@@ -129,13 +130,92 @@ class CourseGroup:
         """
 
 
+class Class:
+    def __init__(
+        self,
+        section: Section,
+        instructor: Instructor,
+        room: Room,
+        timeslots: List[Timeslot]
+    ):
+        self.section = section
+        self.instructor = instructor
+        self.room = room
+        self.timeslots = timeslots
+
+    def __str__(self):
+        return f"""Class: ({self.section.course.desc, self.section.sec_number, self.instructor.desc, self.room.desc, str([t.desc for t in self.timeslots])})\n"""
+
+    def __repr__(self):
+        return f"""### CLASS ###
+            Course:\t{self.section.course}
+            Section:\t{self.section}
+            Instructor:\t{self.instructor}
+            Room:\t{self.room}
+            Timeslots:\t{self.timeslots}
+            \n
+        """
+
+
+class Schedule:
+    def __init__(self, classes: List[Class], course_groups: List[CourseGroup]):
+        self.classes = classes
+        self.course_groups = course_groups
+
+    def __str__(self):
+        return self.to_csv()
+
+    def get_numeric_repr(self):
+        """ NOTE: returns schedule in np.array<(C, S, I, R, Ts[])> format """
+        return array([(
+            c.section.course.idx,
+            c.section.sec_number,
+            c.instructor.idx,
+            c.room.idx,
+            array([t.idx for t in c.timeslots]),
+        ) for c in self.classes])
+
+    def to_csv(self):
+        """ to human-readable csv format """
+        out = "Course,Section,Instructor,Room,Timeslots\n"
+        for c in self.classes:
+            ts = '"'
+            l = len(c.timeslots)
+            for i in range(l):
+                if i == l-1:
+                    ts += c.timeslots[i].desc + '"'
+                else:
+                    ts += c.timeslots[i].desc + ','
+
+            out += f"{c.section.course.desc},{c.section.sec_number},{c.instructor.desc},{c.room.desc},{ts}\n"
+
+        return out
+
+    def to_num_csv(self):
+        """ To numeric csv format """
+        out = "Course,Section,Instructor,Room,Timeslots\n"
+        nr = self.get_numeric_repr()
+        for c in nr:
+            ts = '"'
+            l = len(c[4])
+            for i in range(l):
+                if i == l-1:
+                    ts += str(c[4][i]) + '"'
+                else:
+                    ts += str(c[4][i]) + ','
+
+            out += f"{c[0]},{c[1]},{c[2]},{c[3]},{ts}\n"
+
+        return out
+
+
 class StateManager:
     """State Manager
 
-    Singleton Object used to hold & access all Schedule-Params (i.e. Rooms, Timeslots, Courses, Instructors, CourseGroups) and Sections.
+    Singleton used to hold & access state of UCSP.
     """
 
-    def __init__(self, rooms: List[Room], timeslots: List[Timeslot], courses: List[Course], instructors: List[Instructor], course_groups: List[CourseGroup], fit_func):
+    def __init__(self, rooms: List[Room], timeslots: List[Timeslot], courses: List[Course], instructors: List[Instructor], course_groups: List[CourseGroup], fit_func, HARD_CONSTRAINTS, SOFT_CONSTRAINTS):
         self.rooms = rooms
         self.timeslots = timeslots
         self.instructors = instructors
@@ -143,7 +223,12 @@ class StateManager:
         self.course_groups = course_groups
         self.sections = self._get_sections()
         self.num_of_daily_slots = len(DAILY_SLOT_MAPPING)
-        self.fitness = fit_func
+        self._fit_func = fit_func
+        self.hard_constraints = HARD_CONSTRAINTS
+        self.soft_constraints = SOFT_CONSTRAINTS
+
+    def fitness(self, sch: Schedule, _inspect=False) -> float:
+        return self._fit_func(sch, self, _inspect)
 
     def __repr__(self):
         return f"""StateManager - 
@@ -191,87 +276,3 @@ class StateManager:
 
     def get_instructor(self, instructor_idx):
         return self.instructors[instructor_idx]
-
-
-class Class:
-    def __init__(
-        self,
-        section: Section,
-        instructor: Instructor,
-        room: Room,
-        timeslots: List[Timeslot]
-    ):
-        self.section = section
-        self.instructor = instructor
-        self.room = room
-        self.timeslots = timeslots
-
-    def __str__(self):
-        return f"""Class: ({self.section.course.desc, self.section.sec_number, self.instructor.desc, self.room.desc, str([t.desc for t in self.timeslots])})\n"""
-
-    def __repr__(self):
-        return f"""### CLASS ###
-            Course:\t{self.section.course}
-            Section:\t{self.section}
-            Instructor:\t{self.instructor}
-            Room:\t{self.room}
-            Timeslots:\t{self.timeslots}
-            \n
-        """
-
-
-class Schedule:
-    def __init__(self, classes: List[Class], course_groups: List[CourseGroup]):
-        self.classes = classes
-        self.course_groups = course_groups
-
-    def __str__(self):
-        return self.to_csv()
-        # return f"""
-        #     Classes:\n {self.classes}
-        #     \n
-        #     CourseGroups:\n {self.course_groups}
-        # """
-
-    def get_numeric_repr(self):
-        """ NOTE: returns schedule in np.array<(C, S, I, R, Ts[])> format """
-        return array([(
-            c.section.course.idx,
-            c.section.sec_number,
-            c.instructor.idx,
-            c.room.idx,
-            array([t.idx for t in c.timeslots]),
-        ) for c in self.classes])
-
-    def to_csv(self):
-        """ to human-readable csv format """
-        out = "Course,Section,Instructor,Room,Timeslots\n"
-        for c in self.classes:
-            ts = '"'
-            l = len(c.timeslots)
-            for i in range(l):
-                if i == l-1:
-                    ts += c.timeslots[i].desc + '"'
-                else:
-                    ts += c.timeslots[i].desc + ','
-
-            out += f"{c.section.course.desc},{c.section.sec_number},{c.instructor.desc},{c.room.desc},{ts}\n"
-
-        return out
-
-    def to_num_csv(self):
-        """ To numeric csv format """
-        out = "Course,Section,Instructor,Room,Timeslots\n"
-        nr = self.get_numeric_repr()
-        for c in nr:
-            ts = '"'
-            l = len(c[4])
-            for i in range(l):
-                if i == l-1:
-                    ts += str(c[4][i]) + '"'
-                else:
-                    ts += str(c[4][i]) + ','
-
-            out += f"{c[0]},{c[1]},{c[2]},{c[3]},{ts}\n"
-
-        return out

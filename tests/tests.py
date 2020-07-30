@@ -3,8 +3,8 @@ from concurrent import futures
 
 
 from core.parsers.parse_schedule_params import generate_state_from_csv
-from core.schedule_generators.grs import generate_random_schedule
-from core.fitness import fitness
+from core.generators.generate_random_schedule import generate_random_schedule as grs
+from core.fitness import default as fitness
 from core.models import StateManager
 
 

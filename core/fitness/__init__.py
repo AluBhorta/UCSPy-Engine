@@ -1,9 +1,7 @@
-from core.fitness.default import fitness as default
+from core.fitness.default import default_fitness
 
 
 FITNESS_FUNCS = {
-    "default": default
+    "default": default_fitness
 }
 
-# fitness = FITNESS_FUNCS.get(func_name, "default")
-fitness = default

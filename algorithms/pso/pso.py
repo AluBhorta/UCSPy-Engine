@@ -2,8 +2,7 @@
 import numpy as np
 from copy import deepcopy
 
-from core.schedule_generators.grs import generate_random_schedule as grs
-from core.fitness import fitness
+from core.generators.generate_random_schedule import generate_random_schedule as grs
 from core.models import StateManager, Schedule
 from core.logging import UCSPLogger
 

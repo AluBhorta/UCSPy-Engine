@@ -4,9 +4,10 @@ import os
 
 from core.models import Room, Timeslot, Course, Instructor, CourseGroup, StateManager
 from core.fitness import FITNESS_FUNCS
+from core.generators.generate_constraints import generate_constraints
 
 
-def generate_state_from_csv(_dir="data/schedule_params/default", fit_func_name="default") -> StateManager:
+def generate_state_from_csv(_dir="data/schedule_params/default", fit_func_name="default", constraints_config=None) -> StateManager:
     r_fname = "rooms.csv"
     t_fname = "timeslots.csv"
     c_fname = "courses.csv"
@@ -53,13 +54,13 @@ def generate_state_from_csv(_dir="data/schedule_params/default", fit_func_name="
 
     # Instructors - col 2, 3
     for i in range(len(INSTRUCTORS)):
-        INSTRUCTORS[i][2] = str_to_array(INSTRUCTORS[i][2])
-        INSTRUCTORS[i][3] = str_to_array(INSTRUCTORS[i][3])
+        INSTRUCTORS[i][2] = _str_to_array(INSTRUCTORS[i][2])
+        INSTRUCTORS[i][3] = _str_to_array(INSTRUCTORS[i][3])
 
     # CourseGroups - col 2, 3
     for i in range(len(COURSE_GROUPS)):
-        COURSE_GROUPS[i][2] = str_to_array(COURSE_GROUPS[i][2])
-        COURSE_GROUPS[i][3] = str_to_array(COURSE_GROUPS[i][3])
+        COURSE_GROUPS[i][2] = _str_to_array(COURSE_GROUPS[i][2])
+        COURSE_GROUPS[i][3] = _str_to_array(COURSE_GROUPS[i][3])
 
     # print_params(ROOMS, TIMESLOTS, COURSES, INSTRUCTORS, COURSE_GROUPS)
 
@@ -78,28 +79,17 @@ def generate_state_from_csv(_dir="data/schedule_params/default", fit_func_name="
     # print_params(Rooms, Timeslots, Courses, Instructors, CourseGroups)
 
     # TODO: do a sanity check that the arrays are not empty and contain the objects contain the right attributes
-    FITNESS_FUNCS.get(fit_func_name)
+
+    HARD_CONSTRAINTS, SOFT_CONSTRAINTS = generate_constraints(
+        constraints_config)
+
     return StateManager(
-        Rooms, Timeslots, Courses, Instructors, CourseGroups, FITNESS_FUNCS.get(fit_func_name))
+        Rooms, Timeslots, Courses, Instructors, CourseGroups, FITNESS_FUNCS.get(fit_func_name), HARD_CONSTRAINTS, SOFT_CONSTRAINTS)
 
 
-def str_to_array(str_values):
+def _str_to_array(str_values):
     values = []
     for i in str_values.split(","):
         if i != '':
             values.append(int(i))
     return np.array(values)
-
-
-def print_params(ROOMS, TIMESLOTS, COURSES, INSTRUCTORS, COURSE_GROUPS):
-    print('\nROOMS:')
-    print(ROOMS)
-    print('\nTIMESLOTS:')
-    print(TIMESLOTS)
-    print('\nCOURSES:')
-    print(COURSES)
-    print('\nINSTRUCTORS:')
-    print(INSTRUCTORS)
-    print('\nCOURSE_GROUPS:')
-    print(COURSE_GROUPS)
-    print('\n')

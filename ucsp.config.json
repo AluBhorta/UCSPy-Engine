@@ -48,5 +48,9 @@
       ],
       "use_ids": [1, 2]
     }
+  },
+  "schedule_generator": {
+    "schedule_generators": ["default"],
+    "use": "default"
   }
 }
