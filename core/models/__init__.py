@@ -209,18 +209,27 @@ class Schedule:
         return out
 
 
+class ScheduleParam:
+    def __init__(self, rooms: List[Room], timeslots: List[Timeslot], courses: List[Course], instructors: List[Instructor], course_groups: List[CourseGroup]):
+        self.rooms = rooms
+        self.timeslots = timeslots
+        self.instructors = instructors
+        self.courses = courses
+        self.course_groups = course_groups
+
+
 class StateManager:
     """State Manager
 
     Singleton used to hold & access state of UCSP.
     """
 
-    def __init__(self, rooms: List[Room], timeslots: List[Timeslot], courses: List[Course], instructors: List[Instructor], course_groups: List[CourseGroup], fit_func, HARD_CONSTRAINTS, SOFT_CONSTRAINTS):
-        self.rooms = rooms
-        self.timeslots = timeslots
-        self.instructors = instructors
-        self.courses = courses
-        self.course_groups = course_groups
+    def __init__(self, schedule_param: ScheduleParam, HARD_CONSTRAINTS, SOFT_CONSTRAINTS, fit_func):
+        self.rooms = schedule_param.rooms
+        self.timeslots = schedule_param.timeslots
+        self.instructors = schedule_param.instructors
+        self.courses = schedule_param.courses
+        self.course_groups = schedule_param.course_groups
         self.sections = self._get_sections()
         self.num_of_daily_slots = len(DAILY_SLOT_MAPPING)
         self._fit_func = fit_func

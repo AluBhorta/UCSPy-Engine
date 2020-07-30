@@ -2,26 +2,60 @@ import numpy as np
 from pandas import read_csv
 import os
 
-from core.models import Room, Timeslot, Course, Instructor, CourseGroup, StateManager
-from core.fitness import FITNESS_FUNCS
-from core.generators.generate_constraints import generate_constraints
+from core.models import Room, Timeslot, Course, Instructor, CourseGroup, StateManager, ScheduleParam
 
 
-def generate_state_from_csv(_dir="data/schedule_params/default", fit_func_name="default", constraints_config=None) -> StateManager:
-    r_fname = "rooms.csv"
-    t_fname = "timeslots.csv"
-    c_fname = "courses.csv"
-    i_fname = "instructors.csv"
-    cg_fname = "course_groups.csv"
-    try:
-        R_DF = read_csv(os.path.join(os.getcwd(), _dir, r_fname))
-        T_DF = read_csv(os.path.join(os.getcwd(), _dir, t_fname))
-        C_DF = read_csv(os.path.join(os.getcwd(), _dir, c_fname))
-        I_DF = read_csv(os.path.join(os.getcwd(), _dir, i_fname))
-        CG_DF = read_csv(os.path.join(os.getcwd(), _dir, cg_fname))
-    except:
+def parse_schedule_params(schedule_param_config) -> ScheduleParam:
+
+    if schedule_param_config['use_strategy'] == "folder":
+
+        st = next(
+            s for s in schedule_param_config['strategies'] if s['name'] == 'folder')
+        _path = st['path']
+
+        r_fname = "rooms.csv"
+        t_fname = "timeslots.csv"
+        c_fname = "courses.csv"
+        i_fname = "instructors.csv"
+        cg_fname = "course_groups.csv"
+        try:
+            R_DF = read_csv(os.path.join(
+                os.getcwd(), _path, r_fname))
+            T_DF = read_csv(os.path.join(
+                os.getcwd(), _path, t_fname))
+            C_DF = read_csv(os.path.join(
+                os.getcwd(), _path, c_fname))
+            I_DF = read_csv(os.path.join(
+                os.getcwd(), _path, i_fname))
+            CG_DF = read_csv(os.path.join(
+                os.getcwd(), _path, cg_fname))
+        except:
+            raise Exception(
+                f"ERROR! Required files not found in {_path}. They should be named as follows: {r_fname, t_fname, c_fname, i_fname, cg_fname}"
+            )
+
+    elif schedule_param_config['use_strategy'] == 'discrete_files':
+        st = next(
+            s for s in schedule_param_config['strategies'] if s['name'] == 'discrete_files')
+
+        try:
+            R_DF = read_csv(os.path.join(
+                os.getcwd(), st['discrete_files']['rooms_file']))
+            T_DF = read_csv(os.path.join(
+                os.getcwd(), st['discrete_files']['timeslots_file']))
+            C_DF = read_csv(os.path.join(
+                os.getcwd(), st['discrete_files']['courses_file']))
+            I_DF = read_csv(os.path.join(
+                os.getcwd(), st['discrete_files']['instructors_file']))
+            CG_DF = read_csv(os.path.join(
+                os.getcwd(), st['discrete_files']['coursegroups_file']))
+        except:
+            raise Exception(
+                f"ERROR! Failed to make schedule_param from discrete_files!"
+            )
+    else:
         raise Exception(
-            f"ERROR! Required files not found in {_dir}. They should be named as follows: {r_fname, t_fname, c_fname, i_fname, cg_fname}"
+            f"ERROR! Invalid schedule_param strategy given!"
         )
 
     ROOMS = R_DF.to_numpy()
@@ -76,15 +110,7 @@ def generate_state_from_csv(_dir="data/schedule_params/default", fit_func_name="
     CourseGroups = [CourseGroup(cg[0], cg[1], cg[2], cg[3])
                     for cg in COURSE_GROUPS]
 
-    # print_params(Rooms, Timeslots, Courses, Instructors, CourseGroups)
-
-    # TODO: do a sanity check that the arrays are not empty and contain the objects contain the right attributes
-
-    HARD_CONSTRAINTS, SOFT_CONSTRAINTS = generate_constraints(
-        constraints_config)
-
-    return StateManager(
-        Rooms, Timeslots, Courses, Instructors, CourseGroups, FITNESS_FUNCS.get(fit_func_name), HARD_CONSTRAINTS, SOFT_CONSTRAINTS)
+    return ScheduleParam(Rooms, Timeslots, Courses, Instructors, CourseGroups)
 
 
 def _str_to_array(str_values):

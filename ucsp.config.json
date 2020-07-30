@@ -4,7 +4,6 @@
   "save_logs": false,
   "save_schedule": false,
   "inspect_final_schedule": false,
-  "schedule_params_folder": "data/schedule_params/default/",
   "fitness": {
     "functions": ["default"],
     "use": "default"
@@ -48,6 +47,22 @@
       ],
       "use_ids": [1, 2]
     }
+  },
+  "schedule_param": {
+    "strategies": [
+      { "name": "folder", "path": "data/schedule_params/default/" },
+      {
+        "name": "discrete_files",
+        "discrete_files": {
+          "rooms_file": "data/schedule_params/default/rooms.csv",
+          "timeslots_file": "data/schedule_params/default/timeslots.csv",
+          "courses_file": "data/schedule_params/default/courses.csv",
+          "instructors_file": "data/schedule_params/default/instructors.csv",
+          "coursegroups_file": "data/schedule_params/default/course_groups.csv"
+        }
+      }
+    ],
+    "use_strategy": "discrete_files"
   },
   "schedule_generator": {
     "schedule_generators": ["default"],
