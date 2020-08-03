@@ -18,7 +18,7 @@ def default_fitness(schedule: Schedule, state: StateManager, _inspect=False):
         total_penalty = 0
 
         for soft_constraint in state.soft_constraints:
-            total_penalty += soft_constraint.penalty_of(schedule, _inspect)
+            total_penalty += soft_constraint.penalty_of(schedule, state, _inspect=_inspect)
 
         return total_penalty
 

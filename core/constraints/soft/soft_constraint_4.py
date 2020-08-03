@@ -3,7 +3,7 @@
 
 
 # def penalty_of_soft_constraint_4(schedule: Schedule, unit_penalty=0.5, _inspect=False):
-def penalty_of_soft_constraint_4(schedule, unit_penalty=0.5, _inspect=False):
+def penalty_of_soft_constraint_4(schedule, state, unit_penalty=0.5, _inspect=False):
     """
     4. Instructors have Timeslot preferences.
     (I.preferred_timeslot_idxs)

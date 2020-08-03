@@ -23,23 +23,19 @@ HARD_CONSTRAINT_FUNCS = [
 
 SOFT_CONSTRAINT_FUNCS = [
     {
-        "id": 1, "default_unit_penalty": 0.9, "func": penalty_of_soft_constraint_1,
+        "id": 1, "unit_penalty": 0.9, "func": penalty_of_soft_constraint_1,
         "desc": "Instructors should only take certain courses they are are assigned to"
-
     },
     {
-        "id": 2, "default_unit_penalty": 0.85, "func": penalty_of_soft_constraint_2,
+        "id": 2, "unit_penalty": 0.85, "func": penalty_of_soft_constraint_2,
         "desc": "A particular Room should only allow Classes of certain Courses"
-
     },
     {
-        "id": 3, "default_unit_penalty": 0.6, "func": penalty_of_soft_constraint_3,
+        "id": 3, "unit_penalty": 0.6, "func": penalty_of_soft_constraint_3,
         "desc": "CourseGroups have Timeslot preferences"
-
     },
     {
-        "id": 4, "default_unit_penalty": 0.5, "func": penalty_of_soft_constraint_4,
+        "id": 4, "unit_penalty": 0.5, "func": penalty_of_soft_constraint_4,
         "desc": "Instructors have Timeslot preferences"
-
     },
 ]

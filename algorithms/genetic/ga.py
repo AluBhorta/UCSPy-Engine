@@ -53,13 +53,11 @@ def genetic_algorithm(
             # 2 children produced
             new_population[i + siblig_index] = Schedule(
                 (population[parent1_idx].classes[:crossover_point] +
-                 population[parent2_idx].classes[crossover_point:]),
-                population[i + siblig_index].course_groups
+                 population[parent2_idx].classes[crossover_point:])
             )
             new_population[i] = Schedule(
                 (population[parent2_idx].classes[:crossover_point] +
-                 population[parent1_idx].classes[crossover_point:]),
-                population[i].course_groups
+                 population[parent1_idx].classes[crossover_point:])
             )
 
         """ Mutation """

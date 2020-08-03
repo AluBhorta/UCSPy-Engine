@@ -158,9 +158,8 @@ class Class:
 
 
 class Schedule:
-    def __init__(self, classes: List[Class], course_groups: List[CourseGroup]):
+    def __init__(self, classes: List[Class]):
         self.classes = classes
-        self.course_groups = course_groups
 
     def __str__(self):
         return self.to_csv()
@@ -264,8 +263,7 @@ class StateManager:
                     self.get_room(i[3]),
                     [self.get_timeslot(j) for j in i[4]]
                 )
-            ) for i in num_repr],
-            course_groups=self.course_groups
+            ) for i in num_repr]
         )
 
     def _get_sections(self) -> List[Section]:
