@@ -3,6 +3,7 @@ from pandas import read_csv
 import os
 
 from core.models import Room, Timeslot, Course, Instructor, CourseGroup, StateManager, ScheduleParam
+from core.util import _str_to_array
 
 
 def parse_schedule_params(schedule_param_config) -> ScheduleParam:
@@ -111,11 +112,3 @@ def parse_schedule_params(schedule_param_config) -> ScheduleParam:
                     for cg in COURSE_GROUPS]
 
     return ScheduleParam(Rooms, Timeslots, Courses, Instructors, CourseGroups)
-
-
-def _str_to_array(str_values):
-    values = []
-    for i in str_values.split(","):
-        if i != '':
-            values.append(int(i))
-    return np.array(values)

@@ -191,7 +191,7 @@ class Schedule:
         return out
 
     def to_num_csv(self):
-        """ To numeric csv format """
+        """ to numeric csv format """
         out = "Course,Section,Instructor,Room,Timeslots\n"
         nr = self.get_numeric_repr()
         for c in nr:

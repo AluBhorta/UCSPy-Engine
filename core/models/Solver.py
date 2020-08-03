@@ -9,7 +9,7 @@ from algorithms.genetic.smart_mut_ga import smart_mut_genetic_algorithm
 from algorithms.memetic.memetic import memetic_algorithm
 from algorithms.pso.pso import particle_swarm_optimization
 from core.logging import UCSPLogger
-from core.generators.generate_state import generate_state_manager
+from core.generators.generate_state import generate_state_from_config
 
 
 class UCSPSolver:
@@ -40,12 +40,7 @@ class UCSPSolver:
     ):
         self._config = self._parse_config_file(config_file)
 
-        schedule_param_config = self._config['schedule_param']
-        fit_func_name = self._config['fitness']['use'] or "default"
-        constraints_config = self._config['constraints']
-
-        self._state = generate_state_manager(
-            schedule_param_config, constraints_config, fit_func_name)
+        self._state = generate_state_from_config(config_file)
 
         self._logger = UCSPLogger(save_logs or self._config['save_logs'])
         self._save_sch = save_sch or self._config['save_schedule']
@@ -190,14 +185,20 @@ class UCSPSolver:
     def _write_schedule(self, sch: Schedule):
         if self._save_sch:
             t = datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
-            fname = os.path.join(
-                os.getcwd(), "data/schedules", f"schedule-{t}.csv")
 
+            fname = os.path.join(
+                os.getcwd(), "data/schedules", f"sch-str-{t}.csv")
             with open(fname, "w") as f:
                 f.write(sch.to_csv())
-
             self._logger.write(
-                f"\nSchedule successfully saved to {fname}")
+                f"\nHuman Readable Schedule successfully saved to {fname}")
+
+            fname = os.path.join(
+                os.getcwd(), "data/schedules", f"sch-num-{t}.csv")
+            with open(fname, "w") as f:
+                f.write(sch.to_num_csv())
+            self._logger.write(
+                f"\nNumeric Schedule successfully saved to {fname}")
         else:
             print("\nFinal Schedule: \n")
             print(sch)
