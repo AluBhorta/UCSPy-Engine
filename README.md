@@ -150,19 +150,19 @@ The following are the current constraints that UCSPy-Engine holds, which are mos
 
 ##### Soft Constraints
 
-The Default penalty values for violation of a soft constraint once is shown in the square brackets.
-
-1. [0.9] Instructors should only take certain courses they are assigned to
+1. Instructors should only take certain courses they are assigned to
    (I.assigned_course_idxs)
 
-1. [0.85] A particular Room should only allow Classes of allowed Courses
+1. A particular Room should only allow Classes of allowed Courses
    (R.allowed_course_idxs)
 
-1. [0.8] CourseGroups have Timeslot preferences.
+1. CourseGroups have Timeslot preferences.
    (CG.preferred_timeslot_idxs)
 
-1. [0.6] Instructors have Timeslot preferences.
+1. Instructors have Timeslot preferences.
    (I.preferred_timeslot_idxs)
+
+1. Lectures of the same Class (of a Course) should be taken at one day intervals, if the Course has 2 lectures_per_week and 1 timeslots_per_lecture.
 
 NOTE:
 - institutions can and should adjust the penalties to their needs.
