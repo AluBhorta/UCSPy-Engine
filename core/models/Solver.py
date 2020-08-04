@@ -201,7 +201,7 @@ class UCSPSolver:
                 f"\nNumeric Schedule successfully saved to {fname}")
         else:
             print("\nFinal Schedule: \n")
-            print(sch)
+            print(sch.to_tsv())
 
         fit = self._state.fitness(sch, _inspect=self._inspect_final_sch)
         print(f"Final fitness: {fit}")

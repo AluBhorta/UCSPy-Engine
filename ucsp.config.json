@@ -35,9 +35,14 @@
           "id": 5,
           "unit_penalty": 0.8,
           "desc": "Lectures of the same Class (of a Course) should be taken at one day intervals, if the Course has 2 lectures_per_week and 1 timeslots_per_lecture."
+        },
+        {
+          "id": 6,
+          "unit_penalty": 0.8,
+          "desc": "The Lab Section of a Course (if any) should be placed in adjacent Timeslots to the corresponding Theory Section."
         }
       ],
-      "use_ids": [1, 2, 3, 4, 5]
+      "use_ids": [1, 2, 3, 4, 5, 6]
     },
     "hard_constraints": {
       "constraints": [

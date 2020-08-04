@@ -61,7 +61,7 @@ A course consists of:
 - `idx`: unique index.
 - `desc`: detail description. Can contain meta-information.
 - `num_of_sections`: number of sections of that course to be offered.
-- `timeslots_per_lecture`: how many timeslots will be offered in a lecture. A `lecture` represents a physical event in the real world that has consecutive timeslots.
+- `timeslots_per_lecture`: how many timeslots will be offered in a lecture. A `lecture` represents a physical event in the real world that can have consecutive timeslots.
 - `lectures_per_week`: how many lectures are offered in a week.
 - `course_type`: Lab or Theory (more types can be used).
 - `sections`: Reference to the collection of all the Sections.
@@ -164,8 +164,11 @@ The following are the current constraints that UCSPy-Engine holds, which are mos
 
 1. Lectures of the same Class (of a Course) should be taken at one day intervals, if the Course has 2 lectures_per_week and 1 timeslots_per_lecture.
 
+1. The Lab Section of a Course (if any) should be placed in adjacent Timeslots to the corresponding Theory Section.
+
 NOTE:
 - institutions can and should adjust the penalties to their needs.
+- the Lab course should should be directly after its corresponding Theory course in the `courses.csv` schedule_param
 
 ### The Output
 

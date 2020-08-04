@@ -190,6 +190,22 @@ class Schedule:
 
         return out
 
+    def to_tsv(self):
+        """ to human-readable csv format """
+        out = "Course\tSection\tInstructor\tRoom\tTimeslots\n"
+        for c in self.classes:
+            ts = '"'
+            l = len(c.timeslots)
+            for i in range(l):
+                if i == l-1:
+                    ts += c.timeslots[i].desc + '"'
+                else:
+                    ts += c.timeslots[i].desc + ','
+
+            out += f"{c.section.course.desc}\t{c.section.sec_number}\t{c.instructor.desc}\t{c.room.desc}\t{ts}\n"
+
+        return out
+
     def to_num_csv(self):
         """ to numeric csv format """
         out = "Course,Section,Instructor,Room,Timeslots\n"
@@ -234,6 +250,15 @@ class StateManager:
         self._fit_func = fit_func
         self.hard_constraints = HARD_CONSTRAINTS
         self.soft_constraints = SOFT_CONSTRAINTS
+        self.tl_course_paris = self._get_theory_lab_course_paris()
+
+    def _get_theory_lab_course_paris(self):
+        """ NOTE: for this to work, the Lab course should should be directly after its corresponding Theory course  in the `courses.csv` schedule_param"""
+        paris = []
+        for crs in self.courses:
+            if crs.course_type.lower() == "lab":
+                paris.append((crs.idx-1, crs.idx))
+        return paris
 
     def fitness(self, sch: Schedule, _inspect=False) -> float:
         return self._fit_func(sch, self, _inspect)

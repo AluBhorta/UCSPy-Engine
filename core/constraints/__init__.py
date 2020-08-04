@@ -7,6 +7,7 @@ from core.constraints.soft.soft_constraint_2 import penalty_of_soft_constraint_2
 from core.constraints.soft.soft_constraint_3 import penalty_of_soft_constraint_3
 from core.constraints.soft.soft_constraint_4 import penalty_of_soft_constraint_4
 from core.constraints.soft.soft_constraint_5 import penalty_of_soft_constraint_5
+from core.constraints.soft.soft_constraint_6 import penalty_of_soft_constraint_6
 
 
 """ to learn how to add new constraints, read `core/constraints/modify_constraints.md` """
@@ -42,5 +43,9 @@ SOFT_CONSTRAINT_FUNCS = [
     {
         "id": 5, "unit_penalty": 0.8, "func": penalty_of_soft_constraint_5,
         "desc": "Lectures of the same Class (of a Course) should be taken at one day intervals, if the Course has more than one Lectures per week."
+    },
+    {
+        "id": 6, "unit_penalty": 0.8, "func": penalty_of_soft_constraint_6,
+        "desc": "The Lab Section of a Course (if any) should be placed in adjacent Timeslots to the corresponding Theory Section."
     },
 ]
