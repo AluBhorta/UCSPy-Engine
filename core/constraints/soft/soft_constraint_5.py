@@ -29,7 +29,7 @@ def penalty_of_soft_constraint_5(schedule: Schedule, state: StateManager, unit_p
                 violation_count += 1
                 if _inspect:
                     print(
-                        f"Violation of SC5 ('Lectures of the same Class (of a Course) should be taken at one day intervals, if the Course has 2 lectures_per_week and 1 timeslots_per_lecture.') - of class: \n {c}"
+                        f"Violation of SC5 ('Lectures of the same Class (of a Course) should be taken at one day intervals, if the Course has 2 lectures_per_week and 1 timeslots_per_lecture.') - of class:\n\t{c}"
                     )
 
     return violation_count * unit_penalty

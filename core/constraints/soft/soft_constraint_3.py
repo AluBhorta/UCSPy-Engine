@@ -22,7 +22,7 @@ def penalty_of_soft_constraint_3(schedule, state, unit_penalty=0.6, _inspect=Fal
                     violation_count += 1
                     if _inspect:
                         print(
-                            f"Violation of SC3 ('CourseGroups have Timeslot preferences') - of class: \n {c}"
+                            f"Violation of SC3 ('CourseGroups have Timeslot preferences') - of class:\n\t{c}"
                         )
                     break
 

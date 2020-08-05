@@ -65,6 +65,7 @@ A course consists of:
 - `lectures_per_week`: how many lectures are offered in a week.
 - `course_type`: Lab or Theory (more types can be used).
 - `sections`: Reference to the collection of all the Sections.
+- `credits`: The credits rewarded for taking this particular course. Currently the credits are being deduced by the `course_type` attribute, but it can be assigned explicitly to individual courses.
 
 ##### Section
 
@@ -107,6 +108,7 @@ An Instructor consists of:
 - `desc`: detail description. Can contain meta-information.
 - `assigned_course_idxs`: the collection of courses that they are assigned.
 - `preferred_timeslot_idxs`: timeslots they prefer.
+- `min_credit_req`: the minimum credits that should be taken by a particular instructor.
 
 ##### CourseGroup
 
@@ -165,6 +167,8 @@ The following are the current constraints that UCSPy-Engine holds, which are mos
 1. Lectures of the same Class (of a Course) should be taken at one day intervals, if the Course has 2 lectures_per_week and 1 timeslots_per_lecture.
 
 1. The Lab Section of a Course (if any) should be placed in adjacent Timeslots to the corresponding Theory Section.
+
+1. Instructors have minimum credit load requirements.
 
 NOTE:
 - institutions can and should adjust the penalties to their needs.

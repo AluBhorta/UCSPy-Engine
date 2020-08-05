@@ -97,17 +97,15 @@ def parse_schedule_params(schedule_param_config) -> ScheduleParam:
         COURSE_GROUPS[i][2] = _str_to_array(COURSE_GROUPS[i][2])
         COURSE_GROUPS[i][3] = _str_to_array(COURSE_GROUPS[i][3])
 
-    # print_params(ROOMS, TIMESLOTS, COURSES, INSTRUCTORS, COURSE_GROUPS)
-
     '''
-    TODO: deduce implied sanity check
-    if NUM_OF_LECS_BEING_OFFERED > MAX_LECS_THAT_CAN_BE_OFFERED:
+    TODO: deduce implied sanity checks
+    - if NUM_OF_LECS_BEING_OFFERED > MAX_LECS_THAT_CAN_BE_OFFERED:
     '''
 
     Rooms = [Room(r[0], r[1], r[2], r[3]) for r in ROOMS]
     Timeslots = [Timeslot(t[0], t[1], t[2]) for t in TIMESLOTS]
     Courses = [Course(c[0], c[1], c[2], c[3], c[4], c[5]) for c in COURSES]
-    Instructors = [Instructor(i[0], i[1], i[2], i[3]) for i in INSTRUCTORS]
+    Instructors = [Instructor(i[0], i[1], i[2], i[3], i[4]) for i in INSTRUCTORS]
     CourseGroups = [CourseGroup(cg[0], cg[1], cg[2], cg[3])
                     for cg in COURSE_GROUPS]
 

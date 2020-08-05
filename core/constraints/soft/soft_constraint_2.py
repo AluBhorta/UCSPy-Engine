@@ -14,7 +14,7 @@ def penalty_of_soft_constraint_2(schedule, state, unit_penalty=0.85, _inspect=Fa
             violation_count += 1
             if _inspect:
                 print(
-                    f"Violation of SC2 ('A particular Room should only allow Classes of certain Courses') - of class: \n {c}"
+                    f"Violation of SC2 ('A particular Room should only allow Classes of certain Courses') - of class:\n\t{c}"
                 )
 
     return violation_count * unit_penalty

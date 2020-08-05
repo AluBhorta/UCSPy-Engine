@@ -39,6 +39,6 @@ def penalty_of_soft_constraint_6(schedule: Schedule, state: StateManager, unit_p
                     violation_count += 1
                     if _inspect:
                         print(
-                            f"Violation of SC6 ('The Lab Section of a Course (if any) should be placed in adjacent Timeslots to the corresponding Theory Section.') - of class: \n {cls_pair[1]}"
+                            f"Violation of SC6 ('The Lab Section of a Course (if any) should be placed in adjacent Timeslots to the corresponding Theory Section.') - of class:\n\t{cls_pair[1]}"
                         )
     return violation_count * unit_penalty

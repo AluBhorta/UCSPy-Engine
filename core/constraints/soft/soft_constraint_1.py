@@ -14,7 +14,7 @@ def penalty_of_soft_constraint_1(schedule, state, unit_penalty=0.9, _inspect=Fal
             violation_count += 1
             if _inspect:
                 print(
-                    f"Violation of SC1 ('Instructors should only take certain courses they are are assigned to') - of class: \n {c}"
+                    f"Violation of SC1 ('Instructors should only take certain courses they are are assigned to') - of class:\n\t{c}"
                 )
 
     return violation_count * unit_penalty

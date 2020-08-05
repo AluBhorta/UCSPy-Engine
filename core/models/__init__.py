@@ -65,6 +65,10 @@ class Course:
         self.lectures_per_week = lectures_per_week
         self.course_type = course_type
         self.sections = self._generate_sections()
+        self.credits = self._get_credits()
+
+    def _get_credits(self):
+        return 1 if self.course_type.lower() == "lab" else 3
 
     def __str__(self):
         return f"""Course - idx: {self.idx}, desc: {self.desc}"""
@@ -94,11 +98,12 @@ class Section:
 
 
 class Instructor:
-    def __init__(self, idx, desc, assigned_course_idxs, preferred_timeslot_idxs):
+    def __init__(self, idx, desc, assigned_course_idxs, preferred_timeslot_idxs, min_credit_req):
         self.idx = idx
         self.desc = desc
         self.assigned_course_idxs = assigned_course_idxs
         self.preferred_timeslot_idxs = preferred_timeslot_idxs
+        self.min_credit_req = min_credit_req
 
     def __str__(self):
         return f"""Instructor - idx: {self.idx}, desc: {self.desc}"""
@@ -108,6 +113,7 @@ class Instructor:
             {self.__str__()}, 
             assigned_course_idxs: {self.assigned_course_idxs}, 
             preferred_timeslot_idxs: {self.preferred_timeslot_idxs} 
+            min_credit_req: {self.min_credit_req} 
             \n
         """
 
