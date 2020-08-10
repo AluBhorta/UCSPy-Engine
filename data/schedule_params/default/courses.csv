@@ -1,44 +1,44 @@
-Course Index,Description,Number of Sections to be offered,Timeslots Per Lecture,Lectures Per Week,Course Type
-0,CSC101,5,1,2,Theory
-1,CSC101L,5,1,1,Lab
-2,CSC121,1,1,2,Theory
-3,CSC121L,1,1,1,Lab
-4,CSE104,4,1,2,Theory
-5,CSE104L,4,1,1,Lab
-6,CSE201,3,1,2,Theory
-7,CSE203,5,1,2,Theory
-8,CSE203L,5,1,1,Lab
-9,CSE204,4,1,2,Theory
-10,CSE204L,4,1,1,Lab
-11,CSE210,3,1,2,Theory
-12,CSE210L,3,1,1,Lab
-13,CSE211,3,1,2,Theory
-14,CSE211L,3,1,1,Lab
-15,CSE213,3,1,2,Theory
-16,CSE213L,3,1,1,Lab
-17,CSE214,2,1,2,Theory
-18,CSE216,2,1,2,Theory
-19,CSE216L,2,1,1,Lab
-20,CSE303,2,1,2,Theory
-21,CSE303L,2,1,1,Lab
-22,CSE307,2,1,2,Theory
-23,CSE309,2,1,2,Theory
-24,CSE310,2,1,2,Theory
-25,CSE310L,2,1,1,Lab
-26,CSE313,2,1,2,Theory
-27,CSE315,2,1,2,Theory
-28,CSE316,2,1,2,Theory
-29,CSE316L,2,1,1,Lab
-30,CSE317,2,1,2,Theory
-31,CSE317L,2,1,1,Lab
-32,CSE402,1,2,1,Theory
-33,CSE 437,2,2,1,Theory
-34,CSE 417,1,2,1,Theory
-35,CSE421,1,2,1,Theory
-36,CSE425,1,2,1,Theory
-37,CSE426,1,2,1,Theory
-38,CSE451,1,2,1,Theory
-39,CSE 458,1,2,1,Theory
-40,CSE453,1,2,1,Theory
-41,CSE464,1,2,1,Theory
-42,CSE471,1,2,1,Theory
+Course Index,Description,Number of Sections to be offered,Lectures Per Week,Course Type
+0,CSC101,5,2,Theory
+1,CSC101L,5,1,Lab
+2,CSC121,1,2,Theory
+3,CSC121L,1,1,Lab
+4,CSE104,4,2,Theory
+5,CSE104L,4,1,Lab
+6,CSE201,3,2,Theory
+7,CSE203,5,2,Theory
+8,CSE203L,5,1,Lab
+9,CSE204,4,2,Theory
+10,CSE204L,4,1,Lab
+11,CSE210,3,2,Theory
+12,CSE210L,3,1,Lab
+13,CSE211,3,2,Theory
+14,CSE211L,3,1,Lab
+15,CSE213,3,2,Theory
+16,CSE213L,3,1,Lab
+17,CSE214,2,2,Theory
+18,CSE216,2,2,Theory
+19,CSE216L,2,1,Lab
+20,CSE303,2,2,Theory
+21,CSE303L,2,1,Lab
+22,CSE307,2,2,Theory
+23,CSE309,2,2,Theory
+24,CSE310,2,2,Theory
+25,CSE310L,2,1,Lab
+26,CSE313,2,2,Theory
+27,CSE315,2,2,Theory
+28,CSE316,2,2,Theory
+29,CSE316L,2,1,Lab
+30,CSE317,2,2,Theory
+31,CSE317L,2,1,Lab
+32,CSE402,1,1,Theory
+33,CSE 437,2,1,Theory
+34,CSE 417,2,1,Theory
+35,CSE421,1,1,Theory
+36,CSE425,1,1,Theory
+37,CSE426,1,1,Theory
+38,CSE451,1,1,Theory
+39,CSE 458,2,1,Theory
+40,CSE453,1,1,Theory
+41,CSE464,1,1,Theory
+42,CSE471,1,1,Theory

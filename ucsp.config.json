@@ -1,12 +1,12 @@
 {
   "version": 0.1,
 
-  "save_logs": true,
-  "save_schedule": true,
+  "save_logs": false,
+  "save_schedule": false,
   "inspect_final_schedule": false,
   "fitness": {
     "functions": ["default", "default_expo"],
-    "use": "default_expo"
+    "use": "default"
   },
   "constraints": {
     "soft_constraints": {
@@ -46,7 +46,7 @@
             "desc": "Instructors have minimum credit load requirements."
         }
       ],
-      "use_ids": [1, 2, 3, 4, 5, 6, 7]
+      "use_ids": [1, 2, 3, 4,  6, 7]
     },
     "hard_constraints": {
       "constraints": [
@@ -77,9 +77,5 @@
       }
     ],
     "use_strategy": "discrete_files"
-  },
-  "schedule_generator": {
-    "schedule_generators": ["default"],
-    "use": "default"
   }
 }

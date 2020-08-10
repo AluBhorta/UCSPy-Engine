@@ -61,8 +61,7 @@ A course consists of:
 - `idx`: unique index.
 - `desc`: detail description. Can contain meta-information.
 - `num_of_sections`: number of sections of that course to be offered.
-- `timeslots_per_lecture`: how many timeslots will be offered in a lecture. A `lecture` represents a physical event in the real world that can have consecutive timeslots.
-- `lectures_per_week`: how many lectures are offered in a week.
+- `lectures_per_week`: how many lectures are offered in a week. A `lecture` represents a physical event in the real world.
 - `course_type`: Lab or Theory (more types can be used).
 - `sections`: Reference to the collection of all the Sections.
 - `credits`: The credits rewarded for taking this particular course. Currently the credits are being deduced by the `course_type` attribute, but it can be assigned explicitly to individual courses.

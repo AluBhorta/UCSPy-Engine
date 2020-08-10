@@ -65,10 +65,17 @@ def parse_schedule_params(schedule_param_config) -> ScheduleParam:
     INSTRUCTORS = I_DF.to_numpy()
     COURSE_GROUPS = CG_DF.to_numpy()
 
-    all_theory_courses = list(filter(lambda x: x[5] == "Theory", COURSES))
-    all_theory_course_indices = [c[0] for c in all_theory_courses]
-
     """ parse collections """
+
+    return _get_parsed_schedule_param(
+        (ROOMS, TIMESLOTS, COURSES, INSTRUCTORS, COURSE_GROUPS)
+    )
+
+
+def _get_parsed_schedule_param(param_collection) -> ScheduleParam:
+    ROOMS, TIMESLOTS, COURSES, INSTRUCTORS, COURSE_GROUPS = param_collection
+    all_theory_courses = list(filter(lambda x: x[4] == "Theory", COURSES))
+    all_theory_course_indices = [c[0] for c in all_theory_courses]
 
     # Rooms - col 3: allowed_courses
     for i in range(len(ROOMS)):
@@ -102,10 +109,19 @@ def parse_schedule_params(schedule_param_config) -> ScheduleParam:
     - if NUM_OF_LECS_BEING_OFFERED > MAX_LECS_THAT_CAN_BE_OFFERED:
     '''
 
+    for i in range(len(TIMESLOTS)):
+        if TIMESLOTS[i][3] == '-':
+            TIMESLOTS[i][3] = []
+        elif len(TIMESLOTS[i][3]) == 1:
+            TIMESLOTS[i][3] = [int(TIMESLOTS[i][3])]
+        else:
+            TIMESLOTS[i][3] = _str_to_array(TIMESLOTS[i][3])
+        Timeslots = [Timeslot(t[0], t[1], t[2], t[3]) for t in TIMESLOTS]
+
     Rooms = [Room(r[0], r[1], r[2], r[3]) for r in ROOMS]
-    Timeslots = [Timeslot(t[0], t[1], t[2]) for t in TIMESLOTS]
-    Courses = [Course(c[0], c[1], c[2], c[3], c[4], c[5]) for c in COURSES]
-    Instructors = [Instructor(i[0], i[1], i[2], i[3], i[4]) for i in INSTRUCTORS]
+    Courses = [Course(c[0], c[1], c[2], c[3], c[4]) for c in COURSES]
+    Instructors = [Instructor(i[0], i[1], i[2], i[3], i[4])
+                   for i in INSTRUCTORS]
     CourseGroups = [CourseGroup(cg[0], cg[1], cg[2], cg[3])
                     for cg in COURSE_GROUPS]
 

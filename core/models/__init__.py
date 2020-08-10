@@ -2,35 +2,44 @@ from typing import List
 from numpy import array
 
 
-DAILY_SLOT_MAPPING = {
-    0: '08:00-09:30',
-    1: '09:40-11:10',
-    2: '11:20-12:50',
-    3: '12:50-13:40',
-    4: '13:40-15:10',
-    5: '15:20-16:50',
-    6: '17:00-18:30',
-    7: '18:30-20:00',
-    8: '20:00-21:30',
-}
+DAILY_SLOTS = [
+    '08:00-09:30',
+    '09:40-11:10',
+    '11:20-12:50',
+    '13:40-15:10',
+    '15:20-16:50',
+    '17:00-18:30',
+    '18:30-21:30',
+]
+
+DAY_CODES = [
+    'ST',
+    'MW',
+    'S',
+    'T',
+    'M',
+    'W',
+    'R',
+]
 
 
 class Timeslot:
-    def __init__(self, idx, weekday, daily_slot):
+    def __init__(self, idx, day_code, daily_slot, conflicts_with_idxs):
         self.idx = idx
-        self.weekday = weekday
+        self.day_code = day_code
         self.daily_slot = daily_slot
-        self.desc = self._generate_desc()
+        self.conflicts_with_idxs = conflicts_with_idxs
+        self.desc = self.__str__()
 
     def __str__(self):
-        return f"""Timeslot - idx: {self.idx}, desc: {self.desc}"""
+        return f"""{self.day_code} {self.daily_slot}"""
 
     def __repr__(self):
-        return f"""{self.__str__()}, daily_slot: {self.daily_slot} ;
+        return f"""Timeslot - idx: {self.idx}, 
+            {self.__str__()},
+            conflicts_with_idxs: {self.conflicts_with_idxs}
+            \n
         """
-
-    def _generate_desc(self):
-        return f"{self.weekday}: {DAILY_SLOT_MAPPING.get(self.daily_slot)}"
 
 
 class Room:
@@ -57,11 +66,11 @@ class Room:
 
 
 class Course:
-    def __init__(self, idx, desc, num_of_sections, timeslots_per_lecture, lectures_per_week, course_type):
+    def __init__(self, idx, desc, num_of_sections, lectures_per_week, course_type):
         self.idx = idx
         self.desc = desc
         self.num_of_sections = num_of_sections
-        self.timeslots_per_lecture = timeslots_per_lecture
+        # TODO: 'timeslots_per_lecture' is now redundant
         self.lectures_per_week = lectures_per_week
         self.course_type = course_type
         self.sections = self._generate_sections()
@@ -77,7 +86,6 @@ class Course:
         return f"""
             {self.__str__()},
             num_of_sections: {self.num_of_sections},
-            timeslots_per_lecture: {self.timeslots_per_lecture},
             lectures_per_week: {self.lectures_per_week},
             course_type: {self.course_type},
             sections: {self.sections}
@@ -94,7 +102,10 @@ class Section:
         self.sec_number = sec_number
 
     def __repr__(self):
-        return f'Section - course_idx: {self.course.idx}, section: {self.sec_number}'
+        return f'''Section - course_idx: {self.course.idx}, 
+            section: {self.sec_number}
+            \n
+        '''
 
 
 class Instructor:
@@ -142,15 +153,15 @@ class Class:
         section: Section,
         instructor: Instructor,
         room: Room,
-        timeslots: List[Timeslot]
+        timeslot: Timeslot
     ):
         self.section = section
         self.instructor = instructor
         self.room = room
-        self.timeslots = timeslots
+        self.timeslot = timeslot
 
     def __str__(self):
-        return f"""Class: ({self.section.course.desc, self.section.sec_number, self.instructor.desc, self.room.desc, str([t.desc for t in self.timeslots])})\n"""
+        return f"""Class: ({self.section.course.desc, self.section.sec_number, self.instructor.desc, self.room.desc, self.timeslot })\n"""
 
     def __repr__(self):
         return f"""### CLASS ###
@@ -158,7 +169,7 @@ class Class:
             Section:\t{self.section}
             Instructor:\t{self.instructor}
             Room:\t{self.room}
-            Timeslots:\t{self.timeslots}
+            Timeslot:\t{self.timeslot}
             \n
         """
 
@@ -168,7 +179,7 @@ class Schedule:
         self.classes = classes
 
     def __str__(self):
-        return self.to_csv()
+        return self.to_tsv()
 
     def get_numeric_repr(self):
         """ NOTE: returns schedule in np.array<(C, S, I, R, Ts[])> format """
@@ -177,56 +188,29 @@ class Schedule:
             c.section.sec_number,
             c.instructor.idx,
             c.room.idx,
-            array([t.idx for t in c.timeslots]),
+            c.timeslot.idx
         ) for c in self.classes])
 
     def to_csv(self):
         """ to human-readable csv format """
-        out = "Course,Section,Instructor,Room,Timeslots\n"
+        out = "Course,Section,Instructor,Room,Timeslot\n"
         for c in self.classes:
-            ts = '"'
-            l = len(c.timeslots)
-            for i in range(l):
-                if i == l-1:
-                    ts += c.timeslots[i].desc + '"'
-                else:
-                    ts += c.timeslots[i].desc + ','
-
-            out += f"{c.section.course.desc},{c.section.sec_number},{c.instructor.desc},{c.room.desc},{ts}\n"
-
+            out += f"{c.section.course.desc},{c.section.sec_number},{c.instructor.desc},{c.room.desc},{c.timeslot.desc}\n"
         return out
 
     def to_tsv(self):
         """ to human-readable csv format """
-        out = "Course\tSection\tInstructor\tRoom\tTimeslots\n"
+        out = "Course\tSection\tInstructor\tRoom\tTimeslot\n"
         for c in self.classes:
-            ts = '"'
-            l = len(c.timeslots)
-            for i in range(l):
-                if i == l-1:
-                    ts += c.timeslots[i].desc + '"'
-                else:
-                    ts += c.timeslots[i].desc + ','
-
-            out += f"{c.section.course.desc}\t{c.section.sec_number}\t{c.instructor.desc}\t{c.room.desc}\t{ts}\n"
-
+            out += f"{c.section.course.desc}\t{c.section.sec_number}\t{c.instructor.desc}\t{c.room.desc}\t{c.timeslot.desc}\n"
         return out
 
     def to_num_csv(self):
         """ to numeric csv format """
-        out = "Course,Section,Instructor,Room,Timeslots\n"
+        out = "Course,Section,Instructor,Room,Timeslot\n"
         nr = self.get_numeric_repr()
         for c in nr:
-            ts = '"'
-            l = len(c[4])
-            for i in range(l):
-                if i == l-1:
-                    ts += str(c[4][i]) + '"'
-                else:
-                    ts += str(c[4][i]) + ','
-
-            out += f"{c[0]},{c[1]},{c[2]},{c[3]},{ts}\n"
-
+            out += f"{c[0]},{c[1]},{c[2]},{c[3]},{c[4]}\n"
         return out
 
 
@@ -252,7 +236,9 @@ class StateManager:
         self.courses = schedule_param.courses
         self.course_groups = schedule_param.course_groups
         self.sections = self._get_sections()
-        self.num_of_daily_slots = len(DAILY_SLOT_MAPPING)
+        self.daily_slots = DAILY_SLOTS
+        self.num_of_daily_slots = len(DAILY_SLOTS)
+        self.day_codes = DAY_CODES
         self._fit_func = fit_func
         self.hard_constraints = HARD_CONSTRAINTS
         self.soft_constraints = SOFT_CONSTRAINTS
@@ -284,7 +270,7 @@ class StateManager:
         """ 
         returns a Schedule from `num_repr`
 
-        NOTE: `num_repr` is of type np.array<(C, S, I, R, Ts[])>
+        NOTE: `num_repr` is of type np.array<(C, S, I, R, T)>
         """
         return Schedule(
             classes=[(
@@ -292,7 +278,7 @@ class StateManager:
                     Section(self.get_course(i[0]), i[1]),
                     self.get_instructor(i[2]),
                     self.get_room(i[3]),
-                    [self.get_timeslot(j) for j in i[4]]
+                    self.get_timeslot(i[4])
                 )
             ) for i in num_repr]
         )
@@ -314,3 +300,6 @@ class StateManager:
 
     def get_instructor(self, instructor_idx):
         return self.instructors[instructor_idx]
+
+    def get_course_group(self, course_group_idx):
+        return self.course_groups[course_group_idx]
