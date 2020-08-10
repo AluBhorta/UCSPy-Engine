@@ -19,8 +19,7 @@ def penalty_of_soft_constraint_6(schedule: Schedule, state: StateManager, unit_p
         elif t.day_code == day_codes[1]:
             valid_days = ["M", "W"]
         else:
-            raise Exception(
-                f"ERROR! Invalid day code of Timeslot {t} to have adjacent lab section. Valid day codes are {day_codes}.")
+            return []
 
         # get valid slots
         current_daily_slot_idx = None
@@ -55,13 +54,12 @@ def penalty_of_soft_constraint_6(schedule: Schedule, state: StateManager, unit_p
         theory_cls = _get_classes_of_course_idx(pair[0])
         lab_cls = _get_classes_of_course_idx(pair[1])
         for theory_lab_pair in zip(theory_cls, lab_cls):
-
             theory_timeslot = theory_lab_pair[0].timeslot
             lab_timeslot = theory_lab_pair[1].timeslot
 
             theory_adj_ts_idxs = _get_ajd_timeslot_idxs(theory_timeslot)
 
-            if lab_timeslot.idx not in theory_adj_ts_idxs:
+            if len(theory_adj_ts_idxs) > 0 and lab_timeslot.idx not in theory_adj_ts_idxs:
                 violation_count += 1
                 if _inspect:
                     print(

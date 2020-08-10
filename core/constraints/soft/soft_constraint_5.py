@@ -16,6 +16,5 @@ def penalty_of_soft_constraint_5(schedule: Schedule, state: StateManager, unit_p
                     print(
                         f"Violation of SC5 ('If a Course has 2 Lectures Per Week, it should take place in a composite Timeslot i.e. with Day code of 'ST' or 'MW'.') - of class:\n\t{c}"
                     )
-    print(violation_count * unit_penalty)
 
     return violation_count * unit_penalty
