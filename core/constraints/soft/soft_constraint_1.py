@@ -1,12 +1,10 @@
 
-# from core.models import Schedule
+from core.models import Schedule, StateManager
 
 
-# def penalty_of_soft_constraint_1(schedule: Schedule, unit_penalty=0.9, _inspect=False):
-def penalty_of_soft_constraint_1(schedule, state, unit_penalty=0.9, _inspect=False):
+def penalty_of_soft_constraint_1(schedule: Schedule, state: StateManager, unit_penalty, _inspect=False):
     """
-    1. Instructors should only take certain courses they are are assigned to
-    (I.assigned_course_idxs)
+    1. Instructors should only take certain courses they are are assigned to.
     """
     violation_count = 0
     for c in schedule.classes:

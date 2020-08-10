@@ -1,24 +1,17 @@
-# from core.models import Schedule
+from core.models import Schedule
 
 
-# def violates_hard_constraint_2(schedule: Schedule):
-def violates_hard_constraint_2(schedule):
+def violates_hard_constraint_2(schedule: Schedule):
     """
-    Hard Constraint 2: No instructor can take more than one lecture at a given Timeslot
-    (I, T)
+    Hard Constraint 2: No Instructor can take more than one class at a given Timeslot.
     """
-    # (int instr_idx, int[] timeslot_idxs)[]
-    unique_instr_timeslots = []
+    unique_instr_timeslot_pairs = []
 
     for c in schedule.classes:
-        for u_ITs in unique_instr_timeslots:
-            if c.instructor.idx == u_ITs[0]:
-                c_t_idxs = set(t.idx for t in c.timeslots)
-                intersection = list(c_t_idxs.intersection(u_ITs[1]))
-                if len(intersection) > 0:
-                    return True
+        for unique_pair in unique_instr_timeslot_pairs:
+            if c.instructor.idx == unique_pair[0] and c.timeslot.idx == unique_pair[1]:
+                return True
 
-        unique_instr_timeslots.append(
-            (c.instructor.idx, [t.idx for t in c.timeslots]))
+        unique_instr_timeslot_pairs.append((c.instructor.idx, c.timeslot.idx))
 
     return False

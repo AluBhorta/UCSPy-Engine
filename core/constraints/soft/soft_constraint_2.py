@@ -1,12 +1,9 @@
+from core.models import Schedule, StateManager
 
-# from core.models import Schedule
 
-
-# def penalty_of_soft_constraint_2(schedule: Schedule, unit_penalty=0.85, _inspect=False):
-def penalty_of_soft_constraint_2(schedule, state, unit_penalty=0.85, _inspect=False):
+def penalty_of_soft_constraint_2(schedule: Schedule, state: StateManager, unit_penalty, _inspect=False):
     """
-    2. A particular Room should only allow Classes of certain Courses		
-    (R.allowed_course_idxs)
+    2. A particular Room should only allow Classes of certain Courses.
     """
     violation_count = 0
     for c in schedule.classes:

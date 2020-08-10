@@ -1,24 +1,17 @@
-# from core.models import Schedule
+from core.models import Schedule
 
 
-# def violates_hard_constraint_1(schedule: Schedule):
-def violates_hard_constraint_1(schedule):
+def violates_hard_constraint_1(schedule: Schedule):
     """
-    Hard Constraint 1: No two lectures can take place in the same room at the same Timeslot
-    (R, T)
+    Hard Constraint 1: No two classes can take place in the same room at the same Timeslot.
     """
-    # (int room_idx, int[] timeslot_idxs)[]
-    unique_room_timeslots = []
+    unique_room_timeslot_pairs = []
 
     for c in schedule.classes:
-        for u_RTs in unique_room_timeslots:
-            if c.room.idx == u_RTs[0]:
-                c_t_idxs = set(t.idx for t in c.timeslots)
-                intersection = list(c_t_idxs.intersection(u_RTs[1]))
-                if len(intersection) > 0:
-                    return True
+        for unique_pair in unique_room_timeslot_pairs:
+            if c.room.idx == unique_pair[0] and c.timeslot.idx == unique_pair[1]:
+                return True
 
-        unique_room_timeslots.append(
-            (c.room.idx, [t.idx for t in c.timeslots]))
+        unique_room_timeslot_pairs.append((c.room.idx, c.timeslot.idx))
 
     return False

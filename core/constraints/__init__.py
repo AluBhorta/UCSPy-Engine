@@ -16,11 +16,11 @@ from core.constraints.soft.soft_constraint_7 import penalty_of_soft_constraint_7
 HARD_CONSTRAINT_FUNCS = [
     {
         "id": 1, "func": violates_hard_constraint_1,
-        "desc": "No two lectures can take place in the same room at the same Timeslot"
+        "desc": "No two classes can take place in the same room at the same Timeslot."
     },
     {
         "id": 2, "func": violates_hard_constraint_2,
-        "desc": "No instructor can take more than one lecture at a given Timeslot"
+        "desc": "No Instructor can take more than one class at a given Timeslot."
     },
 ]
 
@@ -42,12 +42,12 @@ SOFT_CONSTRAINT_FUNCS = [
         "desc": "Instructors have Timeslot preferences."
     },
     {
-        "id": 5, "unit_penalty": 0.8, "func": penalty_of_soft_constraint_5,
-        "desc": "Lectures of the same Class (of a Course) should be taken at one day intervals, if the Course has more than one Lectures per week."
+        "id": 5, "unit_penalty": 1.0, "func": penalty_of_soft_constraint_5,
+        "desc": "If a Course has 2 Lectures Per Week, it should take place in a composite Timeslot i.e. with Day code of 'ST' or 'MW'."
     },
     {
         "id": 6, "unit_penalty": 0.8, "func": penalty_of_soft_constraint_6,
-        "desc": "The Lab Section of a Course (if any) should be placed in adjacent Timeslots to the corresponding Theory Section."
+        "desc": "The Lab Section of a Course (if any) should be placed in a Timeslot that is before or after the corresponding Theory Section."
     },
     {
         "id": 7, "unit_penalty": 0.9, "func": penalty_of_soft_constraint_7,

@@ -8,6 +8,7 @@ from core.models import Room, Timeslot, Course, Instructor, CourseGroup, StateMa
 from core.fitness import FITNESS_FUNCS
 from core.generators.generate_constraints import generate_constraints
 from core.parsers.parse_schedule_params import parse_schedule_params
+from core.generators.generate_random_schedule import generate_random_schedule
 
 
 def generate_state_manager(schedule_param_config, constraints_config=None, fit_func_name="default") -> StateManager:
@@ -22,6 +23,7 @@ def generate_state_manager(schedule_param_config, constraints_config=None, fit_f
         HARD_CONSTRAINTS,
         SOFT_CONSTRAINTS,
         FITNESS_FUNCS.get(fit_func_name),
+        generate_random_schedule
     )
 
 

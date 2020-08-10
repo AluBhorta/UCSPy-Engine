@@ -9,7 +9,6 @@ class HardConstraint:
         self.desc = desc
 
     def violates(self, sch) -> bool:
-        # def violates(self, sch: Schedule) -> bool:
         return self._violates_func(sch)
 
 

@@ -1,23 +1,18 @@
 
-# from core.models import Schedule
+from core.models import Schedule, StateManager
 
 
-# def penalty_of_soft_constraint_4(schedule: Schedule, unit_penalty=0.5, _inspect=False):
-def penalty_of_soft_constraint_4(schedule, state, unit_penalty=0.5, _inspect=False):
+def penalty_of_soft_constraint_4(schedule: Schedule, state: StateManager, unit_penalty, _inspect=False):
     """
     4. Instructors have Timeslot preferences.
-    (I.preferred_timeslot_idxs)
     """
     violation_count = 0
     for c in schedule.classes:
-        c_t_idxs = [t.idx for t in c.timeslots]
-        for ct in c_t_idxs:
-            if ct not in c.instructor.preferred_timeslot_idxs:
-                violation_count += 1
-                if _inspect:
-                    print(
-                        f"Violation of SC4 ('Instructors have Timeslot preferences') - of class:\n\t{c}"
-                    )
-                break
+        if c.timeslot.idx not in c.instructor.preferred_timeslot_idxs:
+            violation_count += 1
+            if _inspect:
+                print(
+                    f"Violation of SC4 ('Instructors have Timeslot preferences') - of class:\n\t{c}"
+                )
 
     return violation_count * unit_penalty

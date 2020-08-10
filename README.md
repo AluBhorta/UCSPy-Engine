@@ -146,28 +146,24 @@ The following are the current constraints that UCSPy-Engine holds, which are mos
 
 ##### Hard Constraints
 
-1. No two classes can take place in the same Room at the same Timeslot i.e. tuple (R, T) must be unique in a schedule.
-1. No Instructor can take more than one Class at a given Timeslot i.e. tuple (I, T) must be unique in a schedule.
+1. No two classes can take place in the same room at the same Timeslot.
+2. No Instructor can take more than one class at a given Timeslot.
 
 ##### Soft Constraints
 
-1. Instructors should only take certain courses they are assigned to
-   (I.assigned_course_idxs)
+1. Instructors should only take certain courses they are are assigned to.
 
-1. A particular Room should only allow Classes of allowed Courses
-   (R.allowed_course_idxs)
+2. A particular Room should only allow Classes of certain Courses.
 
-1. CourseGroups have Timeslot preferences.
-   (CG.preferred_timeslot_idxs)
+3. CourseGroups have Timeslot preferences.
 
-1. Instructors have Timeslot preferences.
-   (I.preferred_timeslot_idxs)
+4. Instructors have Timeslot preferences.
 
-1. Lectures of the same Class (of a Course) should be taken at one day intervals, if the Course has 2 lectures_per_week and 1 timeslots_per_lecture.
+5. If a Course has 2 Lectures Per Week, it should take place in a composite Timeslot i.e. with Day code of "ST" or "MW".
 
-1. The Lab Section of a Course (if any) should be placed in adjacent Timeslots to the corresponding Theory Section.
+6. The Lab Section of a Course (if any) should be placed in a Timeslot that is before or after the corresponding Theory Section.
 
-1. Instructors have minimum credit load requirements.
+7. Instructors have minimum credit load requirements.
 
 NOTE:
 - institutions can and should adjust the penalties to their needs.

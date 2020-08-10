@@ -70,7 +70,6 @@ class Course:
         self.idx = idx
         self.desc = desc
         self.num_of_sections = num_of_sections
-        # TODO: 'timeslots_per_lecture' is now redundant
         self.lectures_per_week = lectures_per_week
         self.course_type = course_type
         self.sections = self._generate_sections()
@@ -229,7 +228,7 @@ class StateManager:
     Singleton used to hold & access state of UCSP.
     """
 
-    def __init__(self, schedule_param: ScheduleParam, HARD_CONSTRAINTS, SOFT_CONSTRAINTS, fit_func):
+    def __init__(self, schedule_param: ScheduleParam, HARD_CONSTRAINTS, SOFT_CONSTRAINTS, fit_func, generate_random_schedule):
         self.rooms = schedule_param.rooms
         self.timeslots = schedule_param.timeslots
         self.instructors = schedule_param.instructors
@@ -242,15 +241,17 @@ class StateManager:
         self._fit_func = fit_func
         self.hard_constraints = HARD_CONSTRAINTS
         self.soft_constraints = SOFT_CONSTRAINTS
-        self.tl_course_paris = self._get_theory_lab_course_paris()
+        self.generate_schedule = lambda: generate_random_schedule(self)
 
-    def _get_theory_lab_course_paris(self):
-        """ NOTE: for this to work, the Lab course should should be directly after its corresponding Theory course  in the `courses.csv` schedule_param"""
-        paris = []
+    def _get_theory_lab_course_idx_paris(self):
+        """ NOTE: for this to work, the Lab course should should be directly after its corresponding Theory course  in the `courses.csv` schedule_param
+        TODO: replace the indexing strategy with a dedicated parameter in Course instance (e.g. C.lab_of_course_idx)
+        """
+        pairs = []
         for crs in self.courses:
             if crs.course_type.lower() == "lab":
-                paris.append((crs.idx-1, crs.idx))
-        return paris
+                pairs.append((crs.idx-1, crs.idx))
+        return pairs
 
     def fitness(self, sch: Schedule, _inspect=False) -> float:
         return self._fit_func(sch, self, _inspect)

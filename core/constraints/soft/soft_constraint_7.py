@@ -2,7 +2,7 @@
 from core.models import Schedule, StateManager
 
 
-def penalty_of_soft_constraint_7(schedule: Schedule, state: StateManager, unit_penalty=0.9, _inspect=False):
+def penalty_of_soft_constraint_7(schedule: Schedule, state: StateManager, unit_penalty, _inspect=False):
     """
     7. Instructors have minimum credit load requirements.
     """
