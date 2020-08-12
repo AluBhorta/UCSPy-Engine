@@ -1,5 +1,7 @@
 # UCSPy-Engine
 
+![](https://img.shields.io/travis/AluBhorta/UCSPy-Engine/develop.svg?logo=travis)
+
 An extensible framework for solving UCSP.
 
 ## What Is UCSP?
@@ -166,6 +168,7 @@ The following are the current constraints that UCSPy-Engine holds, which are mos
 7. Instructors have minimum credit load requirements.
 
 NOTE:
+
 - institutions can and should adjust the penalties to their needs.
 - the Lab course should should be directly after its corresponding Theory course in the `courses.csv` schedule_param
 
@@ -298,6 +301,7 @@ Neat right?
 The demonstrations till now use the default parameters, including the default schedule_params, which are in `data/schedule_params/default/`. They are basically `csv` files containing each of the `schedule_params` components, and are named as follows: `rooms.csv`,`timeslots.csv`,`courses.csv`,`instructors.csv`,`course_groups.csv`.
 
 <!-- TODO - needs update for config file usage -->
+
 To specify your own schedule_params, collect/generate the data for each component, name the files accordingly and put them in a folder like `path/to/your/schedule_params/`. To use use that now, run:
 
 ```bash
