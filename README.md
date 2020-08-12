@@ -1,6 +1,6 @@
 # UCSPy-Engine
 
-![](https://img.shields.io/travis/AluBhorta/UCSPy-Engine/develop.svg?logo=travis)
+![](https://travis-ci.com/AluBhorta/UCSPy-Engine.svg?branch=master) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AluBhorta/UCSPy-Engine/blob/master/LICENSE)
 
 An extensible framework for solving UCSP.
 
