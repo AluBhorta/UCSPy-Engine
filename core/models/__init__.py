@@ -180,8 +180,14 @@ class Schedule:
     def __str__(self):
         return self.to_tsv()
 
+    def flatten(self):
+        schedule = self.get_numeric_repr()
+        a = array([item for _cls in schedule for item in _cls])
+        # a.shape = (1,len(a))
+        return a
+
     def get_numeric_repr(self):
-        """ NOTE: returns schedule in np.array<(C, S, I, R, Ts[])> format """
+        """ NOTE: returns schedule in np.array<(C, S, I, R, T)> format """
         return array([(
             c.section.course.idx,
             c.section.sec_number,
@@ -241,7 +247,13 @@ class StateManager:
         self._fit_func = fit_func
         self.hard_constraints = HARD_CONSTRAINTS
         self.soft_constraints = SOFT_CONSTRAINTS
-        self.generate_schedule = lambda: generate_random_schedule(self)
+        self.generate_schedule = self._get_generate_schedule(
+            generate_random_schedule)
+
+    def _get_generate_schedule(self, grs_func):
+        def f() -> Schedule:
+            return grs_func(self)
+        return f
 
     def _get_theory_lab_course_idx_paris(self):
         """ NOTE: for this to work, the Lab course should should be directly after its corresponding Theory course  in the `courses.csv` schedule_param
@@ -255,6 +267,18 @@ class StateManager:
 
     def fitness(self, sch: Schedule, _inspect=False) -> float:
         return self._fit_func(sch, self, _inspect)
+
+    # def fitness_error(self, sch: Schedule, _inspect=False) -> float:
+    #     f = self.fitness(sch, _inspect)
+    #     return
+
+    def flat_fitness(self, sch, class_dimension=5):
+        sch.shape = (len(self.sections), class_dimension)
+        sch = self.numeric_to_sch(sch)
+        return self.fitness(sch)
+
+    def flat_fitness_array(self, sch_arr, class_dimension=5):
+        return array([self.flat_fitness(sch) for sch in sch_arr])
 
     def __repr__(self):
         return f"""StateManager - 
@@ -291,16 +315,16 @@ class StateManager:
         return sections
 
     def get_room(self, room_idx):
-        return self.rooms[room_idx]
+        return self.rooms[int(room_idx)]
 
     def get_timeslot(self, timeslot_idx):
-        return self.timeslots[timeslot_idx]
+        return self.timeslots[int(timeslot_idx)]
 
     def get_course(self, course_idx):
-        return self.courses[course_idx]
+        return self.courses[int(course_idx)]
 
     def get_instructor(self, instructor_idx):
-        return self.instructors[instructor_idx]
+        return self.instructors[int(instructor_idx)]
 
     def get_course_group(self, course_group_idx):
-        return self.course_groups[course_group_idx]
+        return self.course_groups[int(course_group_idx)]

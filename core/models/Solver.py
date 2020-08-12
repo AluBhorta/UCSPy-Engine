@@ -10,6 +10,7 @@ from algorithms.memetic.memetic import memetic_algorithm
 from algorithms.pso.pso import particle_swarm_optimization
 from core.logging import UCSPLogger
 from core.generators.generate_state import generate_state_from_config
+from algorithms.pso.pyswarms import pyswarms
 
 
 class UCSPSolver:
@@ -170,7 +171,8 @@ class UCSPSolver:
             f"""Running Particle Swarm Optimization - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {min_acceptable_fitness}; w0: {w0}; wf: {wf}; c1: {c1}; c2: {c2}; vmax_pct: {vmax_pct};\n"""
         )
         t1 = perf_counter()
-        sch = particle_swarm_optimization(
+        # sch = particle_swarm_optimization(
+        sch = pyswarms(
             self._logger,
             self._state,
             epochs,

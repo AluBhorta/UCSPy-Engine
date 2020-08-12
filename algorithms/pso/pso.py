@@ -2,7 +2,6 @@
 import numpy as np
 from copy import deepcopy
 
-from core.generators.generate_random_schedule import generate_random_schedule as grs
 from core.models import StateManager, Schedule
 from core.logging import UCSPLogger
 
@@ -23,23 +22,25 @@ def particle_swarm_optimization(
         dw_depoch = (wf-w0) / epochs
         return (dw_depoch * epoch) + w0
 
-    lim_c = len(state.courses)
-    lim_s = len(state.sections)
-    lim_r = len(state.rooms)
-    lim_i = len(state.instructors)
-    lim_ts = len(state.timeslots)
+    limit_course = len(state.courses)
+    limit_section = len(state.sections)
+    limit_instructor = len(state.instructors)
+    limit_room = len(state.rooms)
+    limit_timeslot = len(state.timeslots)
 
     vmax_lim = np.ceil(
-        np.array([1, 1, lim_i, lim_r, lim_ts]) * (vmax_pct/100)
+        np.array([1, 1, limit_instructor, limit_room, limit_timeslot]) * (vmax_pct/100)
     ).astype(int)
 
-    part_max_lim = np.array([lim_c, lim_s, lim_i, lim_r, lim_ts])
+    particle_max_lim = np.array(
+        [limit_course, limit_section, limit_instructor, limit_room, limit_timeslot]
+    )
 
     particles = [[None, None, None] for _ in range(population_size)]
 
     # each particle consists of [X_current, P_best, Velocity]
     for i in range(population_size):
-        particles[i][0] = grs(state).get_numeric_repr()
+        particles[i][0] = state.generate_schedule().get_numeric_repr()
         particles[i][1] = deepcopy(particles[i][0])
         particles[i][2] = particles[i][0] % vmax_lim
 
@@ -56,6 +57,7 @@ def particle_swarm_optimization(
                 current_fitness = state.fitness(
                     state.numeric_to_sch(particles[i][0])
                 )
+                print(current_fitness)
                 if current_fitness >= min_acceptable_fitness:
                     return particles[i][0]
 
@@ -95,7 +97,7 @@ def particle_swarm_optimization(
 
                 particles[i][0] = (
                     particles[i][0] + particles[i][2]
-                ) % part_max_lim
+                ) % particle_max_lim
         except KeyboardInterrupt:
             print("Solver stopped by user")
             break
