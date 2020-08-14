@@ -6,7 +6,7 @@ from pyswarms.discrete.binary import BinaryPSO
 from pyswarms.single.global_best import GlobalBestPSO
 import pyswarms.utils.functions.single_obj as fx
 from pyswarms.utils.plotters.plotters import plot_contour, plot_surface, plot_cost_history
-# from pyswarms.utils.plotters.formatters import 
+# from pyswarms.utils.plotters.formatters import
 from pyswarms.utils.plotters.formatters import Mesher, Designer
 
 from core.models import StateManager, Schedule
@@ -26,22 +26,23 @@ def pyswarms(
     dims = 4
     population_size = 10
     epochs = 1000
-    # velocity_clamp = (0, 2)
+    velocity_clamp = (0, 2)
     options = {'c1': 0.5, 'c2': 0.3, 'w': 0.9, 'k': population_size, 'p': 1}
+    bounds = (
+        np.array([0]*dims),
+        np.array([10]*dims),
+    )
 
     optimizer = IntegerPSO(
-    # optimizer = GlobalBestPSO(
         n_particles=population_size,
         dimensions=dims,
         options=options,
-        # bounds=bounds,
+        bounds=bounds,
         # ftol=min_acceptable_fitness,
-        # init_pos=flat_sch,
+        # init_pos=None,
         # velocity_clamp=velocity_clamp
     )
-    output = optimizer.optimize(fx.ackley, epochs)
-
-    # NOTE: IntegerPSO is not improving solution! :(
+    output = optimizer.optimize(fx.sphere, epochs, 3)
 
     # plot_cost_history(optimizer.cost_history)
     # _plot_performance(optimizer.pos_history)
@@ -66,5 +67,5 @@ def _plot_performance(pos_history):
     pos_history_3d = m.compute_history_3d(pos_history)  # preprocessing
     animation3d = plot_surface(pos_history=pos_history_3d,
                                mesher=m, designer=d,
-                            #    mark=(0, 0, 0)
+                               #    mark=(0, 0, 0)
                                )

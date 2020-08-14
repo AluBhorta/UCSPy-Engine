@@ -1,15 +1,16 @@
 
 # Import standard library
 import logging
+from time import sleep
 
 # Import modules
 import numpy as np
 import multiprocessing as mp
 
 from pyswarms.backend.operators import compute_pbest, compute_objective_function
-from pyswarms.backend.topology import Ring
+from pyswarms.backend.topology import Ring, Star
 from pyswarms.backend.handlers import BoundaryHandler, VelocityHandler
-from pyswarms.base import DiscreteSwarmOptimizer
+from pyswarms.base import DiscreteSwarmOptimizer, SwarmOptimizer
 from pyswarms.utils.reporter import Reporter
 
 
@@ -19,12 +20,11 @@ class IntegerPSO(DiscreteSwarmOptimizer):
         n_particles,
         dimensions,
         options,
-        # bounds=None,
-        # bh_strategy="periodic",
+        bounds=None,
+        bh_strategy="nearest",
         init_pos=None,
         velocity_clamp=None,
         vh_strategy="unmodified",
-        # center=1.00,
         ftol=-np.inf,
     ):
         """Initialize the swarm
@@ -75,14 +75,16 @@ class IntegerPSO(DiscreteSwarmOptimizer):
             dimensions=dimensions,
             binary=False,
             options=options,
-            init_pos=init_pos,
             velocity_clamp=velocity_clamp,
+            init_pos=init_pos,
             ftol=ftol,
         )
         # Initialize the resettable attributes
         self.reset()
         # Initialize the topology
-        self.top = Ring(static=False)
+        self.top = Star()
+        self.bounds = bounds
+        self.bh = BoundaryHandler(strategy=bh_strategy)
         self.vh = VelocityHandler(strategy=vh_strategy)
         self.name = __name__
 
@@ -116,6 +118,7 @@ class IntegerPSO(DiscreteSwarmOptimizer):
             lvl=logging.INFO,
         )
         # Populate memory of the handlers
+        self.bh.memory = self.swarm.position
         self.vh.memory = self.swarm.position
 
         # Setup Pool of processes for parallel evaluation
@@ -153,21 +156,15 @@ class IntegerPSO(DiscreteSwarmOptimizer):
                 < relative_measure
             ):
                 break
-            
-            # print(self.swarm.velocity)
-            # print(self.swarm.position)
-            old_p = self.swarm.position
 
-            # Perform position velocity update
+            # Perform velocity update
             self.swarm.velocity = self.top.compute_velocity(
-                self.swarm, self.velocity_clamp, self.vh
-                # ,bounds=None
+                self.swarm, self.velocity_clamp, self.vh, bounds=self.bounds
             )
-            self.swarm.position = self._compute_position(self.swarm)
-            
-            new_p = self.swarm.position
-            r = np.array_equal(old_p, new_p)
-            print(r)
+            # Perform position update
+            self.swarm.position = self._compute_position()
+
+            # sleep(0.05)
 
         # Obtain the final best_cost and the final best_position
         final_best_cost = self.swarm.best_cost.copy()
@@ -181,7 +178,7 @@ class IntegerPSO(DiscreteSwarmOptimizer):
         )
         return (final_best_cost, final_best_pos)
 
-    def _compute_position(self, swarm, bounds=None, bh=BoundaryHandler(strategy="periodic")):
+    def _compute_position(self):
         """Update the position matrix of the swarm
 
         This computes the next position in a binary swarm. It compares the
@@ -193,39 +190,20 @@ class IntegerPSO(DiscreteSwarmOptimizer):
         swarm: pyswarms.backend.swarms.Swarm
             a Swarm class
         """
-
-        # TODO: update your position here accordingly
-        # X = X + np.floor(V).astype(int)
-
         try:
-            temp_position = swarm.position.copy()
+            temp_position = self.swarm.position.copy()
 
-            # temp_position += swarm.velocity
-            temp_position += np.floor(swarm.velocity).astype(int)
+            temp_position += np.floor(self.swarm.velocity).astype(int)
 
-            if bounds is not None:
-                temp_position = bh(temp_position, bounds)
+            if self.bounds is not None:
+                temp_position = self.bh(temp_position, self.bounds)
 
             position = temp_position
         except AttributeError:
             rep.logger.exception(
-                "Please pass a Swarm class. You passed {}".format(type(swarm))
+                "Please pass a Swarm class. You passed {}".format(
+                    type(self.swarm))
             )
             raise
         else:
             return position
-
-    def _sigmoid(self, x):
-        """Helper method for the sigmoid function
-
-        Parameters
-        ----------
-        x : numpy.ndarray
-            Input vector for sigmoid computation
-
-        Returns
-        -------
-        numpy.ndarray
-            Output sigmoid computation
-        """
-        return 1 / (1 + np.exp(-x))
