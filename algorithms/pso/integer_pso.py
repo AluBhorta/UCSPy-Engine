@@ -1,16 +1,15 @@
 
 # Import standard library
 import logging
-from time import sleep
 
 # Import modules
 import numpy as np
 import multiprocessing as mp
 
 from pyswarms.backend.operators import compute_pbest, compute_objective_function
-from pyswarms.backend.topology import Ring, Star
+from pyswarms.backend.topology import Star
 from pyswarms.backend.handlers import BoundaryHandler, VelocityHandler
-from pyswarms.base import DiscreteSwarmOptimizer, SwarmOptimizer
+from pyswarms.base import DiscreteSwarmOptimizer
 from pyswarms.utils.reporter import Reporter
 
 
@@ -51,6 +50,12 @@ class IntegerPSO(DiscreteSwarmOptimizer):
                     the Minkowski p-norm to use. 1 is the
                     sum-of-absolute values (or L1 distance) while 2 is
                     the Euclidean (or L2) distance.
+        bounds : tuple of numpy.ndarray, optional
+            a tuple of size 2 where the first entry is the minimum bound while
+            the second entry is the maximum bound. Each array must be of shape
+            :code:`(dimensions,)`.
+        bh_strategy : str
+            a strategy for the handling of out-of-bounds particles.
         init_pos : numpy.ndarray, optional
             option to explicitly set the particles' initial positions. Set to
             :code:`None` if you wish to generate the particles randomly.
@@ -164,8 +169,6 @@ class IntegerPSO(DiscreteSwarmOptimizer):
             # Perform position update
             self.swarm.position = self._compute_position()
 
-            # sleep(0.05)
-
         # Obtain the final best_cost and the final best_position
         final_best_cost = self.swarm.best_cost.copy()
         final_best_pos = self.swarm.pbest_pos[self.swarm.pbest_cost.argmin()].copy(
@@ -179,16 +182,16 @@ class IntegerPSO(DiscreteSwarmOptimizer):
         return (final_best_cost, final_best_pos)
 
     def _compute_position(self):
-        """Update the position matrix of the swarm
+        """Compute the new position matrix of the swarm
 
-        This computes the next position in a binary swarm. It compares the
-        sigmoid output of the velocity-matrix and compares it with a randomly
-        generated matrix.
+        This method computes the next position of a swarm with integer values by adding the previous position matrix with the floor of the swarm's velocity.
 
-        Parameters
-        ----------
-        swarm: pyswarms.backend.swarms.Swarm
-            a Swarm class
+        If bounded, the positions are handled by a :code:`BoundaryHandler` instance
+
+        Returns
+        -------
+        numpy.ndarray
+            New position-matrix
         """
         try:
             temp_position = self.swarm.position.copy()

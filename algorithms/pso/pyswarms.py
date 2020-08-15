@@ -24,13 +24,13 @@ def pyswarms(
 ):
 
     dims = 4
-    population_size = 10
+    population_size = 100
     epochs = 1000
     velocity_clamp = (0, 2)
     options = {'c1': 0.5, 'c2': 0.3, 'w': 0.9, 'k': population_size, 'p': 1}
     bounds = (
         np.array([0]*dims),
-        np.array([10]*dims),
+        np.array([32]*dims),
     )
 
     optimizer = IntegerPSO(
@@ -38,11 +38,13 @@ def pyswarms(
         dimensions=dims,
         options=options,
         bounds=bounds,
-        # ftol=min_acceptable_fitness,
+        # bh_strategy="nearest",
         # init_pos=None,
-        # velocity_clamp=velocity_clamp
+        # velocity_clamp=velocity_clamp,
+        # vh_strategy="unmodified",
+        # ftol=-np.inf,
     )
-    output = optimizer.optimize(fx.sphere, epochs, 3)
+    output = optimizer.optimize(fx.ackley, epochs, n_processes=1)
 
     # plot_cost_history(optimizer.cost_history)
     # _plot_performance(optimizer.pos_history)

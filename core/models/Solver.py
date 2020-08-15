@@ -171,7 +171,48 @@ class UCSPSolver:
             f"""Running Particle Swarm Optimization - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {min_acceptable_fitness}; w0: {w0}; wf: {wf}; c1: {c1}; c2: {c2}; vmax_pct: {vmax_pct};\n"""
         )
         t1 = perf_counter()
-        # sch = particle_swarm_optimization(
+        sch = particle_swarm_optimization(
+            self._logger,
+            self._state,
+            epochs,
+            population_size,
+            min_acceptable_fitness,
+            w0, wf, c1, c2, vmax_pct
+        )
+        t2 = perf_counter()
+        self._write_schedule(sch)
+        self._logger.write(f"\nTime taken: {t2-t1} s")
+
+    def pyswarms(
+        self,
+        epochs=100,
+        population_size=100,
+        min_acceptable_fitness=1,
+        w0=0.8, wf=0.2, c1=1, c2=2, vmax_pct=5
+    ):
+        """ Particle Swarm Optimization 
+
+        :param epochs: The maximum number of iterations to run if `min_acceptable_fitness` is not satisfied. (default: 100) 
+        \n
+        :param population_size: The size of the population i.e. the number of particles in each iteration. (default: 100)
+        \n
+        :param min_acceptable_fitness: The minimum acceptable fitness for this solver. Ranges from 0-1, with 1 being perfect solution with not constraint violation. (default: 1)
+        \n
+        :param w0: The starting weight of each particle. (default: 0.8) 
+        \n
+        :param wf: The ending weight of each particle. (default: 0.2)
+        \n
+        :param c1: The weight/coefficient of the individual component in the velocity update equation. (default: 1)
+        \n
+        :param c2: The weight/coefficient of the social component in the velocity update equation. (default: 2)
+        \n
+        :param vmax_pct: The maximum velocity percent i.e. the maximum percentage change a particle can undergo in each iteration. (default: 5)
+        \n
+        """
+        self._logger.write(
+            f"""Running Particle Swarm Optimization - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {min_acceptable_fitness}; w0: {w0}; wf: {wf}; c1: {c1}; c2: {c2}; vmax_pct: {vmax_pct};\n"""
+        )
+        t1 = perf_counter()
         sch = pyswarms(
             self._logger,
             self._state,
