@@ -46,6 +46,7 @@ class UCSPSolver:
         self._logger = UCSPLogger(save_logs or self._config['save_logs'])
         self._save_sch = save_sch or self._config['save_schedule']
         self._inspect_final_sch = inspect_final_sch or self._config['inspect_final_schedule']
+        self.min_acceptable_fitness = self._config['min_acceptable_fitness'] or 0
 
     def _parse_config_file(self, fpath):
         with open(fpath) as f:
@@ -55,7 +56,6 @@ class UCSPSolver:
         self,
         epochs=100,
         population_size=100,
-        min_acceptable_fitness=1,
         elite_pct=10,
         mateable_pct=50,
         mutable_pct=25
@@ -66,8 +66,6 @@ class UCSPSolver:
         \n
         :param population_size: The size of the population i.e. the number of individuals in each generation. (default: 100)
         \n
-        :param min_acceptable_fitness: The minimum acceptable fitness for this solver. Ranges from 0-1, with 1 being perfect solution with not constraint violation. (default: 1)
-        \n
         :param elite_pct: The percentage of elites i.e. the % of top individuals that directly get selected for the next generation. (default: 10)
         \n
         :param mateable_pct: The percentage of top individuals that mate to produce the next generation of the population. (default: 50)
@@ -77,7 +75,7 @@ class UCSPSolver:
         \n
         """
         self._logger.write(
-            f"""Running Genetic Algorithm - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {min_acceptable_fitness}; elite_pct: {elite_pct}; mateable_pct: {mateable_pct}; mutable_pct: {mutable_pct};\n"""
+            f"""Running Genetic Algorithm - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {self.min_acceptable_fitness}; elite_pct: {elite_pct}; mateable_pct: {mateable_pct}; mutable_pct: {mutable_pct};\n"""
         )
         t1 = perf_counter()
         sch = smart_mut_genetic_algorithm(
@@ -85,7 +83,7 @@ class UCSPSolver:
             self._state,
             epochs,
             population_size,
-            min_acceptable_fitness,
+            self.min_acceptable_fitness,
             elite_pct,
             mateable_pct,
             mutable_pct
@@ -97,7 +95,6 @@ class UCSPSolver:
     def meme(
         self,
         epochs=100,
-        min_acceptable_fitness=1,
         population_size=50,
         elite_pct=10,
         mateable_pct=50,
@@ -110,8 +107,6 @@ class UCSPSolver:
         \n
         :param population_size: The size of the population i.e. the number of individuals in each generation. (default: 100)
         \n
-        :param min_acceptable_fitness: The minimum acceptable fitness for this solver. Ranges from 0-1, with 1 being perfect solution with not constraint violation. (default: 1)
-        \n
         :param elite_pct: The percentage of elites i.e. the % of top individuals that directly get selected for the next generation. (default: 10)
         \n
         :param mateable_pct: The percentage of top individuals that mate to produce the next generation of the population. (default: 50)
@@ -122,7 +117,7 @@ class UCSPSolver:
         \n
         """
         self._logger.write(
-            f"""Running Memetic Algorithm - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {min_acceptable_fitness}; elite_pct: {elite_pct}; mateable_pct: {mateable_pct}; lcl_search_pct: {lcl_search_pct}; lcl_search_iters: {lcl_search_iters};\n"""
+            f"""Running Memetic Algorithm - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {self.min_acceptable_fitness}; elite_pct: {elite_pct}; mateable_pct: {mateable_pct}; lcl_search_pct: {lcl_search_pct}; lcl_search_iters: {lcl_search_iters};\n"""
         )
 
         t1 = perf_counter()
@@ -130,7 +125,7 @@ class UCSPSolver:
             self._logger,
             self._state,
             epochs,
-            min_acceptable_fitness,
+            self.min_acceptable_fitness,
             population_size,
             elite_pct,
             mateable_pct,
@@ -145,7 +140,6 @@ class UCSPSolver:
         self,
         epochs=100,
         population_size=100,
-        min_acceptable_fitness=1,
         w0=0.8, wf=0.2, c1=1, c2=2, vmax_pct=5
     ):
         """ Particle Swarm Optimization 
@@ -153,8 +147,6 @@ class UCSPSolver:
         :param epochs: The maximum number of iterations to run if `min_acceptable_fitness` is not satisfied. (default: 100) 
         \n
         :param population_size: The size of the population i.e. the number of particles in each iteration. (default: 100)
-        \n
-        :param min_acceptable_fitness: The minimum acceptable fitness for this solver. Ranges from 0-1, with 1 being perfect solution with not constraint violation. (default: 1)
         \n
         :param w0: The starting weight of each particle. (default: 0.8) 
         \n
@@ -168,7 +160,7 @@ class UCSPSolver:
         \n
         """
         self._logger.write(
-            f"""Running Particle Swarm Optimization - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {min_acceptable_fitness}; w0: {w0}; wf: {wf}; c1: {c1}; c2: {c2}; vmax_pct: {vmax_pct};\n"""
+            f"""Running Particle Swarm Optimization - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {self.min_acceptable_fitness}; w0: {w0}; wf: {wf}; c1: {c1}; c2: {c2}; vmax_pct: {vmax_pct};\n"""
         )
         t1 = perf_counter()
         sch = particle_swarm_optimization(
@@ -176,7 +168,7 @@ class UCSPSolver:
             self._state,
             epochs,
             population_size,
-            min_acceptable_fitness,
+            self.min_acceptable_fitness,
             w0, wf, c1, c2, vmax_pct
         )
         t2 = perf_counter()
@@ -187,7 +179,6 @@ class UCSPSolver:
         self,
         epochs=100,
         population_size=100,
-        min_acceptable_fitness=1,
         w0=0.8, wf=0.2, c1=1, c2=2, vmax_pct=5
     ):
         """ Particle Swarm Optimization 
@@ -195,8 +186,6 @@ class UCSPSolver:
         :param epochs: The maximum number of iterations to run if `min_acceptable_fitness` is not satisfied. (default: 100) 
         \n
         :param population_size: The size of the population i.e. the number of particles in each iteration. (default: 100)
-        \n
-        :param min_acceptable_fitness: The minimum acceptable fitness for this solver. Ranges from 0-1, with 1 being perfect solution with not constraint violation. (default: 1)
         \n
         :param w0: The starting weight of each particle. (default: 0.8) 
         \n
@@ -210,7 +199,7 @@ class UCSPSolver:
         \n
         """
         self._logger.write(
-            f"""Running Particle Swarm Optimization - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {min_acceptable_fitness}; w0: {w0}; wf: {wf}; c1: {c1}; c2: {c2}; vmax_pct: {vmax_pct};\n"""
+            f"""Running Particle Swarm Optimization - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {self.min_acceptable_fitness}; w0: {w0}; wf: {wf}; c1: {c1}; c2: {c2}; vmax_pct: {vmax_pct};\n"""
         )
         t1 = perf_counter()
         sch = pyswarms(
@@ -218,7 +207,7 @@ class UCSPSolver:
             self._state,
             epochs,
             population_size,
-            min_acceptable_fitness,
+            self.min_acceptable_fitness,
             w0, wf, c1, c2, vmax_pct
         )
         t2 = perf_counter()

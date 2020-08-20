@@ -4,9 +4,10 @@
   "save_logs": false,
   "save_schedule": false,
   "inspect_final_schedule": false,
+  "min_acceptable_fitness": 0,
   "fitness": {
-    "functions": ["default", "default_expo"],
-    "use": "default"
+    "functions": ["default", "default_expo", "tanh_fitness"],
+    "use": "tanh_fitness"
   },
   "constraints": {
     "soft_constraints": {

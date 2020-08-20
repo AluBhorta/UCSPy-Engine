@@ -28,12 +28,13 @@ def smart_mut_genetic_algorithm(
             population = sorted(
                 population,
                 key=lambda sch: state.fitness(sch),
-                reverse=True)
+                # reverse=True
+            )
 
             best_fitness = state.fitness(population[0])
             logger.write(f"{epoch}\t\t{best_fitness}")
 
-            if best_fitness >= min_acceptable_fitness:
+            if best_fitness <= min_acceptable_fitness:
                 return population[0]
 
             """ Dominance by elites """
@@ -89,7 +90,7 @@ def smart_mut_genetic_algorithm(
                     tmp_sch.classes[class_idx].timeslot = \
                         random.choice(state.timeslots)
 
-                if state.fitness(tmp_sch) > state.fitness(new_population[schedule_idx]):
+                if state.fitness(tmp_sch) < state.fitness(new_population[schedule_idx]):
                     new_population[schedule_idx] = tmp_sch
 
             population = new_population
