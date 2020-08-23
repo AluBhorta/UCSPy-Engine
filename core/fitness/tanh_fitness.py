@@ -25,9 +25,11 @@ def _total_soft_penalty(schedule: Schedule, state: StateManager, _inspect=False)
 
 def tanh_fitness(schedule: Schedule, state: StateManager, _inspect=False, relax_coeff=0.01):
     """
-    Hyperbolic tangent fitness function
+    Hyperbolic tangent fitness function.
 
-    returns 1 if schedule infeasible, 0 if perfect. Otherwise results are in between.
+    returns 1 if schedule infeasible, 0 if perfect. Otherwise results are in between 0 and 1 if the total soft penalty of the schedule > 0.
+
+    `relax_coeff` determines how quickly tanh(x) will converge to 1 as x approaches infinity. The smaller the `relax_coeff`, the slower it'll converge.
     """
     violates_a_hc = _violates_a_hard_constraint(schedule, state, _inspect)
     if violates_a_hc:
