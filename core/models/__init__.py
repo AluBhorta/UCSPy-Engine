@@ -183,7 +183,6 @@ class Schedule:
     def flatten(self):
         schedule = self.get_numeric_repr()
         a = array([item for _cls in schedule for item in _cls])
-        # a.shape = (1,len(a))
         return a
 
     def get_numeric_repr(self):
@@ -268,14 +267,14 @@ class StateManager:
     def fitness(self, sch: Schedule, _inspect=False) -> float:
         return self._fit_func(sch, self, _inspect)
 
-    # def fitness_error(self, sch: Schedule, _inspect=False) -> float:
-    #     f = self.fitness(sch, _inspect)
-    #     return
-
     def flat_fitness(self, sch, class_dimension=5):
-        sch.shape = (len(self.sections), class_dimension)
+        sch = self.deflatten(sch)
         sch = self.numeric_to_sch(sch)
         return self.fitness(sch)
+    
+    def deflatten(self, sch, class_dimension=5):
+        sch.shape = (len(self.sections), class_dimension)
+        return sch
 
     def flat_fitness_array(self, sch_arr, class_dimension=5):
         return array([self.flat_fitness(sch) for sch in sch_arr])

@@ -1,6 +1,7 @@
 
 # Import standard library
 import logging
+import time
 
 # Import modules
 import numpy as np
@@ -9,7 +10,7 @@ import multiprocessing as mp
 from pyswarms.backend.operators import compute_pbest, compute_objective_function
 from pyswarms.backend.topology import Star
 from pyswarms.backend.handlers import BoundaryHandler, VelocityHandler
-from pyswarms.base import DiscreteSwarmOptimizer
+from pyswarms.base import DiscreteSwarmOptimizer, SwarmOptimizer
 from pyswarms.utils.reporter import Reporter
 
 
@@ -24,6 +25,7 @@ class IntegerPSO(DiscreteSwarmOptimizer):
         init_pos=None,
         velocity_clamp=None,
         vh_strategy="unmodified",
+        # vh_strategy="adjust",
         ftol=-np.inf,
     ):
         """Initialize the swarm
@@ -92,6 +94,11 @@ class IntegerPSO(DiscreteSwarmOptimizer):
         self.bh = BoundaryHandler(strategy=bh_strategy)
         self.vh = VelocityHandler(strategy=vh_strategy)
         self.name = __name__
+        print("min\tmax")
+        print(np.min(self.swarm.position), np.max(self.swarm.position))
+        print(self.swarm.position.shape)
+        # print(self.swarm.velocity)
+
 
     def optimize(self, objective_func, iters, n_processes=None, **kwargs):
         """Optimize the swarm for a number of iterations
@@ -169,10 +176,14 @@ class IntegerPSO(DiscreteSwarmOptimizer):
             # Perform position update
             self.swarm.position = self._compute_position()
 
+            print(np.min(self.swarm.position), np.max(self.swarm.position))
+            print(np.min(self.swarm.velocity), np.max(self.swarm.velocity))
+            time.sleep(0.01)
+
+
         # Obtain the final best_cost and the final best_position
         final_best_cost = self.swarm.best_cost.copy()
-        final_best_pos = self.swarm.pbest_pos[self.swarm.pbest_cost.argmin()].copy(
-        )
+        final_best_pos = self.swarm.pbest_pos[self.swarm.pbest_cost.argmin()].copy()
         self.rep.log(
             "Optimization finished | best cost: {}, best pos: {}".format(
                 final_best_cost, final_best_pos
@@ -184,7 +195,7 @@ class IntegerPSO(DiscreteSwarmOptimizer):
     def _compute_position(self):
         """Compute the new position matrix of the swarm
 
-        This method computes the next position of a swarm with integer values by adding the previous position matrix with the floor of the swarm's velocity.
+        This method computes the next position of the swarm by adding the previous position matrix with the floor of the swarm's velocity.
 
         If bounded, the positions are handled by a :code:`BoundaryHandler` instance
 
@@ -196,7 +207,7 @@ class IntegerPSO(DiscreteSwarmOptimizer):
         try:
             temp_position = self.swarm.position.copy()
 
-            temp_position += np.floor(self.swarm.velocity).astype(int)
+            temp_position += np.floor(self.swarm.velocity).astype(int) 
 
             if self.bounds is not None:
                 temp_position = self.bh(temp_position, self.bounds)
