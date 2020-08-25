@@ -4,6 +4,19 @@ from copy import deepcopy
 
 from core.models import StateManager, Schedule
 from core.logging import UCSPLogger
+from core.models.Algorithm import Algorithm
+
+
+class GeneticAlgorithm(Algorithm):
+    def __init__(self, logger: UCSPLogger, state: StateManager):
+        super(GeneticAlgorithm, self).__init__(logger, state)
+
+    def run(self, *args, **kwargs):
+        return smart_mut_genetic_algorithm(
+            self.logger,
+            self.state,
+            *args, **kwargs
+        )
 
 
 def smart_mut_genetic_algorithm(
@@ -11,7 +24,7 @@ def smart_mut_genetic_algorithm(
     state: StateManager,
     epochs=100,
     population_size=100,
-    min_acceptable_fitness=1,
+    min_acceptable_fitness=0,
     elite_pct=10,
     mateable_pct=50,
     mutable_pct=20

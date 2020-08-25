@@ -26,13 +26,10 @@ def generate_state_manager(schedule_param_config, constraints_config=None, fit_f
         generate_random_schedule
     )
 
+from core.parsers.parse_config import parse_config_file
 
 def generate_state_from_config(config_file="ucsp.config.json"):
-    def _parse_config_file(fpath):
-        with open(fpath) as f:
-            return json.load(f)
-
-    _config = _parse_config_file(config_file)
+    _config = parse_config_file(config_file)
 
     schedule_param_config = _config['schedule_param']
     fit_func_name = _config['fitness']['use'] or "default"

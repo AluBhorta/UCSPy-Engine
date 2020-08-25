@@ -5,12 +5,12 @@ import os
 import json
 
 from core.models import Schedule
-from algorithms.genetic.smart_mut_ga import smart_mut_genetic_algorithm
-from algorithms.memetic.memetic import memetic_algorithm
-from algorithms.pso.pso import particle_swarm_optimization
 from core.logging import UCSPLogger
 from core.generators.generate_state import generate_state_from_config
 from algorithms.pso.pyswarms import pyswarms
+from core.parsers.parse_config import parse_config_file
+
+from algorithms.genetic.smart_mut_ga import GeneticAlgorithm
 
 
 class UCSPSolver:
@@ -39,180 +39,22 @@ class UCSPSolver:
         save_logs=None,
         inspect_final_sch=None
     ):
-        self._config = self._parse_config_file(config_file)
+        self._config = parse_config_file(config_file)
 
         self._state = generate_state_from_config(config_file)
 
         self._logger = UCSPLogger(save_logs or self._config['save_logs'])
         self._save_sch = save_sch or self._config['save_schedule']
         self._inspect_final_sch = inspect_final_sch or self._config['inspect_final_schedule']
-        self.min_acceptable_fitness = self._config['min_acceptable_fitness'] or 0
+        self.min_acceptable_fitness = self._config["fitness"]['min_acceptable_fitness'] or 0
 
-    def _parse_config_file(self, fpath):
-        with open(fpath) as f:
-            return json.load(f)
-
-    def ga(
-        self,
-        epochs=100,
-        population_size=100,
-        elite_pct=10,
-        mateable_pct=50,
-        mutable_pct=25
-    ):
-        """ Genetic Algorithm 
-
-        :param epochs: The maximum number of iterations to run if `min_acceptable_fitness` is not satisfied. (default: 100) 
-        \n
-        :param population_size: The size of the population i.e. the number of individuals in each generation. (default: 100)
-        \n
-        :param elite_pct: The percentage of elites i.e. the % of top individuals that directly get selected for the next generation. (default: 10)
-        \n
-        :param mateable_pct: The percentage of top individuals that mate to produce the next generation of the population. (default: 50)
-        \n
-        :param mutable_pct: The percentage of individuals that could undergo mutation, if that makes them more fit. (default: 25)
-        NOTE: we are not using the standard mutation as that leaves the solution worse off, and converges to 0. Rather we are using what we term as `smart mutation`.
-        \n
-        """
-        self._logger.write(
-            f"""Running Genetic Algorithm - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {self.min_acceptable_fitness}; elite_pct: {elite_pct}; mateable_pct: {mateable_pct}; mutable_pct: {mutable_pct};\n"""
-        )
+    def solve(self, algo="ga", *args, **kwargs):
         t1 = perf_counter()
-        sch = smart_mut_genetic_algorithm(
-            self._logger,
-            self._state,
-            epochs,
-            population_size,
-            self.min_acceptable_fitness,
-            elite_pct,
-            mateable_pct,
-            mutable_pct
-        )
+        sch = GeneticAlgorithm(self._logger, self._state).run(*args, **kwargs)
         t2 = perf_counter()
         self._write_schedule(sch)
         self._logger.write(f"\nTime taken: {t2-t1} s")
-
-    def meme(
-        self,
-        epochs=100,
-        population_size=50,
-        elite_pct=10,
-        mateable_pct=50,
-        lcl_search_pct=10,
-        lcl_search_iters=30
-    ):
-        """ Memetic Algorithm 
-
-        :param epochs: The maximum number of iterations to run if `min_acceptable_fitness` is not satisfied. (default: 100) 
-        \n
-        :param population_size: The size of the population i.e. the number of individuals in each generation. (default: 100)
-        \n
-        :param elite_pct: The percentage of elites i.e. the % of top individuals that directly get selected for the next generation. (default: 10)
-        \n
-        :param mateable_pct: The percentage of top individuals that mate to produce the next generation of the population. (default: 50)
-        \n
-        :param lcl_search_pct: The percentage of individuals that undergo local search to find a better solution than their current one. (default: 10)
-        \n
-        :param lcl_search_iters: The maximum number of times an individual chosen for local search - will continue to look for a better solution, if they haven't found one already. (default: 30)
-        \n
-        """
-        self._logger.write(
-            f"""Running Memetic Algorithm - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {self.min_acceptable_fitness}; elite_pct: {elite_pct}; mateable_pct: {mateable_pct}; lcl_search_pct: {lcl_search_pct}; lcl_search_iters: {lcl_search_iters};\n"""
-        )
-
-        t1 = perf_counter()
-        sch = memetic_algorithm(
-            self._logger,
-            self._state,
-            epochs,
-            self.min_acceptable_fitness,
-            population_size,
-            elite_pct,
-            mateable_pct,
-            lcl_search_pct,
-            lcl_search_iters,
-        )
-        t2 = perf_counter()
-        self._write_schedule(sch)
-        self._logger.write(f"\nTime taken: {t2-t1} s")
-
-    def pso(
-        self,
-        epochs=100,
-        population_size=100,
-        w0=0.8, wf=0.2, c1=1, c2=2, vmax_pct=5
-    ):
-        """ Particle Swarm Optimization 
-
-        :param epochs: The maximum number of iterations to run if `min_acceptable_fitness` is not satisfied. (default: 100) 
-        \n
-        :param population_size: The size of the population i.e. the number of particles in each iteration. (default: 100)
-        \n
-        :param w0: The starting weight of each particle. (default: 0.8) 
-        \n
-        :param wf: The ending weight of each particle. (default: 0.2)
-        \n
-        :param c1: The weight/coefficient of the individual component in the velocity update equation. (default: 1)
-        \n
-        :param c2: The weight/coefficient of the social component in the velocity update equation. (default: 2)
-        \n
-        :param vmax_pct: The maximum velocity percent i.e. the maximum percentage change a particle can undergo in each iteration. (default: 5)
-        \n
-        """
-        self._logger.write(
-            f"""Running Particle Swarm Optimization - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {self.min_acceptable_fitness}; w0: {w0}; wf: {wf}; c1: {c1}; c2: {c2}; vmax_pct: {vmax_pct};\n"""
-        )
-        t1 = perf_counter()
-        sch = particle_swarm_optimization(
-            self._logger,
-            self._state,
-            epochs,
-            population_size,
-            self.min_acceptable_fitness,
-            w0, wf, c1, c2, vmax_pct
-        )
-        t2 = perf_counter()
-        self._write_schedule(sch)
-        self._logger.write(f"\nTime taken: {t2-t1} s")
-
-    def pyswarms(
-        self,
-        epochs=100,
-        population_size=100,
-        w0=0.8, wf=0.2, c1=1, c2=2, vmax_pct=5
-    ):
-        """ Particle Swarm Optimization 
-
-        :param epochs: The maximum number of iterations to run if `min_acceptable_fitness` is not satisfied. (default: 100) 
-        \n
-        :param population_size: The size of the population i.e. the number of particles in each iteration. (default: 100)
-        \n
-        :param w0: The starting weight of each particle. (default: 0.8) 
-        \n
-        :param wf: The ending weight of each particle. (default: 0.2)
-        \n
-        :param c1: The weight/coefficient of the individual component in the velocity update equation. (default: 1)
-        \n
-        :param c2: The weight/coefficient of the social component in the velocity update equation. (default: 2)
-        \n
-        :param vmax_pct: The maximum velocity percent i.e. the maximum percentage change a particle can undergo in each iteration. (default: 5)
-        \n
-        """
-        self._logger.write(
-            f"""Running Particle Swarm Optimization - epochs: {epochs}; population_size: {population_size}; min_acceptable_fitness: {self.min_acceptable_fitness}; w0: {w0}; wf: {wf}; c1: {c1}; c2: {c2}; vmax_pct: {vmax_pct};\n"""
-        )
-        t1 = perf_counter()
-        sch = pyswarms(
-            self._logger,
-            self._state,
-            epochs,
-            population_size,
-            self.min_acceptable_fitness,
-            w0, wf, c1, c2, vmax_pct
-        )
-        t2 = perf_counter()
-        self._write_schedule(sch)
-        self._logger.write(f"\nTime taken: {t2-t1} s")
+        pass
 
     def _write_schedule(self, sch: Schedule):
         if self._save_sch:

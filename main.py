@@ -10,13 +10,14 @@ class UCSPyEngine:
     """
     UCSPy-Engine
 
-    Solves univesity course scheduling problems using various intelligent algorithms.
+    Solves the univesity course scheduling problems using various intelligent algorithms.
     """
 
-    def __init__(self):
+    def __init__(self, config_file="ucsp.config.json"):
         Path("data/logs").mkdir(parents=True, exist_ok=True)
         Path("data/schedules").mkdir(parents=True, exist_ok=True)
-        self.solver = UCSPSolver
+
+        self.solve = UCSPSolver().solve
         self.plot = make_line_plot
         self.inspect = inspect_schedule
 
