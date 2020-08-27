@@ -36,7 +36,6 @@ def tanh_fitness(schedule: Schedule, state: StateManager, _inspect=False, relax_
         return 1
 
     tsp = _total_soft_penalty(schedule, state, _inspect)
-    # print(tsp)
     if tsp < 0:
         raise Exception(f"Error! Total soft penalty cannot be negative!")
     return np.tanh(relax_coeff * tsp)

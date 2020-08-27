@@ -6,20 +6,12 @@
   "inspect_final_schedule": false,
   "fitness": {
     "min_acceptable_fitness": 0,
-    "functions": ["default", "default_expo", "tanh_fitness"],
+    "functions": ["tanh_fitness"],
     "use": "tanh_fitness"
   },
   "algorithm": {
-    "algorithms": ["ga", "meme", "pso"],
-    "use": "ga",
-    "algo_params": {
-      "epochs": 100,
-      "population_size": 100,
-      
-      "elite_pct": 10,
-      "mateable_pct": 50,
-      "mutable_pct": 20
-    }
+    "algorithms": ["ga", "meme"],
+    "use": "ga"
   },
   "constraints": {
     "soft_constraints": {

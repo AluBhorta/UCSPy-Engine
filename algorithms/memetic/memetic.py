@@ -4,13 +4,30 @@ from copy import deepcopy
 
 from core.models import StateManager, Schedule
 from core.logging import UCSPLogger
+from core.models.Algorithm import Algorithm
 
 
-def memetic_algorithm(
+class MemeticAlgorithm(Algorithm):
+    def __init__(self, logger: UCSPLogger, state: StateManager):
+        super(MemeticAlgorithm, self).__init__(
+            logger,
+            state,
+            name="meme"
+        )
+
+    def run(self, *args, **kwargs):
+        return _memetic_algorithm(
+            self.logger,
+            self.state,
+            *args, **kwargs
+        )
+
+
+def _memetic_algorithm(
     logger: UCSPLogger,
     state: StateManager,
     epochs=100,
-    min_acceptable_fitness=1,
+    min_acceptable_fitness=0,
     population_size=100,
     elite_pct=10,
     mateable_pct=50,
@@ -22,20 +39,18 @@ def memetic_algorithm(
     new_population = [None for _ in range(population_size)]
 
     total_classes = len(state.sections)
-
     logger.write(f"Generation\t\tFitness")
+
     for epoch in range(epochs):
         try:
-            """ Sort by its fitness in DESC order """
             population = sorted(
                 population,
-                key=lambda sch: state.fitness(sch),
-                reverse=True)
+                key=lambda sch: state.fitness(sch))
 
             best_fitness = state.fitness(population[0])
             logger.write(f"{epoch}\t\t{best_fitness}")
 
-            if best_fitness >= min_acceptable_fitness:
+            if best_fitness <= min_acceptable_fitness:
                 return population[0]
 
             """ Dominance by elites """
@@ -89,7 +104,7 @@ def memetic_algorithm(
                         tmp_sch.classes[class_idx].timeslot = \
                             random.choice(state.timeslots)
 
-                    if state.fitness(tmp_sch) > state.fitness(new_population[schedule_idx]):
+                    if state.fitness(tmp_sch) < state.fitness(new_population[schedule_idx]):
                         new_population[schedule_idx] = tmp_sch
                         break
 
@@ -102,7 +117,7 @@ def memetic_algorithm(
     best_fit_idx = 0
     for i in range(1, len(population)):
         f = state.fitness(population[i])
-        if f > best_fitness:
+        if f < best_fitness:
             best_fitness = f
             best_fit_idx = i
 

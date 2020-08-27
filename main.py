@@ -12,7 +12,7 @@ class UCSPyEngine:
     """
     UCSPy-Engine
 
-    Solves the univesity course scheduling problems using various intelligent algorithms.
+    :param config_file: The JSON file used to configure UCSPy-Engine.  (default: 'ucsp.config.json')
     """
 
     def __init__(self, config_file="ucsp.config.json"):
@@ -20,7 +20,7 @@ class UCSPyEngine:
         Path("data/schedules").mkdir(parents=True, exist_ok=True)
 
         self._config = parse_config_file(config_file)
-        self._state = generate_state_from_config(config_file)
+        self._state = generate_state_from_config(self._config)
 
         # main services: TODO - convert to methods
         self.solve = UCSPSolver(self._config, self._state).solve

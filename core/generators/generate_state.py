@@ -28,12 +28,10 @@ def generate_state_manager(schedule_param_config, constraints_config=None, fit_f
 
 from core.parsers.parse_config import parse_config_file
 
-def generate_state_from_config(config_file="ucsp.config.json"):
-    _config = parse_config_file(config_file)
-
-    schedule_param_config = _config['schedule_param']
-    fit_func_name = _config['fitness']['use'] or "default"
-    constraints_config = _config['constraints']
+def generate_state_from_config(config):
+    schedule_param_config = config['schedule_param']
+    fit_func_name = config['fitness']['use']
+    constraints_config = config['constraints']
 
     return generate_state_manager(
         schedule_param_config,

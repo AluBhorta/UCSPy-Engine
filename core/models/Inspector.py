@@ -2,7 +2,6 @@
 from pandas import read_csv
 import os
 
-from core.generators.generate_state import generate_state_from_config
 from core.models import StateManager
 from core.util import _str_to_array
 

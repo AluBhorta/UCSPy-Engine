@@ -9,17 +9,21 @@ from core.models.Algorithm import Algorithm
 
 class GeneticAlgorithm(Algorithm):
     def __init__(self, logger: UCSPLogger, state: StateManager):
-        super(GeneticAlgorithm, self).__init__(logger, state)
+        super(GeneticAlgorithm, self).__init__(
+            logger,
+            state,
+            name="ga"
+        )
 
     def run(self, *args, **kwargs):
-        return smart_mut_genetic_algorithm(
+        return _smart_mut_genetic_algorithm(
             self.logger,
             self.state,
             *args, **kwargs
         )
 
 
-def smart_mut_genetic_algorithm(
+def _smart_mut_genetic_algorithm(
     logger: UCSPLogger,
     state: StateManager,
     epochs=100,
@@ -35,14 +39,12 @@ def smart_mut_genetic_algorithm(
 
     total_classes = len(state.sections)
     logger.write(f"Generation\t\tFitness")
+
     for epoch in range(epochs):
         try:
-            """ Sort by its fitness in DESC order """
             population = sorted(
                 population,
-                key=lambda sch: state.fitness(sch),
-                # reverse=True
-            )
+                key=lambda sch: state.fitness(sch))
 
             best_fitness = state.fitness(population[0])
             logger.write(f"{epoch}\t\t{best_fitness}")
@@ -115,7 +117,7 @@ def smart_mut_genetic_algorithm(
     best_fit_idx = 0
     for i in range(1, len(population)):
         f = state.fitness(population[i])
-        if f > best_fitness:
+        if f < best_fitness:
             best_fitness = f
             best_fit_idx = i
 
