@@ -4,11 +4,8 @@ from time import perf_counter
 import os
 import json
 
-from core.models import Schedule
+from core.models import Schedule, StateManager
 from core.logging import UCSPLogger
-from core.generators.generate_state import generate_state_from_config
-from algorithms.pso.pyswarms import pyswarms
-from core.parsers.parse_config import parse_config_file
 
 from algorithms.genetic.smart_mut_ga import GeneticAlgorithm
 
@@ -32,21 +29,14 @@ class UCSPSolver:
 
     """
 
-    def __init__(
-        self,
-        config_file="ucsp.config.json",
-        save_sch=None,
-        save_logs=None,
-        inspect_final_sch=None
-    ):
-        self._config = parse_config_file(config_file)
+    def __init__(self, config, state: StateManager):
+        self._config = config
+        self._state = state
+        self._logger = UCSPLogger(self._config['save_logs'])
 
-        self._state = generate_state_from_config(config_file)
-
-        self._logger = UCSPLogger(save_logs or self._config['save_logs'])
-        self._save_sch = save_sch or self._config['save_schedule']
-        self._inspect_final_sch = inspect_final_sch or self._config['inspect_final_schedule']
-        self.min_acceptable_fitness = self._config["fitness"]['min_acceptable_fitness'] or 0
+        self._save_sch = self._config['save_schedule']
+        self._inspect_final_sch = self._config['inspect_final_schedule']
+        self.min_acceptable_fitness = self._config["fitness"]['min_acceptable_fitness']
 
     def solve(self, algo="ga", *args, **kwargs):
         t1 = perf_counter()
@@ -54,7 +44,6 @@ class UCSPSolver:
         t2 = perf_counter()
         self._write_schedule(sch)
         self._logger.write(f"\nTime taken: {t2-t1} s")
-        pass
 
     def _write_schedule(self, sch: Schedule):
         if self._save_sch:

@@ -3,7 +3,9 @@ from pathlib import Path
 
 from core.plotting import make_line_plot
 from core.models.Solver import UCSPSolver
-from core.util.inspect_schedule import inspect_schedule
+from core.models.Inspector import Inspector
+from core.generators.generate_state import generate_state_from_config
+from core.parsers.parse_config import parse_config_file
 
 
 class UCSPyEngine:
@@ -17,11 +19,14 @@ class UCSPyEngine:
         Path("data/logs").mkdir(parents=True, exist_ok=True)
         Path("data/schedules").mkdir(parents=True, exist_ok=True)
 
-        self.solve = UCSPSolver().solve
+        self._config = parse_config_file(config_file)
+        self._state = generate_state_from_config(config_file)
+
+        # main services: TODO - convert to methods
+        self.solve = UCSPSolver(self._config, self._state).solve
         self.plot = make_line_plot
-        self.inspect = inspect_schedule
+        self.inspect = Inspector(self._state).inspect
 
 
 if __name__ == "__main__":
     fire.Fire(UCSPyEngine)
-    pass
