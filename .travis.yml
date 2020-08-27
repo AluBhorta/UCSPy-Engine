@@ -6,5 +6,5 @@ python:
 install:
   - pip install -r requirements.txt
 
-script: python main.py solver ga --epochs=5
+script: python main.py solve ga --epochs=5
 
