@@ -1,8 +1,8 @@
 
-from core.models import Schedule, StateManager
+from core.models import Schedule, ScheduleParam
 
 
-def penalty_of_soft_constraint_5(schedule: Schedule, state: StateManager, unit_penalty, _inspect=False):
+def penalty_of_soft_constraint_5(schedule: Schedule, schedule_param: ScheduleParam, unit_penalty, _inspect=False):
     """
     5. If a Course has 2 Lectures Per Week, it should take place in a composite Timeslot i.e. with Day code of 'ST' or 'MW'.
     """

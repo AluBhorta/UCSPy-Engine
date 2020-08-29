@@ -1,8 +1,8 @@
 
-from core.models import Schedule, StateManager
+from core.models import Schedule, ScheduleParam
 
 
-def penalty_of_soft_constraint_1(schedule: Schedule, state: StateManager, unit_penalty, _inspect=False):
+def penalty_of_soft_constraint_1(schedule: Schedule, schedule_param: ScheduleParam, unit_penalty, _inspect=False):
     """
     1. Instructors should only take certain courses they are are assigned to.
     """

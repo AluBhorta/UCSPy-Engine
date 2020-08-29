@@ -19,5 +19,5 @@ class SoftConstraint:
         self._penalty_func = penalty_func
         self.desc = desc
 
-    def penalty_of(self, sch, state, _inspect=False) -> float:
-        return self._penalty_func(sch, state, self._unit_penalty, _inspect)
+    def penalty_of(self, sch, schedule_param, _inspect=False) -> float:
+        return self._penalty_func(sch, schedule_param, self._unit_penalty, _inspect)

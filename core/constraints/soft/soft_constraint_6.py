@@ -1,8 +1,8 @@
 
-from core.models import Schedule, StateManager, Timeslot
+from core.models import Schedule, Timeslot, ScheduleParam
 
 
-def penalty_of_soft_constraint_6(schedule: Schedule, state: StateManager, unit_penalty, _inspect=False):
+def penalty_of_soft_constraint_6(schedule: Schedule, schedule_param: ScheduleParam, unit_penalty, _inspect=False):
     """
     6. The Lab Section of a Course (if any) should be placed in a Timeslot that is before or after the corresponding Theory Section.
     """
@@ -23,15 +23,15 @@ def penalty_of_soft_constraint_6(schedule: Schedule, state: StateManager, unit_p
 
         # get valid slots
         current_daily_slot_idx = None
-        for i in range(len(state.daily_slots)):
-            if t.daily_slot == state.daily_slots[i]:
+        for i in range(len(schedule_param.daily_slots)):
+            if t.daily_slot == schedule_param.daily_slots[i]:
                 current_daily_slot_idx = i
                 break
         if current_daily_slot_idx is not None:
             valid_slots = []
             if current_daily_slot_idx == 0:
                 valid_slots.append(current_daily_slot_idx+1)
-            elif current_daily_slot_idx == len(state.daily_slots)-1:
+            elif current_daily_slot_idx == len(schedule_param.daily_slots)-1:
                 valid_slots.append(current_daily_slot_idx-1)
             else:
                 valid_slots.extend(
@@ -42,15 +42,26 @@ def penalty_of_soft_constraint_6(schedule: Schedule, state: StateManager, unit_p
 
         # return valid timeslots
         valid_timeslot_idxs = []
-        for timeslot in state.timeslots:
+        for timeslot in schedule_param.timeslots:
             if timeslot.day_code in valid_days and timeslot.daily_slot in valid_slots:
                 valid_timeslot_idxs.append(timeslot.idx)
 
         return valid_timeslot_idxs
 
+    def _get_theory_lab_course_idx_paris(courses):
+        """ NOTE: for this to work, the Lab course should should be directly after its corresponding Theory course  in the `courses.csv` schedule_param
+        TODO: replace the indexing strategy with a dedicated parameter in Course instance (e.g. C.lab_of_course_idx)
+        """
+        pairs = []
+        for crs in courses:
+            if crs.course_type.lower() == "lab":
+                pairs.append((crs.idx-1, crs.idx))
+        return pairs
+
+    # start of penalty_of_soft_constraint_6
     violation_count = 0
 
-    for pair in state._get_theory_lab_course_idx_paris():
+    for pair in _get_theory_lab_course_idx_paris(schedule_param.courses):
         theory_cls = _get_classes_of_course_idx(pair[0])
         lab_cls = _get_classes_of_course_idx(pair[1])
         for theory_lab_pair in zip(theory_cls, lab_cls):

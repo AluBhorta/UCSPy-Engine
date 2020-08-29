@@ -1,8 +1,8 @@
 
-from core.models import Schedule, StateManager
+from core.models import Schedule, ScheduleParam
 
 
-def penalty_of_soft_constraint_7(schedule: Schedule, state: StateManager, unit_penalty, _inspect=False):
+def penalty_of_soft_constraint_7(schedule: Schedule, schedule_param: ScheduleParam, unit_penalty, _inspect=False):
     """
     7. Instructors have minimum credit load requirements.
     """
@@ -16,7 +16,7 @@ def penalty_of_soft_constraint_7(schedule: Schedule, state: StateManager, unit_p
             loads[c.instructor.idx] += c.section.course.credits
 
     for idx in loads.keys():
-        I = state.get_instructor(idx)
+        I = schedule_param.get_instructor(idx)
         if loads[idx] < I.min_credit_req:
             violation_count += 1
             if _inspect:

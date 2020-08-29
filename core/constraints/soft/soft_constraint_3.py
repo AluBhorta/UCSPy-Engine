@@ -1,20 +1,20 @@
 
-from core.models import Schedule, StateManager
+from core.models import Schedule, ScheduleParam
 
 
-def penalty_of_soft_constraint_3(schedule: Schedule, state: StateManager, unit_penalty, _inspect=False):
+def penalty_of_soft_constraint_3(schedule: Schedule, schedule_param: ScheduleParam, unit_penalty, _inspect=False):
     """
     3. CourseGroups have Timeslot preferences.
     """
     violation_count = 0
     for c in schedule.classes:
         cg_idx = None
-        for cg in state.course_groups:
+        for cg in schedule_param.course_groups:
             if c.section.course.idx in cg.course_idxs:
                 cg_idx = cg.idx
                 break
         if cg_idx is not None:
-            if not c.timeslot.idx in state.course_groups[cg_idx].preferred_timeslot_idxs:
+            if not c.timeslot.idx in schedule_param.course_groups[cg_idx].preferred_timeslot_idxs:
                 violation_count += 1
                 if _inspect:
                     print(

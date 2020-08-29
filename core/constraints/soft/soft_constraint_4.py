@@ -1,8 +1,8 @@
 
-from core.models import Schedule, StateManager
+from core.models import Schedule, ScheduleParam
 
 
-def penalty_of_soft_constraint_4(schedule: Schedule, state: StateManager, unit_penalty, _inspect=False):
+def penalty_of_soft_constraint_4(schedule: Schedule, schedule_param: ScheduleParam, unit_penalty, _inspect=False):
     """
     4. Instructors have Timeslot preferences.
     """
