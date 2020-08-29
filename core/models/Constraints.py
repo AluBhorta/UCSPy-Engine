@@ -1,6 +1,4 @@
 
-# from core.models import Schedule
-
 
 class HardConstraint:
     def __init__(self, _id, violates_func, desc):

@@ -4,6 +4,7 @@ from pandas import read_csv
 import os
 import json
 
+from core.parsers.parse_config import parse_config_file
 from core.models import Room, Timeslot, Course, Instructor, CourseGroup, StateManager, ScheduleParam
 from core.fitness import FITNESS_FUNCS
 from core.generators.generate_constraints import generate_constraints
@@ -26,7 +27,6 @@ def generate_state_manager(schedule_param_config, constraints_config=None, fit_f
         generate_random_schedule
     )
 
-from core.parsers.parse_config import parse_config_file
 
 def generate_state_from_config(config):
     schedule_param_config = config['schedule_param']
