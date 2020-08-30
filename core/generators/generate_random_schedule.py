@@ -62,7 +62,7 @@ def _get_unique_Instr_Timeslot_Room(assigned_instructors: List[Instructor], cour
                     assigned_instructors, course, classes, state)
                 rand_I_T_counter += 1
                 continue
-            else:  # brute force search ._.
+            else:
                 for instructor in state.instructors:
                     if not __Instr_Timeslot_conflicts(instructor, timeslot, classes):
                         for room in state.rooms:
@@ -72,9 +72,16 @@ def _get_unique_Instr_Timeslot_Room(assigned_instructors: List[Instructor], cour
                         for _ in range(MAX_RAND_T):
                             timeslot = _get_Timeslot_for_Course_Instr(
                                 course, instructor, classes, state)
-                            for room in state.rooms:
-                                if not __Room_Timeslot_conflicts(room, timeslot, classes):
-                                    return (instructor, timeslot, room)
+                            if timeslot != None:
+                                for room in state.rooms:
+                                    if not __Room_Timeslot_conflicts(room, timeslot, classes):
+                                        return (instructor, timeslot, room)
+
+                        for timeslot in state.timeslots:
+                            if not __Instr_Timeslot_conflicts(instructor, timeslot, classes):
+                                for room in state.rooms:
+                                    if not __Room_Timeslot_conflicts(room, timeslot, classes):
+                                        return (instructor, timeslot, room)
 
                 raise Exception(
                     f"Input Error! No unique (I, T, R) combination possible for course_idx {course.idx}!")
@@ -88,9 +95,27 @@ def _get_unique_Instr_Timeslot(assigned_instructors: List[Instructor], course: C
     NOTE: must satisfy _I_T_conflicts == False
     """
 
+    MAX_RAND_I = 50
+    counter = 0
     instructor = random.choice(assigned_instructors)
+
     timeslot = _get_Timeslot_for_Course_Instr(
         course, instructor, classes, state)
+
+    while timeslot == None:
+        instructor = random.choice(assigned_instructors)
+        timeslot = _get_Timeslot_for_Course_Instr(
+            course, instructor, classes, state)
+        if counter > MAX_RAND_I:
+            for instructor in state.instructors:
+                timeslot = _get_Timeslot_for_Course_Instr(
+                    course, instructor, classes, state
+                )
+                if timeslot != None:
+                    break
+            raise Exception(
+                f"ERROR! No Timeslot found by `_get_unique_Instr_Timeslot` for: {course}")
+        counter += 1
 
     return (instructor, timeslot)
 
@@ -132,8 +157,7 @@ def _get_Timeslot_for_Course_Instr(
         if not __Instr_Timeslot_conflicts(instructor, timeslot, classes):
             return timeslot
 
-    raise Exception(
-        f"ERROR! No Timeslot found by `_get_Timeslot_for_Course_Instr` for: {course} - {instructor}")
+    return None
 
 
 def __Instr_Timeslot_conflicts(given_I: Instructor, given_T: Timeslot, classes: List[Class]):
