@@ -7,14 +7,14 @@ from pyswarms.utils.plotters.plotters import plot_contour, plot_surface, plot_co
 from pyswarms.utils.plotters.formatters import Mesher, Designer
 from pyswarms.utils.decorators import cost
 
-from core.models import StateManager, Schedule
+from core.models import Schedule
 from core.logging import UCSPLogger
 from .integer_pso import IntegerPSO
 
 
 def pyswarms(
     logger: UCSPLogger,
-    state: StateManager,
+    state,
     epochs=100,
     population_size=100,
     min_acceptable_fitness=1,

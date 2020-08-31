@@ -4,7 +4,6 @@ from pathlib import Path
 from core.plotting import make_line_plot
 from core.models.Solver import UCSPSolver
 from core.models.ScheduleInspector import ScheduleInspector
-from core.generators.generate_state import generate_state_from_config
 from core.parsers.parse_config import parse_config_file
 from core.generators.StateGenerator import StateGenerator
 from core.models.ScheduleOperator import ScheduleOperator

@@ -2,13 +2,13 @@
 import numpy as np
 from copy import deepcopy
 
-from core.models import StateManager, Schedule
+from core.models import Schedule
 from core.logging import UCSPLogger
 
 
 def particle_swarm_optimization(
     logger: UCSPLogger,
-    state: StateManager,
+    state,
     epochs=100,
     population_size=100,
     min_acceptable_fitness=1,

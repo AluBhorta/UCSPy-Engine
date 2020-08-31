@@ -2,7 +2,6 @@
 from pandas import read_csv
 import os
 
-from core.models import StateManager
 from core.util import _str_to_array
 from core.models.ScheduleOperator import ScheduleOperator
 from core.models.FitnessProvider import FitnessProvider
