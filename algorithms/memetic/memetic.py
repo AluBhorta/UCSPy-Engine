@@ -8,6 +8,7 @@ from core.models.Algorithm import Algorithm
 from core.models.FitnessProvider import FitnessProvider
 from core.models.ScheduleGenerator import ScheduleGenerator
 
+
 class MemeticAlgorithm(Algorithm):
     def __init__(
         self,
@@ -15,6 +16,13 @@ class MemeticAlgorithm(Algorithm):
         fitness_provider: FitnessProvider,
         schedule_generator: ScheduleGenerator,
         logger: UCSPLogger,
+        epochs=100,
+        min_acceptable_fitness=0,
+        population_size=100,
+        elite_pct=10,
+        mateable_pct=50,
+        lcl_search_pct=10,
+        lcl_search_iters=30,
     ):
         super(MemeticAlgorithm, self).__init__(
             schedule_param,
@@ -22,6 +30,24 @@ class MemeticAlgorithm(Algorithm):
             schedule_generator,
             logger
         )
+        self.epochs = epochs
+        self.min_acceptable_fitness = min_acceptable_fitness
+        self.population_size = population_size
+        self.elite_pct = elite_pct
+        self.mateable_pct = mateable_pct
+        self.lcl_search_pct = lcl_search_pct
+        self.lcl_search_iters = lcl_search_iters
+
+    def get_default_args(self, *args, **kwargs):
+        return {
+            "epochs": self.epochs,
+            "min_acceptable_fitness": self.min_acceptable_fitness,
+            "population_size": self.population_size,
+            "elite_pct": self.elite_pct,
+            "mateable_pct": self.mateable_pct,
+            "lcl_search_pct": self.lcl_search_pct,
+            "lcl_search_iters": self.lcl_search_iters,
+        }
 
     def run(self, *args, **kwargs):
         return _memetic_algorithm(
@@ -29,7 +55,13 @@ class MemeticAlgorithm(Algorithm):
             self.fitness_provider,
             self.schedule_generator,
             self.logger,
-            *args, **kwargs
+            self.epochs,
+            self.min_acceptable_fitness,
+            self.population_size,
+            self.elite_pct,
+            self.mateable_pct,
+            self.lcl_search_pct,
+            self.lcl_search_iters,
         )
 
 
@@ -47,7 +79,8 @@ def _memetic_algorithm(
     lcl_search_iters=30,
 ):
     # initial population
-    population = [schedule_generator.generate() for _ in range(population_size)]
+    population = [schedule_generator.generate()
+                  for _ in range(population_size)]
     new_population = [None for _ in range(population_size)]
 
     total_classes = len(schedule_param.sections)

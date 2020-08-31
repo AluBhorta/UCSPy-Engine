@@ -22,3 +22,8 @@ class Algorithm(ABC):
     @abstractmethod
     def run(self, *args, **kwargs):
         raise NotImplementedError
+
+    @abstractmethod
+    def get_default_args(self, *args, **kwargs):
+        """ return the default arguments of the algorithm as a dictionary. """
+        raise NotImplementedError

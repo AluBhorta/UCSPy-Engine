@@ -27,16 +27,13 @@ class UCSPSolver:
         self._algo_name = config['algorithm']['use']
 
     def solve(self, algo_name=None, *args, **kwargs):
-        _algo = self._get_algo(algo_name)
-        self._logger.write(f"Running: {_algo.__name__}...\n")
+        algo = self._get_algo(algo_name, *args, **kwargs)
+        self._logger.write(f"Running: {type(algo).__name__}...")
+        default_args = algo.get_default_args()
+        self._logger.write(f"Default arguments: {default_args}\n")
 
         t1 = perf_counter()
-        sch = _algo(
-            self._state.schedule_param,
-            self._state.fitness_provider,
-            self._state.schedule_generator,
-            self._logger
-        ).run(*args, **kwargs)
+        sch = algo.run()
         t2 = perf_counter()
 
         self._write_schedule(sch)
@@ -44,12 +41,20 @@ class UCSPSolver:
 
         return sch
 
-    def _get_algo(self, algo_name=None) -> Algorithm:
+    def _get_algo(self, algo_name=None, *args, **kwargs) -> Algorithm:
         name = algo_name or self._algo_name
         algo = ALL_ALGORITHMS.get(name)
+
         if not hasattr(algo, 'run'):
             raise Exception(f"ERROR! Invalid algo name provided: {name}")
-        return algo
+
+        return algo(
+            self._state.schedule_param,
+            self._state.fitness_provider,
+            self._state.schedule_generator,
+            self._logger,
+            *args, **kwargs
+        )
 
     def _write_schedule(self, sch: Schedule):
         if self._save_sch:

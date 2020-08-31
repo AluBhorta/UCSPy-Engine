@@ -16,6 +16,12 @@ class GeneticAlgorithm(Algorithm):
         fitness_provider: FitnessProvider,
         schedule_generator: ScheduleGenerator,
         logger: UCSPLogger,
+        epochs=100,
+        population_size=100,
+        min_acceptable_fitness=0,
+        elite_pct=10,
+        mateable_pct=50,
+        mutable_pct=20
     ):
         super(GeneticAlgorithm, self).__init__(
             schedule_param,
@@ -23,6 +29,22 @@ class GeneticAlgorithm(Algorithm):
             schedule_generator,
             logger
         )
+        self.epochs = epochs
+        self.population_size = population_size
+        self.min_acceptable_fitness = min_acceptable_fitness
+        self.elite_pct = elite_pct
+        self.mateable_pct = mateable_pct
+        self.mutable_pct = mutable_pct
+
+    def get_default_args(self, *args, **kwargs):
+        return {
+            "epochs": self.epochs,
+            "population_size": self.population_size,
+            "min_acceptable_fitness": self.min_acceptable_fitness,
+            "elite_pct": self.elite_pct,
+            "mateable_pct": self.mateable_pct,
+            "mutable_pct": self.mutable_pct,
+        }
 
     def run(self, *args, **kwargs):
         return _smart_mut_genetic_algorithm(
@@ -30,7 +52,12 @@ class GeneticAlgorithm(Algorithm):
             self.fitness_provider,
             self.schedule_generator,
             self.logger,
-            *args, **kwargs
+            self.epochs,
+            self.population_size,
+            self.min_acceptable_fitness,
+            self.elite_pct,
+            self.mateable_pct,
+            self.mutable_pct,
         )
 
 
@@ -47,7 +74,8 @@ def _smart_mut_genetic_algorithm(
     mutable_pct=20
 ):
     # initial population
-    population = [schedule_generator.generate() for _ in range(population_size)]
+    population = [schedule_generator.generate()
+                  for _ in range(population_size)]
     new_population = [None for _ in range(population_size)]
 
     total_classes = len(schedule_param.sections)
