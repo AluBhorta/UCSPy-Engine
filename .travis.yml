@@ -1,10 +1,11 @@
 language: python
 python:
   - "3.8"
+  - "3.7"
   - "3.6"
 
 install:
   - pip install -r requirements.txt
 
-script: python main.py solve ga --epochs=5
+script: python test.py
 
