@@ -40,7 +40,7 @@ def particle_swarm_optimization(
 
     # each particle consists of [X_current, P_best, Velocity]
     for i in range(population_size):
-        particles[i][0] = state.generate_schedule().get_numeric_repr()
+        particles[i][0] = state.generate_schedule().get_numrepr()
         particles[i][1] = deepcopy(particles[i][0])
         particles[i][2] = particles[i][0] % vmax_lim
 

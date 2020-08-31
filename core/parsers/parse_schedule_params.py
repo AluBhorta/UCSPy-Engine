@@ -1,8 +1,9 @@
+from typing import List
 import numpy as np
 from pandas import read_csv
 import os
 
-from core.models import Room, Timeslot, Course, Instructor, CourseGroup, ScheduleParam
+from core.models import Room, Timeslot, Course, Instructor, CourseGroup, ScheduleParam, Section
 from core.util import _str_to_array
 
 
@@ -116,13 +117,40 @@ def _get_parsed_schedule_param(param_collection) -> ScheduleParam:
             TIMESLOTS[i][3] = [int(TIMESLOTS[i][3])]
         else:
             TIMESLOTS[i][3] = _str_to_array(TIMESLOTS[i][3])
-        Timeslots = [Timeslot(t[0], t[1], t[2], t[3]) for t in TIMESLOTS]
 
     Rooms = [Room(r[0], r[1], r[2], r[3]) for r in ROOMS]
+    Timeslots = [Timeslot(t[0], t[1], t[2], t[3]) for t in TIMESLOTS]
     Courses = [Course(c[0], c[1], c[2], c[3], c[4]) for c in COURSES]
     Instructors = [Instructor(i[0], i[1], i[2], i[3], i[4])
                    for i in INSTRUCTORS]
     CourseGroups = [CourseGroup(cg[0], cg[1], cg[2], cg[3])
                     for cg in COURSE_GROUPS]
 
-    return ScheduleParam(Rooms, Timeslots, Courses, Instructors, CourseGroups)
+    sections = _get_all_sections(Courses)
+    daily_slots = _get_all_daily_slots(Timeslots)
+    day_codes = _get_all_day_codes(Timeslots)
+
+    return ScheduleParam(Rooms, Timeslots, Courses, Instructors, CourseGroups, sections, daily_slots, day_codes)
+
+
+def _get_all_sections(courses: List[Course]) -> List[Section]:
+    sections = []
+    for c in courses:
+        sections.extend(c.sections)
+    return sections
+
+
+def _get_all_daily_slots(ts: List[Timeslot]):
+    ds = []
+    for t in ts:
+        if t.daily_slot not in ds:
+            ds.append(t.daily_slot)
+    return ds
+
+
+def _get_all_day_codes(ts: List[Timeslot]):
+    dc = []
+    for t in ts:
+        if t.day_code not in dc:
+            dc.append(t.day_code)
+    return dc

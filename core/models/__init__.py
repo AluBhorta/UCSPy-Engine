@@ -2,27 +2,6 @@ from typing import List
 from numpy import array
 
 
-DAILY_SLOTS = [
-    '08:00-09:30',
-    '09:40-11:10',
-    '11:20-12:50',
-    '13:40-15:10',
-    '15:20-16:50',
-    '17:00-18:30',
-    '18:30-21:30',
-]
-
-DAY_CODES = [
-    'ST',
-    'MW',
-    'S',
-    'T',
-    'M',
-    'W',
-    'R',
-]
-
-
 class Timeslot:
     def __init__(self, idx, day_code, daily_slot, conflicts_with_idxs):
         self.idx = idx
@@ -75,9 +54,6 @@ class Course:
         self.sections = self._generate_sections()
         self.credits = self._get_credits()
 
-    def _get_credits(self):
-        return 1 if self.course_type.lower() == "lab" else 3
-
     def __str__(self):
         return f"""Course - idx: {self.idx}, desc: {self.desc}"""
 
@@ -90,6 +66,10 @@ class Course:
             sections: {self.sections}
             \n
         """
+
+    def _get_credits(self):
+        # TODO: take this as input
+        return 1 if self.course_type.lower() == "lab" else 3
 
     def _generate_sections(self):
         return [Section(self, (i+1)) for i in range(self.num_of_sections)]
@@ -181,11 +161,11 @@ class Schedule:
         return self.to_tsv()
 
     def flatten(self):
-        schedule = self.get_numeric_repr()
+        schedule = self.get_numrepr()
         a = array([item for _cls in schedule for item in _cls])
         return a
 
-    def get_numeric_repr(self):
+    def get_numrepr(self):
         """ returns rumeric representation of schedule in np.array<(C, S, I, R, T)> format """
         return array([(
             c.section.course.idx,
@@ -212,24 +192,32 @@ class Schedule:
     def to_num_csv(self):
         """ to numeric csv format """
         out = "Course,Section,Instructor,Room,Timeslot\n"
-        nr = self.get_numeric_repr()
+        nr = self.get_numrepr()
         for c in nr:
             out += f"{c[0]},{c[1]},{c[2]},{c[3]},{c[4]}\n"
         return out
 
 
 class ScheduleParam:
-    def __init__(self, rooms: List[Room], timeslots: List[Timeslot], courses: List[Course], instructors: List[Instructor], course_groups: List[CourseGroup]):
+    def __init__(
+        self,
+        rooms: List[Room],
+        timeslots: List[Timeslot],
+        courses: List[Course],
+        instructors: List[Instructor],
+        course_groups: List[CourseGroup],
+        sections: List[Section],
+        daily_slots: List[str],
+        day_codes: List[str]
+    ):
         self.rooms = rooms
         self.timeslots = timeslots
         self.instructors = instructors
         self.courses = courses
         self.course_groups = course_groups
-
-        self.sections = self._get_sections()
-        self.daily_slots = DAILY_SLOTS
-        self.num_of_daily_slots = len(DAILY_SLOTS)
-        self.day_codes = DAY_CODES
+        self.sections = sections
+        self.daily_slots = daily_slots
+        self.day_codes = day_codes
 
     def get_room(self, room_idx):
         return self.rooms[int(room_idx)]
@@ -246,12 +234,6 @@ class ScheduleParam:
     def get_course_group(self, course_group_idx):
         return self.course_groups[int(course_group_idx)]
 
-    def _get_sections(self) -> List[Section]:
-        sections = []
-        for c in self.courses:
-            sections.extend(c.sections)
-        return sections
-
 
 class StateManager:
     """State Manager
@@ -266,9 +248,8 @@ class StateManager:
         self.courses = schedule_param.courses
         self.course_groups = schedule_param.course_groups
         self.sections = self._get_sections()
-        self.daily_slots = DAILY_SLOTS
-        self.num_of_daily_slots = len(DAILY_SLOTS)
-        self.day_codes = DAY_CODES
+        self.daily_slots = None
+        self.day_codes = None
 
         self.hard_constraints = HARD_CONSTRAINTS
         self.soft_constraints = SOFT_CONSTRAINTS

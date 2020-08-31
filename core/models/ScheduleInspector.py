@@ -19,13 +19,13 @@ class ScheduleInspector:
         self.schedule_operator = schedule_operator
 
     def inspect(self, schedule_file):
-        ns = self._parse_num_sch_from(schedule_file)
-        sch = self.schedule_operator.numrepr_to_sch(ns)
+        numrepr = self._parse_numrepr_from_file(schedule_file)
+        sch = self.schedule_operator.numrepr_to_sch(numrepr)
 
         f_val = self.fitness_provider.fitness(sch, _inspect=True)
         print(f"\nFinal Fitness: {f_val}")
 
-    def _parse_num_sch_from(self, schedule_file):
+    def _parse_numrepr_from_file(self, schedule_file):
         return read_csv(
             os.path.join(os.getcwd(), schedule_file)
         ).to_numpy()
