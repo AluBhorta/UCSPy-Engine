@@ -4,6 +4,8 @@ import os
 
 from core.models import StateManager
 from core.util import _str_to_array
+from core.models.ScheduleOperator import ScheduleOperator
+from core.models.FitnessProvider import FitnessProvider
 
 
 class ScheduleInspector:
@@ -12,14 +14,15 @@ class ScheduleInspector:
         Inspect the quality of a schedule.
     """
 
-    def __init__(self, state: StateManager):
-        self.state = state
+    def __init__(self, fitness_provider: FitnessProvider, schedule_operator: ScheduleOperator):
+        self.fitness_provider = fitness_provider
+        self.schedule_operator = schedule_operator
 
     def inspect(self, schedule_file):
         ns = self._parse_num_sch_from(schedule_file)
-        sch = self.state.numeric_to_sch(ns)
+        sch = self.schedule_operator.numrepr_to_sch(ns)
 
-        f_val = self.state.fitness(sch, _inspect=True)
+        f_val = self.fitness_provider.fitness(sch, _inspect=True)
         print(f"\nFinal Fitness: {f_val}")
 
     def _parse_num_sch_from(self, schedule_file):
