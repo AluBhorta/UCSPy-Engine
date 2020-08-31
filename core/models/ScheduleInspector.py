@@ -6,7 +6,7 @@ from core.models import StateManager
 from core.util import _str_to_array
 
 
-class Inspector:
+class ScheduleInspector:
     """ Schedule Inspector 
 
         Inspect the quality of a schedule.

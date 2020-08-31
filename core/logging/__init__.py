@@ -2,11 +2,13 @@
 import sys
 import datetime
 
+
 class UCSPLogger(object):
     """  UCSPLogger
-    
+
         used for logging to the console or to the log file and console.
     """
+
     def __init__(self, save_logs=False):
         self.terminal = sys.stdout
         if save_logs:
@@ -22,6 +24,3 @@ class UCSPLogger(object):
         self.terminal.write(message)
         if self.file:
             self.file.write(message)
-
-    def flush(self):
-        pass

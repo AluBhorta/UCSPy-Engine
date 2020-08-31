@@ -2,7 +2,7 @@ import numpy as np
 from pandas import read_csv
 import os
 
-from core.models import Room, Timeslot, Course, Instructor, CourseGroup, StateManager, ScheduleParam
+from core.models import Room, Timeslot, Course, Instructor, CourseGroup, ScheduleParam
 from core.util import _str_to_array
 
 

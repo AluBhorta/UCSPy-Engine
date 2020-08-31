@@ -3,9 +3,11 @@ import json
 import datetime
 from time import perf_counter
 
-from core.models import Schedule, StateManager
+from core.models import Schedule
 from core.logging import UCSPLogger
 from algorithms import ALL_ALGORITHMS
+from core.models.Algorithm import Algorithm
+from core.models.UCSPState import UCSPState
 
 
 class UCSPSolver:
@@ -15,15 +17,13 @@ class UCSPSolver:
     Solves the univesity course scheduling problems using various intelligent algorithms.
     """
 
-    def __init__(self, config, state: StateManager):
-        self._config = config
+    def __init__(self, config, state: UCSPState):
         self._state = state
-        self._logger = UCSPLogger(config['save_logs'])
+        self._logger = state.logger
 
         self._save_sch = config['save_schedule']
         self._inspect_final_sch = config['inspect_final_schedule']
         self._min_acceptable_fitness = config["fitness"]['min_acceptable_fitness']
-
         self._algo_name = config['algorithm']['use']
 
     def solve(self, algo_name=None, *args, **kwargs):
@@ -31,13 +31,20 @@ class UCSPSolver:
         self._logger.write(f"Running: {_algo.__name__}...\n")
 
         t1 = perf_counter()
-        sch = _algo(self._logger, self._state).run(*args, **kwargs)
+        sch = _algo(
+            self._state.schedule_param,
+            self._state.fitness_provider,
+            self._state.schedule_generator,
+            self._logger
+        ).run(*args, **kwargs)
         t2 = perf_counter()
 
         self._write_schedule(sch)
         self._logger.write(f"\nTime taken: {t2-t1} s")
 
-    def _get_algo(self, algo_name=None):
+        return sch
+
+    def _get_algo(self, algo_name=None) -> Algorithm:
         name = algo_name or self._algo_name
         algo = ALL_ALGORITHMS.get(name)
         if not hasattr(algo, 'run'):
@@ -65,5 +72,7 @@ class UCSPSolver:
             print("\nFinal Schedule: \n")
             print(sch.to_tsv())
 
-        fit = self._state.fitness(sch, _inspect=self._inspect_final_sch)
+        fit = self._state.fitness_provider.fitness(
+            sch, _inspect=self._inspect_final_sch
+        )
         print(f"Final fitness: {fit}")

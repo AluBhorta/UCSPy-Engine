@@ -2,30 +2,42 @@ import numpy as np
 import random
 from copy import deepcopy
 
-from core.models import StateManager, Schedule
+from core.models import Schedule, ScheduleParam
 from core.logging import UCSPLogger
 from core.models.Algorithm import Algorithm
-
+from core.models.FitnessProvider import FitnessProvider
+from core.models.ScheduleGenerator import ScheduleGenerator
 
 class MemeticAlgorithm(Algorithm):
-    def __init__(self, logger: UCSPLogger, state: StateManager):
+    def __init__(
+        self,
+        schedule_param: ScheduleParam,
+        fitness_provider: FitnessProvider,
+        schedule_generator: ScheduleGenerator,
+        logger: UCSPLogger,
+    ):
         super(MemeticAlgorithm, self).__init__(
-            logger,
-            state,
-            name="meme"
+            schedule_param,
+            fitness_provider,
+            schedule_generator,
+            logger
         )
 
     def run(self, *args, **kwargs):
         return _memetic_algorithm(
+            self.schedule_param,
+            self.fitness_provider,
+            self.schedule_generator,
             self.logger,
-            self.state,
             *args, **kwargs
         )
 
 
 def _memetic_algorithm(
+    schedule_param: ScheduleParam,
+    fitness_provider: FitnessProvider,
+    schedule_generator: ScheduleGenerator,
     logger: UCSPLogger,
-    state: StateManager,
     epochs=100,
     min_acceptable_fitness=0,
     population_size=100,
@@ -35,19 +47,19 @@ def _memetic_algorithm(
     lcl_search_iters=30,
 ):
     # initial population
-    population = [state.generate_schedule() for _ in range(population_size)]
+    population = [schedule_generator.generate() for _ in range(population_size)]
     new_population = [None for _ in range(population_size)]
 
-    total_classes = len(state.sections)
+    total_classes = len(schedule_param.sections)
     logger.write(f"Generation\t\tFitness")
 
     for epoch in range(epochs):
         try:
             population = sorted(
                 population,
-                key=lambda sch: state.fitness(sch))
+                key=lambda sch: fitness_provider.fitness(sch))
 
-            best_fitness = state.fitness(population[0])
+            best_fitness = fitness_provider.fitness(population[0])
             logger.write(f"{epoch}\t\t{best_fitness}")
 
             if best_fitness <= min_acceptable_fitness:
@@ -94,17 +106,17 @@ def _memetic_algorithm(
                     if param_idx == 0:
                         """ mutate room """
                         tmp_sch.classes[class_idx].room = random.choice(
-                            state.rooms)
+                            schedule_param.rooms)
                     elif param_idx == 1:
                         """ mutate instructor """
                         tmp_sch.classes[class_idx].instructor = \
-                            random.choice(state.instructors)
+                            random.choice(schedule_param.instructors)
                     else:  # param_idx == 2
                         """ mutate timeslot """
                         tmp_sch.classes[class_idx].timeslot = \
-                            random.choice(state.timeslots)
+                            random.choice(schedule_param.timeslots)
 
-                    if state.fitness(tmp_sch) < state.fitness(new_population[schedule_idx]):
+                    if fitness_provider.fitness(tmp_sch) < fitness_provider.fitness(new_population[schedule_idx]):
                         new_population[schedule_idx] = tmp_sch
                         break
 
@@ -113,10 +125,10 @@ def _memetic_algorithm(
             print("Solver stopped by user")
             break
 
-    best_fitness = state.fitness(population[0])
+    best_fitness = fitness_provider.fitness(population[0])
     best_fit_idx = 0
     for i in range(1, len(population)):
-        f = state.fitness(population[i])
+        f = fitness_provider.fitness(population[i])
         if f < best_fitness:
             best_fitness = f
             best_fit_idx = i

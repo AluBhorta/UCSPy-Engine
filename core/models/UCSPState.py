@@ -1,12 +1,9 @@
-from abc import ABC, abstractmethod
-
+from . import ScheduleParam
+from .FitnessProvider import FitnessProvider
+from .ScheduleGenerator import ScheduleGenerator
 from core.logging import UCSPLogger
-from core.models.FitnessProvider import FitnessProvider
-from core.models import ScheduleParam
-from core.models.ScheduleGenerator import ScheduleGenerator
 
-
-class Algorithm(ABC):
+class UCSPState:
     def __init__(
         self,
         schedule_param: ScheduleParam,
@@ -18,7 +15,3 @@ class Algorithm(ABC):
         self.fitness_provider = fitness_provider
         self.schedule_generator = schedule_generator
         self.logger = logger
-
-    @abstractmethod
-    def run(self, *args, **kwargs):
-        raise NotImplementedError

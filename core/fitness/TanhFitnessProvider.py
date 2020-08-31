@@ -6,10 +6,10 @@ from core.models.ConstraintManager import ConstraintManager
 
 class TanhFitnessProvider(FitnessProvider):
     def __init__(self, constraint_manager: ConstraintManager, relax_coeff=0.01):
-        self.constraint_manager = constraint_manager
+        super(TanhFitnessProvider, self).__init__(constraint_manager)
         self.relax_coeff = relax_coeff
 
-    def fitness(self, schedule):
+    def fitness(self, schedule, **kwargs):
         violates_a_hc = self.constraint_manager.violates_a_hard_constraint(
             schedule)
         if violates_a_hc:
