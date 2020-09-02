@@ -9,6 +9,7 @@ from core.constraints.soft.soft_constraint_4 import penalty_of_soft_constraint_4
 from core.constraints.soft.soft_constraint_5 import penalty_of_soft_constraint_5
 from core.constraints.soft.soft_constraint_6 import penalty_of_soft_constraint_6
 from core.constraints.soft.soft_constraint_7 import penalty_of_soft_constraint_7
+from core.constraints.soft.soft_constraint_8 import penalty_of_soft_constraint_8
 
 
 """ to learn how to add new constraints, read `core/constraints/modify_constraints.md` """
@@ -52,5 +53,9 @@ SOFT_CONSTRAINT_FUNCS = [
     {
         "id": 7, "unit_penalty": 0.9, "func": penalty_of_soft_constraint_7,
         "desc": "Instructors have minimum credit load requirements."
+    },
+    {
+        "id": 8, "unit_penalty": 0.6, "func": penalty_of_soft_constraint_8,
+        "desc": "The Theory Section and the corresponding Lab Section of a Course (if any) should be taken by the same Instructor."
     },
 ]

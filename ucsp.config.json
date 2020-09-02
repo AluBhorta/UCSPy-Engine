@@ -1,8 +1,8 @@
 {
   "version": 0.1,
 
-  "save_logs": false,
-  "save_schedule": false,
+  "save_logs": true, 
+  "save_schedule": true,
   "inspect_final_schedule": false,
   "fitness": {
     "min_acceptable_fitness": 0,
@@ -50,9 +50,13 @@
           "id": 7,
           "unit_penalty": 0.9,
           "desc": "Instructors have minimum credit load requirements."
+        },
+        {
+          "id": 8, "unit_penalty": 0.6,
+          "desc": "The Theory Section and the corresponding Lab Section of a Course (if any) should be taken by the same Instructor."
         }
       ],
-      "use_ids": [1, 2, 3, 4, 5, 6, 7]
+      "use_ids": [1, 2, 3, 4, 5, 6, 7, 8]
     },
     "hard_constraints": {
       "constraints": [

@@ -1,15 +1,12 @@
 
 from core.models import Schedule, Timeslot, ScheduleParam
+from core.util import _get_theory_lab_course_idx_paris, _get_classes_of_course_idx
 
 
 def penalty_of_soft_constraint_6(schedule: Schedule, schedule_param: ScheduleParam, unit_penalty, _inspect=False):
     """
     6. The Lab Section of a Course (if any) should be placed in a Timeslot that is before or after the corresponding Theory Section.
     """
-
-    def _get_classes_of_course_idx(c_idx):
-        return [c for c in schedule.classes
-                if c.section.course.idx == c_idx]
 
     def _get_ajd_timeslot_idxs(t: Timeslot):
         # get valid days
@@ -48,22 +45,16 @@ def penalty_of_soft_constraint_6(schedule: Schedule, schedule_param: SchedulePar
 
         return valid_timeslot_idxs
 
-    def _get_theory_lab_course_idx_paris(courses):
-        """ NOTE: for this to work, the Lab course should should be directly after its corresponding Theory course  in the `courses.csv` schedule_param
-        TODO: replace the indexing strategy with a dedicated parameter in Course instance (e.g. C.lab_of_course_idx)
-        """
-        pairs = []
-        for crs in courses:
-            if crs.course_type.lower() == "lab":
-                pairs.append((crs.idx-1, crs.idx))
-        return pairs
-
     # start of penalty_of_soft_constraint_6
     violation_count = 0
 
-    for pair in _get_theory_lab_course_idx_paris(schedule_param.courses):
-        theory_cls = _get_classes_of_course_idx(pair[0])
-        lab_cls = _get_classes_of_course_idx(pair[1])
+    theory_lab_course_idx_paris = _get_theory_lab_course_idx_paris(
+        schedule_param.courses
+    )
+    for pair in theory_lab_course_idx_paris:
+        theory_cls = _get_classes_of_course_idx(pair[0], schedule)
+        lab_cls = _get_classes_of_course_idx(pair[1], schedule)
+
         for theory_lab_pair in zip(theory_cls, lab_cls):
             theory_timeslot = theory_lab_pair[0].timeslot
             lab_timeslot = theory_lab_pair[1].timeslot
