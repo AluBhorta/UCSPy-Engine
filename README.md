@@ -253,7 +253,7 @@ TODO:
 To solve UCSP, use the `solve` command along with the sub-command for the algo, like so:
 
 ```sh
-python main.py solve <algo>
+python cli.py solve <algo>
 ```
 
 The available algorithms as of now are:
@@ -266,7 +266,7 @@ The available algorithms as of now are:
 To use a Genetic Algorithm, for example, run:
 
 ```sh
-python main.py solve ga
+python cli.py solve ga
 ```
 
 This will run the Genetic Algorithm using the default parameters, and print out the final schedule.
@@ -274,7 +274,7 @@ This will run the Genetic Algorithm using the default parameters, and print out 
 To save the final schedule, run:
 
 ```sh
-python main.py solve --save-sch=True <algo>
+python cli.py solve --save-sch=True <algo>
 ```
 
 The final schedule will be saved in `data/schedules/` as `csv`.
@@ -282,7 +282,7 @@ The final schedule will be saved in `data/schedules/` as `csv`.
 To save the logs generated while running, use:
 
 ```sh
-python main.py solve --save_logs=True <algo>
+python cli.py solve --save_logs=True <algo>
 ```
 
 The logs can be used to automatically generate performance plots like this:
@@ -292,13 +292,13 @@ The logs can be used to automatically generate performance plots like this:
 And it is done by using the `plot` command, which takes the path of the log file like so:
 
 ```sh
-python main.py plot data/logs/<filename>
+python cli.py plot data/logs/<filename>
 ```
 
 To plot from the sample log file, for example, run:
 
 ```sh
-python main.py plot data/logs/sample.log
+python cli.py plot data/logs/sample.log
 ```
 
 Neat right?
@@ -310,25 +310,25 @@ The demonstrations till now use the default parameters, including the default sc
 To specify your own schedule_params, collect/generate the data for each component, name the files accordingly and put them in a folder like `path/to/your/schedule_params/`. To use use that now, run:
 
 ```bash
-python main.py solve --params_folder=path/to/your/schedule_params/ <algo>
+python cli.py solve --params_folder=path/to/your/schedule_params/ <algo>
 ```
 
 To inspect the fitness of the final schedule, use the `--inspect_final_sch` flag like so:
 
 ```bash
-python main.py solve --inspect_final_sch=True <algo>
+python cli.py solve --inspect_final_sch=True <algo>
 ```
 
 For help or synopsis:
 
 ```bash
-python main.py -
-python main.py --help
+python cli.py -
+python cli.py --help
 
-python main.py - <command>
-python main.py - <command> --help
+python cli.py - <command>
+python cli.py - <command> --help
 
-python main.py - <command> <subcommand> --help
+python cli.py - <command> <subcommand> --help
 ```
 
 **NB:**
