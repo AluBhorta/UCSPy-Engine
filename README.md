@@ -188,17 +188,11 @@ A Schedule represents a solution of the UCSP inputs provided, which consists of:
 
 The fitness of a schedule determines how desirable it is, and how much a Schedule violates the constraints determines its fitness.
 
-The fitness of Schedule `s` is calculated as follows:
+<!-- The fitness of Schedule `s` is calculated as follows:
 
-TODO: update fitness with diagram
+TODO: update fitness description with diagram of equation -->
 
-Where:
-
-- `f(s)` is the fitness of `s`.
-- `P_soft(s)` is the total aggregate soft constraint violation penalty.
-- and `M_hard(s)` is the `hard penalty multiplier`, which is 1 if `s` does not violate any hard constraints, else 0.
-
-Therefore, following our fitness function - a Schedule of 0 fitness is infeasible, while a fitness of 1 is a perfect solution.
+Therefore, following our fitness function - a Schedule of `1.0` fitness is infeasible, while a fitness of `0.0` is a perfect solution.
 
 ---
 
@@ -409,7 +403,7 @@ NOTE:
 
 UCSPy-Engine is very flexible, and allows you to customize it according to your needs.
 
-TODO: (describe in detail)
+<!-- TODO: (describe in detail) -->
 
 - adding new algorithms: extend `Algorithm` abstract class
 - adding new fitness function: extend `FitnessProvider` abstract class
