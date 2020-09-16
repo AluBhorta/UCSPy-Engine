@@ -14,41 +14,28 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 started = False
 
 
-@socketio.on('connect')
-def handle_connect():
-    #     connected = True
-    print('Client connected')
-
-
-@socketio.on('disconnect')
-def handle_disconnect():
-    print('Client disconnected')
-
-
-@socketio.on('message')
-def handle_message(message):
-    print(f'received message: {message}')
-    send('ping!')
-
-
 def send_progress(data={"name": "wow"}):
     socketio.emit("progress", json.dumps(data))
 
 
 @socketio.on('solve')
-def handle_solve(config):
-    r = json.loads(config)
-    print(r)
+def handle_solve(solverT):
+    r = json.loads(solverT)
+    print(f"Solver started! {r}")
 
-    # start new solver
-    UCSPyEngine().solve()
-
+    # UCSPyEngine().solve()
     started = True
-    # send_progress()
+
+    while started:
+        emit("progress", {
+            "id": "string",
+            "epoch": "string",
+            "fitness": "21",
+        })
+        time.sleep(5)
 
 
 @socketio.on('stop')
 def handle_stop(id):
     print("stopped", id)
     started = False
-    send(f"STOPPED! {id}")

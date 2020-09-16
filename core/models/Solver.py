@@ -14,7 +14,7 @@ class UCSPSolver:
     """ 
     UCSP Solver
 
-    Solves the univesity course scheduling problems using various intelligent algorithms.
+    Solves the univesity course scheduling problem using various intelligent algorithms.
     """
 
     def __init__(self, config, state: UCSPState):
@@ -40,6 +40,9 @@ class UCSPSolver:
         self._logger.write(f"\nTime taken: {t2-t1} s")
 
         return sch
+
+    def stop(self):
+        raise NotImplementedError
 
     def _get_algo(self, algo_name=None, *args, **kwargs) -> Algorithm:
         name = algo_name or self._algo_name
