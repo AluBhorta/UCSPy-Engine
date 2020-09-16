@@ -312,7 +312,7 @@ The parameters required for solving UCSP are provided through a JSON configurati
 To solve UCSP, use the `solve` command along with the sub-command for the algo, like so:
 
 ```sh
-python main.py solve <algo>
+python cli.py solve <algo>
 ```
 
 The available algorithms as of now are:
@@ -325,7 +325,7 @@ The available algorithms as of now are:
 To use Genetic Algorithm, for example, run:
 
 ```sh
-python main.py solve ga
+python cli.py solve ga
 ```
 
 This will run the Genetic Algorithm using the default parameters, and print out the final schedule.
@@ -358,13 +358,13 @@ For Memetic Algorithm:
 For example, the number of iteration could easily be changed to 500 like so:
 
 ```sh
-python main.py solve ga --epochs=500
+python cli.py solve ga --epochs=500
 ```
 
 The other parameter can be updated as well like so:
 
 ```sh
-python main.py solve <algo> --<parameter>=<value>
+python cli.py solve <algo> --<parameter>=<value>
 ```
 
 #### `plot`
@@ -378,13 +378,13 @@ These generated logs can be used to automatically generate performance plots lik
 And it is done by using the `plot` command, which takes the path of the log file like so:
 
 ```sh
-python main.py plot data/logs/<filename>
+python cli.py plot data/logs/<filename>
 ```
 
 To plot from the sample log file, for example, run:
 
 ```sh
-python main.py plot data/logs/sample.log
+python cli.py plot data/logs/sample.log
 ```
 
 Neat right?
@@ -396,7 +396,7 @@ When solver is run with the `save_schedule` flag set to true, it'll save the fin
 For example, to inspect the fitness of a schedule named `sch-num-2020-09-03T10-41-37.csv`, run:
 
 ```bash
-python main.py inspect data/schedules/sch-num-2020-09-03T10-41-37.csv
+python cli.py inspect data/schedules/sch-num-2020-09-03T10-41-37.csv
 ```
 
 This will show the constraint violations and the final fitness.
@@ -420,13 +420,13 @@ TODO: (describe in detail)
 For help or synopsis:
 
 ```bash
-python main.py -
-python main.py --help
+python cli.py -
+python cli.py --help
 
-python main.py - <command>
-python main.py - <command> --help
+python cli.py - <command>
+python cli.py - <command> --help
 
-python main.py - <command> <subcommand> --help
+python cli.py - <command> <subcommand> --help
 ```
 
 **NB:**
