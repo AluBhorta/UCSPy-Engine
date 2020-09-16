@@ -1,5 +1,5 @@
-from .genetic.smart_mut_ga import GeneticAlgorithm
-from .memetic.memetic import MemeticAlgorithm
+from .genetic.GeneticAlgorithm import GeneticAlgorithm
+from .memetic.MemeticAlgorithm import MemeticAlgorithm
 
 
 ALL_ALGORITHMS = {

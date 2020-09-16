@@ -15,7 +15,7 @@ class DefaultScheduleGenerator(ScheduleGenerator):
 
         for C in self.schedule_param.courses:
             assigned_instructors = self._get_assigned_Instructors_for(
-                C, self.schedule_param)
+                C, )
 
             for sec_i in range(C.num_of_sections):
                 instructor, timeslot, room = self._get_unique_Instr_Timeslot_Room(
@@ -26,8 +26,8 @@ class DefaultScheduleGenerator(ScheduleGenerator):
 
         return Schedule(classes)
 
-    def _get_assigned_Instructors_for(self, course: Course, schedule_param: ScheduleParam):
-        INSTRUCTORS = schedule_param.instructors
+    def _get_assigned_Instructors_for(self, course: Course, ):
+        INSTRUCTORS = self.schedule_param.instructors
 
         assigned_instructors = []
         for I in INSTRUCTORS:
@@ -74,7 +74,7 @@ class DefaultScheduleGenerator(ScheduleGenerator):
                         else:
                             for _ in range(MAX_RAND_T):
                                 timeslot = self._get_Timeslot_for_Course_Instr(
-                                    course, instructor, classes, self.schedule_param)
+                                    course, instructor, classes, )
                                 if timeslot != None:
                                     for room in self.schedule_param.rooms:
                                         if not self.__Room_Timeslot_conflicts(room, timeslot, classes):
@@ -117,7 +117,7 @@ class DefaultScheduleGenerator(ScheduleGenerator):
 
             instructor = random.choice(assigned_instructors)
             timeslot = self._get_Timeslot_for_Course_Instr(
-                course, instructor, classes, self.schedule_param)
+                course, instructor, classes, )
             counter += 1
 
         return (instructor, timeslot)
