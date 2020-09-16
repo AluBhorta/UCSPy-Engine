@@ -1,7 +1,7 @@
 {
   "version": 0.1,
 
-  "save_logs": true, 
+  "save_logs": true,
   "save_schedule": true,
   "inspect_final_schedule": false,
   "fitness": {
@@ -52,7 +52,8 @@
           "desc": "Instructors have minimum credit load requirements."
         },
         {
-          "id": 8, "unit_penalty": 0.6,
+          "id": 8,
+          "unit_penalty": 0.6,
           "desc": "The Theory Section and the corresponding Lab Section of a Course (if any) should be taken by the same Instructor."
         }
       ],
@@ -77,7 +78,7 @@
       { "name": "folder", "path": "data/schedule_params/default/" },
       {
         "name": "discrete_files",
-        "discrete_files": {
+        "files": {
           "rooms_file": "data/schedule_params/default/rooms.csv",
           "timeslots_file": "data/schedule_params/default/timeslots.csv",
           "courses_file": "data/schedule_params/default/courses.csv",

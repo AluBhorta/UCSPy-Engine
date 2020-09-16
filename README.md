@@ -40,10 +40,12 @@ Our target is to find an optimal Schedule that satisfies our constraints best. B
 
 ### The Inputs
 
+<!-- TODO: revise to check if all models are upto date -->
+
 To define a UCSP, we need 2 main inputs:
 
--   the `schedule params`: which are the required data needed to form a schedule
--   and `constraints`: which are what we want to satisfy
+- the `schedule params`: which are the required data needed to form a schedule
+- and `constraints`: which are what we want to satisfy
 
 The following represents a class diagram of the inputs- Course, Instructor, Room, Timeslot and CourseGroup:
 ![](data/img/UCSPinput.PNG)
@@ -60,13 +62,13 @@ Represents a particular course (of a subject) in a university e.g. CSE101 is a c
 
 A course consists of:
 
--   `idx`: unique index.
--   `desc`: detail description. Can contain meta-information.
--   `num_of_sections`: number of sections of that course to be offered.
--   `lectures_per_week`: how many lectures are offered in a week. A `lecture` represents a physical event in the real world.
--   `course_type`: Lab or Theory (more types can be used).
--   `sections`: Reference to the collection of all the Sections.
--   `credits`: The credits rewarded for taking this particular course. Currently the credits are being deduced by the `course_type` attribute, but it can be assigned explicitly to individual courses.
+- `idx`: unique index.
+- `desc`: detail description. Can contain meta-information.
+- `num_of_sections`: number of sections of that course to be offered.
+- `lectures_per_week`: how many lectures are offered in a week. A `lecture` represents a physical event in the real world.
+- `course_type`: Lab or Theory (more types can be used).
+- `sections`: Reference to the collection of all the Sections.
+- `credits`: The credits rewarded for taking this particular course. Currently the credits are being deduced by the `course_type` attribute, but it can be assigned explicitly to individual courses.
 
 ##### Section
 
@@ -74,8 +76,8 @@ Sections are used to fulfill the total number of sections to be offered, for a p
 
 A Section consists of:
 
--   `course`: A reference to the course.
--   `sec_number`: The section number.
+- `course`: A reference to the course.
+- `sec_number`: The section number.
 
 ##### Room
 
@@ -83,10 +85,10 @@ Room is a location where a particular section of a course is held (e.g. CSELAB1,
 
 A Room consists of:
 
--   `idx`: unique index.
--   `desc`: detail description. Can contain meta-information.
--   `seat_capacity`: you already understand what it is.
--   `allowed_course_idxs`: a collection of course indices that are allowed in this room.
+- `idx`: unique index.
+- `desc`: detail description. Can contain meta-information.
+- `seat_capacity`: you already understand what it is.
+- `allowed_course_idxs`: a collection of course indices that are allowed in this room.
 
 ##### Timeslot
 
@@ -94,10 +96,10 @@ A particular period/interval of time in a week.
 
 A Timeslot consists of:
 
--   `idx`: unique index.
--   `desc`: detail description. Can contain meta-information.
--   `weekday`: The day of the week (Sun-Sat).
--   `daily_slot`: A workday is usually divided up into periods or slots e.g. '08:00-09:30' or 'period 1' etc. If there are 7 periods for example, then daily_slot takes a value from 0 to 6.
+- `idx`: unique index.
+- `desc`: detail description. Can contain meta-information.
+- `weekday`: The day of the week (Sun-Sat).
+- `daily_slot`: A workday is usually divided up into periods or slots e.g. '08:00-09:30' or 'period 1' etc. If there are 7 periods for example, then daily_slot takes a value from 0 to 6.
 
 ##### Instructor
 
@@ -105,11 +107,11 @@ The teacher/professor/faculty that takes a particular class.
 
 An Instructor consists of:
 
--   `idx`: unique index.
--   `desc`: detail description. Can contain meta-information.
--   `assigned_course_idxs`: the collection of courses that they are assigned.
--   `preferred_timeslot_idxs`: timeslots they prefer.
--   `min_credit_req`: the minimum credits that should be taken by a particular instructor.
+- `idx`: unique index.
+- `desc`: detail description. Can contain meta-information.
+- `assigned_course_idxs`: the collection of courses that they are assigned.
+- `preferred_timeslot_idxs`: timeslots they prefer.
+- `min_credit_req`: the minimum credits that should be taken by a particular instructor.
 
 ##### CourseGroup
 
@@ -117,10 +119,10 @@ A group of courses, to no ones surprise.
 
 A CourseGroup consists of:
 
--   `idx`: unique index.
--   `desc`: detail description. Can contain meta-information.
--   `course_idxs`: a collection of Course indices.
--   `preferred_timeslot_idxs`: a collection of Timeslot indices, which are preferred for the courses.
+- `idx`: unique index.
+- `desc`: detail description. Can contain meta-information.
+- `course_idxs`: a collection of Course indices.
+- `preferred_timeslot_idxs`: a collection of Timeslot indices, which are preferred for the courses.
 
 ##### Class
 
@@ -130,14 +132,14 @@ A Class is the base unit of a schedule that defines a particular event, in space
 
 A Class consists of:
 
--   `section`: The Section (of a Course).
--   `instructor`: The Instructor.
--   `room`: The Room.
--   `timeslots`: The Timeslots. Note the 's' - some courses can have classes that exceed several consecutive periods.
+- `section`: The Section (of a Course).
+- `instructor`: The Instructor.
+- `room`: The Room.
+- `timeslots`: The Timeslots. Note the 's' - some courses can have classes that exceed several consecutive periods.
 
 NOTE:
 
--   the properties of a `schedule params` component can be modified to suit the needs of a particular university.
+- the properties of a `schedule params` component can be modified to suit the needs of a particular university.
 
 #### Constraints
 
@@ -170,8 +172,8 @@ The following are the current constraints that UCSPy-Engine holds, which are mos
 
 NOTE:
 
--   institutions can and should adjust the penalties to their needs.
--   the Lab course should should be directly after its corresponding Theory course in the `courses.csv` schedule_param
+- institutions can and should adjust the penalties to their needs.
+- the Lab course should should be directly after its corresponding Theory course in the `courses.csv` schedule_param
 
 ### The Output
 
@@ -179,8 +181,8 @@ NOTE:
 
 A Schedule represents a solution of the UCSP inputs provided, which consists of:
 
--   `classes`: the collection of all classes. You might realize that the total number of classes is equal to the total number of sections, as they have a 1 to 1 mapping.
--   `course_groups`: the CourseGroups. This property was optional but turned out useful for our fitness calculation of individual schedules.
+- `classes`: the collection of all classes. You might realize that the total number of classes is equal to the total number of sections, as they have a 1 to 1 mapping.
+- `course_groups`: the CourseGroups. This property was optional but turned out useful for our fitness calculation of individual schedules.
 
 ### Fitness Calculation
 
@@ -192,9 +194,9 @@ TODO: update fitness with diagram
 
 Where:
 
--   `f(s)` is the fitness of `s`.
--   `P_soft(s)` is the total aggregate soft constraint violation penalty.
--   and `M_hard(s)` is the `hard penalty multiplier`, which is 1 if `s` does not violate any hard constraints, else 0.
+- `f(s)` is the fitness of `s`.
+- `P_soft(s)` is the total aggregate soft constraint violation penalty.
+- and `M_hard(s)` is the `hard penalty multiplier`, which is 1 if `s` does not violate any hard constraints, else 0.
 
 Therefore, following our fitness function - a Schedule of 0 fitness is infeasible, while a fitness of 1 is a perfect solution.
 
@@ -206,8 +208,8 @@ Alright! Enough theory. It's time to see how it works!
 
 ### Dependencies
 
--   python 3.6 (or above)
--   pip
+- python 3.6 (or above)
+- pip
 
 Check whether you have the correct version of python installed with:
 
@@ -227,7 +229,7 @@ Initialize and activate a new python environment with virtualenv:
 
 ```bash
 # For Linux/Unix
-virtualenv -p `which python3.6` .venv
+virtualenv .venv
 source .venv/bin/activate
 ```
 
@@ -245,10 +247,67 @@ pip install -r requirements.txt
 
 ### Usage
 
-TODO:
+There are 3 main services offered by UCSPy-Engine:
 
--   describe how `ucsp.config.json` file should be used
--   update whole usage section below
+- `solve` - used to solve a course scheduling problem.
+- `plot` - used to plot the performance of the solver.
+- `inspect` - use to inspect the quality of the solution provided, by showing detail constraint violations.
+
+#### `solve`
+
+The main use case for UCSPy-Engine is to solve a course scheduling problem.
+
+**Configuration**
+
+The parameters required for solving UCSP are provided through a JSON configuration file named `ucsp.config.json` at the root of the project. The following are the main options:
+
+- flags
+
+  - `save_logs`: will save the logs if set to `true`.
+  - `save_schedule`: will save the final schedule if set to `true`.
+  - `inspect_final_schedule`: will inspect the final schedule if set to `true`.
+
+- `fitness`
+
+  - `min_acceptable_fitness`: the minimum acceptable fitness required to terminate if maximum iterations is not yet completed. Range is from 1-0, 1 being worst solution and 0 being perfect solution.
+  - `functions`: (read only) list of available fitness functions names.
+  - `use`: the name of the fitness function to use.
+
+- `algorithm`
+
+  - `algorithms`: (read only) list of available algorithm names.
+  - `use`: the name of the algorithm to use.
+
+- `constraints`
+
+  - `soft_constraints`
+
+    - `constraints`
+      - `id`: (read only) The ID of the soft constraint.
+      - `desc`: (read only) the description of the soft constraint.
+      - `unit_penalty`: Unit penalty value for the soft constraint. Adjust this to set the priority of the constraints. Range is 0.0-1.0, 0.0 being no penalty and 1.0 being max penalty.
+    - `use_ids`: list of the soft constraint IDs to use.
+
+  - `hard_constraints`
+    - `constraints`
+      - `id`: (read only) The ID of the hard constraint.
+      - `desc`: (read only) the description of the hard constraint.
+    - `use_ids`: list of the hard constraint IDs to use.
+
+- `schedule_param`
+  There are two strategies for providing the schedule_param, `discrete_files` & `folder`.
+
+  `discrete_files` requires the path to each schedule_param file, namely: `rooms_file, timeslots_file, courses_file, instructors_file, coursegroups_file.`
+
+  `folder` accepts the path to a folder that contains the required schedule_param files names as `'rooms.csv', 'timeslots.csv', 'courses.csv', 'instructors.csv', 'course_groups.csv'`.
+
+  - `strategies`: list of length 2 containing the strategies.
+    - `name`: (read only) The name of the strategy.
+    - `path`: (for folder strategy) path to the folder that contains the required schedule_param files as mentioned above
+    - `*_file`: (for discrete_files strategy) path to each schedule_param file as mentioned above.
+  - `use_strategy`: name of the strategy to use.
+
+**Running the solver through the cli**
 
 To solve UCSP, use the `solve` command along with the sub-command for the algo, like so:
 
@@ -263,7 +322,7 @@ The available algorithms as of now are:
 | ga                 | Genetic Algorithm |
 | meme               | Memetic Algorithm |
 
-To use a Genetic Algorithm, for example, run:
+To use Genetic Algorithm, for example, run:
 
 ```sh
 python main.py solve ga
@@ -271,21 +330,48 @@ python main.py solve ga
 
 This will run the Genetic Algorithm using the default parameters, and print out the final schedule.
 
-To save the final schedule, run:
+**Passing parameters to the algorithm**
+
+Each algorithm has a set of unique parameters that can provided as command line arguments.
+
+For Genetic Algorithm:
+
+| algo parameter  | description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| epochs          | the maximum number of iterations before termination. (default: 100)        |
+| population_size | The size of the population in a generation. (default: 100)                 |
+| elite_pct       | The % of elites in the population. (default: 10)                           |
+| mateable_pct    | The % of population that have a chance to perform crossover. (default: 50) |
+| mutable_pct     | The % of population that could be mutated. (default: 20)                   |
+
+For Memetic Algorithm:
+
+| algo parameter   | description                                                                          |
+| ---------------- | ------------------------------------------------------------------------------------ |
+| epochs           | the maximum number of iterations before termination. (default: 100)                  |
+| population_size  | The size of the population in a generation. (default: 100)                           |
+| elite_pct        | The % of elites in the population. (default: 10)                                     |
+| mateable_pct     | The % of population that have a chance to perform crossover. (default: 50)           |
+| lcl_search_pct   | The % of population that performs local search. (default: 10)                        |
+| lcl_search_iters | The number of iterations of local search for each selected individual. (default: 30) |
+
+For example, the number of iteration could easily be changed to 500 like so:
 
 ```sh
-python main.py solve --save-sch=True <algo>
+python main.py solve ga --epochs=500
 ```
 
-The final schedule will be saved in `data/schedules/` as `csv`.
-
-To save the logs generated while running, use:
+The other parameter can be updated as well like so:
 
 ```sh
-python main.py solve --save_logs=True <algo>
+python main.py solve <algo> --<parameter>=<value>
 ```
 
-The logs can be used to automatically generate performance plots like this:
+#### `plot`
+
+When solver is run with the `save_logs` flag set to true, it'll save the logs generated in a file under the folder `data/logs/` with the datetime as the log's name `<datetime>.log`.
+
+These generated logs can be used to automatically generate performance plots like this:
 
 ![sample-log-plot](data/img/sample-log-plot.png)
 
@@ -303,21 +389,33 @@ python main.py plot data/logs/sample.log
 
 Neat right?
 
-The demonstrations till now use the default parameters, including the default schedule_params, which are in `data/schedule_params/default/`. They are basically `csv` files containing each of the `schedule_params` components, and are named as follows: `rooms.csv`,`timeslots.csv`,`courses.csv`,`instructors.csv`,`course_groups.csv`.
+#### `inspect`
 
-<!-- TODO - needs update for config file usage -->
+When solver is run with the `save_schedule` flag set to true, it'll save the final schedule in two forms as csv - one in numerical form (e.g. `sch-num-<datetime>.csv`), and the other in a human readable string form (e.g. `sch-str-<datetime>.csv`).
 
-To specify your own schedule_params, collect/generate the data for each component, name the files accordingly and put them in a folder like `path/to/your/schedule_params/`. To use use that now, run:
-
-```bash
-python main.py solve --params_folder=path/to/your/schedule_params/ <algo>
-```
-
-To inspect the fitness of the final schedule, use the `--inspect_final_sch` flag like so:
+For example, to inspect the fitness of a schedule named `sch-num-2020-09-03T10-41-37.csv`, run:
 
 ```bash
-python main.py solve --inspect_final_sch=True <algo>
+python main.py inspect data/schedules/sch-num-2020-09-03T10-41-37.csv
 ```
+
+This will show the constraint violations and the final fitness.
+
+NOTE:
+
+- Make sure you select the correct schedule_param that was used to generate the schedule in the first place.
+
+#### Advanced
+
+UCSPy-Engine is very flexible, and allows you to customize it according to your needs.
+
+TODO: (describe in detail)
+
+- adding new algorithms: extend `Algorithm` abstract class
+- adding new fitness function: extend `FitnessProvider` abstract class
+- adding new constraints
+- adding new Sch Generator
+- updating schedule param
 
 For help or synopsis:
 
@@ -333,25 +431,14 @@ python main.py - <command> <subcommand> --help
 
 **NB:**
 
--   it is very important that your schedule_params follow the standard order and notation as shown in the default params.
--   all `.csv` files are ignored by git as mentioned in the `.gitignore` patterns, except for the default schedule_params. You may update your `.gitignore` to track yours.
+- it is very important that your schedule_params follow the standard order and notation as shown in the default params.
+- all `.csv` files are ignored by git as mentioned in the `.gitignore` patterns, except for the default schedule_params. You may update your `.gitignore` to track yours.
 
 ---
 
-## How To Contribute To UCSPy-Engine?
-
-UCSPy-Engine is open sourced under the MIT license. So feel free to hack, modify, or encode your own way or add new algorithms.
+## Contributing To UCSPy-Engine
 
 Contributions to UCSPy-Engine are welcome! You can make pull requests to the `master` branch.
-
----
-
-TODO: describe how to
-
--   Add custom algorithms
--   Add custom constraints
--   Add custom fitness functions
--   Add custom schedule_generators
 
 ## License
 

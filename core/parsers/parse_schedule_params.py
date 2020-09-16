@@ -42,15 +42,15 @@ def parse_schedule_params(schedule_param_config) -> ScheduleParam:
 
         try:
             R_DF = read_csv(os.path.join(
-                os.getcwd(), st['discrete_files']['rooms_file']))
+                os.getcwd(), st['files']['rooms_file']))
             T_DF = read_csv(os.path.join(
-                os.getcwd(), st['discrete_files']['timeslots_file']))
+                os.getcwd(), st['files']['timeslots_file']))
             C_DF = read_csv(os.path.join(
-                os.getcwd(), st['discrete_files']['courses_file']))
+                os.getcwd(), st['files']['courses_file']))
             I_DF = read_csv(os.path.join(
-                os.getcwd(), st['discrete_files']['instructors_file']))
+                os.getcwd(), st['files']['instructors_file']))
             CG_DF = read_csv(os.path.join(
-                os.getcwd(), st['discrete_files']['coursegroups_file']))
+                os.getcwd(), st['files']['coursegroups_file']))
         except:
             raise Exception(
                 f"ERROR! Failed to make schedule_param from discrete_files!"
