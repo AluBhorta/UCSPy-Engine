@@ -73,9 +73,6 @@ class UCSPSolver:
                 f.write(sch.to_num_csv())
             self._logger.write(
                 f"\nNumeric Schedule successfully saved to {fname}")
-        else:
-            print("\nFinal Schedule: \n")
-            print(sch.to_tsv())
 
         fit = self._state.fitness_provider.fitness(
             sch, _inspect=self._inspect_final_sch

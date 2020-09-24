@@ -1,5 +1,7 @@
 from .TanhFitnessProvider import TanhFitnessProvider
+from .AckleyFitnessProvider import AckleyFitnessProvider
 
 FITNESS_PROVIDERS = {
-    "tanh_fitness": TanhFitnessProvider,
+    "tanh": TanhFitnessProvider,
+    "ackley": AckleyFitnessProvider,
 }

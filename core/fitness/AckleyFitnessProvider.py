@@ -1,21 +1,28 @@
-import numpy as np
+
+import math
 
 from core.models.FitnessProvider import FitnessProvider
 from core.models.ConstraintManager import ConstraintManager
 
 
-class TanhFitnessProvider(FitnessProvider):
-    def __init__(self, constraint_manager: ConstraintManager, relax_coeff=0.01):
-        super(TanhFitnessProvider, self).__init__(constraint_manager)
-        self.relax_coeff = relax_coeff
+class AckleyFitnessProvider(FitnessProvider):
+    def __init__(self, constraint_manager: ConstraintManager):
+        super(AckleyFitnessProvider, self).__init__(constraint_manager)
 
     def fitness(self, schedule, _inspect=False, **kwargs):
         violates_a_hc = self.constraint_manager.violates_a_hard_constraint(
             schedule, _inspect)
         if violates_a_hc:
-            return 1
+            return math.inf
 
         tsp = self.constraint_manager.total_soft_penalty(schedule, _inspect)
         if tsp < 0:
             raise Exception(f"Error! Total soft penalty cannot be negative!")
-        return np.tanh(self.relax_coeff * tsp)
+
+        return self._ackley(tsp)
+
+    def _ackley(self, tsp, a=1.0, b=0.01, c=2*math.pi):
+        first_sum = tsp**2.0
+        second_sum = math.cos(c*tsp)
+
+        return -a*math.exp(-b*math.sqrt(first_sum)) - math.exp(second_sum) + a + math.e

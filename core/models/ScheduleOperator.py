@@ -23,3 +23,10 @@ class ScheduleOperator:
                 )
             ) for i in numrepr]
         )
+
+    # NOTE: could implement 
+    # def flat_fitness(self, flat_schedule, **kwargs) -> float:
+    #     raise NotImplementedError
+    #  &
+    # def numrepr_fitness(self, numrepr_schedule, **kwargs) -> float:
+    #     raise NotImplementedError
