@@ -24,7 +24,8 @@ class UCSPyEngine:
         self._state = StateGenerator(self._config).generate()
 
     def solve(self, *args, **kwargs):
-        return UCSPSolver(self._config, self._state).solve(*args, **kwargs)
+        UCSPSolver(self._config, self._state).solve(*args, **kwargs)
+        return 
 
     def plot(self, *args, **kwargs):
         return make_line_plot(*args, **kwargs)

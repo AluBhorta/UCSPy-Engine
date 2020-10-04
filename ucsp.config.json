@@ -87,6 +87,6 @@
         }
       }
     ],
-    "use_strategy": "discrete_files"
+    "use_strategy": "folder"
   }
 }

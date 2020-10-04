@@ -7,12 +7,11 @@ class ScheduleOperator:
         self.schedule_param = schedule_param
 
     def deflatten(self, flat_sch) -> Schedule:
-        """ ndarray<(c*5,)> -> Sch """
-        flat_sch.shape = (len(self.schedule_param.sections), 5)
-        return flat_sch
+        """ <ndarray(c*5,)> -> Sch """
+        return flat_sch.reshape(len(self.schedule_param.sections), 5)
 
     def numrepr_to_sch(self, numrepr) -> Schedule:
-        """ ndarray<(n,5)> -> Sch """
+        """ <ndarray(n,5)> -> <Sch> """
         return Schedule(
             classes=[(
                 Class(
@@ -24,9 +23,10 @@ class ScheduleOperator:
             ) for i in numrepr]
         )
 
-    # NOTE: could implement 
-    # def flat_fitness(self, flat_schedule, **kwargs) -> float:
-    #     raise NotImplementedError
-    #  &
+    def flat_to_sch(self, flat_schedule, **kwargs) -> Schedule:
+        numrepr = self.deflatten(flat_schedule)
+        schedule = self.numrepr_to_sch(numrepr)
+        return schedule
+
     # def numrepr_fitness(self, numrepr_schedule, **kwargs) -> float:
     #     raise NotImplementedError

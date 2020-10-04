@@ -162,8 +162,7 @@ class Schedule:
 
     def flatten(self):
         schedule = self.get_numrepr()
-        a = array([item for _cls in schedule for item in _cls])
-        return a
+        return array([item for _cls in schedule for item in _cls])
 
     def get_numrepr(self):
         """ returns rumeric representation of schedule in np.array<(C, S, I, R, T)> format """

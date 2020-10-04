@@ -2,9 +2,7 @@ from time import perf_counter
 from numpy import array
 
 
-def bench_time(func, l):
-    print(func, l)
-
+def bench_time(func):
     def inner(*args, **kwargs):
         t1 = perf_counter()
         r = func(*args, **kwargs)
