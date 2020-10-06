@@ -27,13 +27,22 @@ class ParticleSwarmOptimization(Algorithm):
         logger: UCSPLogger,
         epochs=100,
         min_acceptable_fitness=0,
-        population_size=5,
+        population_size=50,
         w0=0.5,
-        wf=0.1,
+        wf=0.01,
         c1=1,
         c2=1,
-        vmax_pct=5
     ):
+        """ 
+        ...
+        epochs: number of iterations
+        min_acceptable_fitness: minimum acceptable fitness, such that 1 is worst and 0 is best
+        population_size: population size
+        w0: initial weight
+        wf: final weight
+        c1: cognitive coefficient of velocity
+        c2: social coefficient of velocity
+        """
         super(ParticleSwarmOptimization, self).__init__(
             schedule_param,
             fitness_provider,
@@ -47,7 +56,6 @@ class ParticleSwarmOptimization(Algorithm):
         self.wf = wf
         self.c1 = c1
         self.c2 = c2
-        self.vmax_pct = vmax_pct
         self.schedule_operator = ScheduleOperator(schedule_param)
 
     def run(self, *args, **kwargs):
@@ -61,21 +69,18 @@ class ParticleSwarmOptimization(Algorithm):
         for epoch in range(self.epochs):
             for particle in particles:
                 current_fitness = self._get_fitness_of(particle.position)
+                # print(f"{current_fitness}", end="\t")
 
-                # NOTE: this comparision could be dynamic: > OR < depending on the type of fitness function
-                # OR, a function from fitnessprovider, that takes 2 args, answering True => if left fitness is better than right fitness
                 if current_fitness < self.min_acceptable_fitness:
                     return self.schedule_operator.flat_to_sch(particle.position), current_fitness
 
                 pbest_fitness = self._get_fitness_of(particle.pbest_position)
                 if current_fitness < pbest_fitness:
-                    print(
-                        f"current_fitness: {current_fitness}\tpbest_fitness: {pbest_fitness}")
+                    # print(f"current_fitness: {current_fitness}\t pbest_fitness: {pbest_fitness}")
                     particle.pbest_position = deepcopy(particle.position)
 
                 if current_fitness < gbest_fitness:
-                    print(
-                        f"current_fitness: {current_fitness}\t gbest_fitness: {gbest_fitness}")
+                    # print(f"current_fitness: {current_fitness}\t gbest_fitness: {gbest_fitness}")
                     gbest_fitness = current_fitness
                     gbest_position = deepcopy(particle.position)
 
@@ -83,19 +88,11 @@ class ParticleSwarmOptimization(Algorithm):
             weight = self._update_weight(epoch)
 
             for particle in particles:
-                velo1 = particle.velocity
-
                 particle.velocity = \
                     self._get_new_velocity(particle, weight, gbest_position)
 
                 particle.position = self._get_new_position(particle)
 
-                velo2 = particle.velocity
-                # print("\nvelo1: \n", velo1)
-                # print("\nvelo2: \n", velo2)
-                # print("\nvelo2-velo1: \n", velo2-velo1)
-
-        # TODO: search thru all and update gbest_position
         return self.schedule_operator.flat_to_sch(gbest_position)
 
     def _generate_particles(self):
@@ -130,12 +127,15 @@ class ParticleSwarmOptimization(Algorithm):
         return (dw_depoch * epoch) + self.w0
 
     def _get_new_velocity(self, particle: Particle, weight, gbest_position):
-        v = \
+        velo_fractional = \
             self.__velo_comp_intertia(weight, particle.velocity) + \
             self.__velo_comp_cognitive(particle.pbest_position, particle.position) + \
             self.__velo_comp_social(gbest_position, particle.position)
 
-        return np.array([np.floor(i).astype(int) for i in v])
+        velo_decimal = np.array([np.floor(i).astype(int)
+                                 for i in velo_fractional])
+        # print(f"velo:\n{velo_decimal}")
+        return velo_decimal
 
     def __velo_comp_intertia(self, w, V):
         return w * V
@@ -154,6 +154,7 @@ class ParticleSwarmOptimization(Algorithm):
             len(self.schedule_param.rooms),
             len(self.schedule_param.timeslots),
         ] * (len(particle.position)//5)
+        # `limit` is used to make sure that `position` doesn't go out of bounds
 
         return (particle.position + particle.velocity) % limit
 
@@ -166,5 +167,4 @@ class ParticleSwarmOptimization(Algorithm):
             "wf": self.wf,
             "c1": self.c1,
             "c2": self.c2,
-            "vmax_pct": self.vmax_pct,
         }

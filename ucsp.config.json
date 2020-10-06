@@ -10,7 +10,7 @@
     "use": "tanh"
   },
   "algorithm": {
-    "algorithms": ["ga", "meme"],
+    "algorithms": ["ga", "meme", "pso"],
     "use": "ga"
   },
   "constraints": {

@@ -27,19 +27,22 @@ class UCSPSolver:
         self._algo_name = config['algorithm']['use']
 
     def solve(self, algo_name=None, *args, **kwargs):
-        algo = self._get_algo(algo_name, *args, **kwargs)
-        self._logger.write(f"Running: {type(algo).__name__}...")
-        default_args = algo.get_default_args()
-        self._logger.write(f"Default arguments: {default_args}\n")
+        try:
+            algo = self._get_algo(algo_name, *args, **kwargs)
+            self._logger.write(f"Running: {type(algo).__name__}...")
+            default_args = algo.get_default_args()
+            self._logger.write(f"Default arguments: {default_args}\n")
 
-        t1 = perf_counter()
-        sch = algo.run()
-        t2 = perf_counter()
+            t1 = perf_counter()
+            sch = algo.run()
+            t2 = perf_counter()
 
-        self._write_schedule(sch)
-        self._logger.write(f"\nTime taken: {t2-t1} s")
+            self._write_schedule(sch)
+            self._logger.write(f"\nTime taken: {t2-t1} s")
 
-        return sch
+            return sch
+        except KeyboardInterrupt:
+            print("Stopped...")
 
     def _get_algo(self, algo_name=None, *args, **kwargs) -> Algorithm:
         name = algo_name or self._algo_name
