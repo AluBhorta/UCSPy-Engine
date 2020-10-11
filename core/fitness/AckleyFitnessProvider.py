@@ -6,8 +6,16 @@ from core.models.ConstraintManager import ConstraintManager
 
 
 class AckleyFitnessProvider(FitnessProvider):
+    """ 
+    AckleyFitnessProvider (experimental)
+
+    fitness of 0 is perfect & infinity is infeasible
+    """
     def __init__(self, constraint_manager: ConstraintManager):
         super(AckleyFitnessProvider, self).__init__(constraint_manager)
+
+    def compare(self, fitness1, fitness2):
+        return True if fitness1 < fitness2 else False
 
     def fitness(self, schedule, _inspect=False, **kwargs):
         violates_a_hc = self.constraint_manager.violates_a_hard_constraint(

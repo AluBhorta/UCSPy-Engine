@@ -6,11 +6,11 @@
   "inspect_final_schedule": false,
   "fitness": {
     "min_acceptable_fitness": 0,
-    "functions": ["tanh"],
+    "functions": ["tanh", "default"],
     "use": "tanh"
   },
   "algorithm": {
-    "algorithms": ["ga", "meme", "pso"],
+    "algorithms": ["ga", "meme"],
     "use": "ga"
   },
   "constraints": {
