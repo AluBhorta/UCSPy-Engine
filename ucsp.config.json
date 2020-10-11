@@ -6,7 +6,7 @@
   "inspect_final_schedule": false,
   "fitness": {
     "min_acceptable_fitness": 0,
-    "functions": ["tanh", "default"],
+    "functions": ["tanh", "default", "default_expo"],
     "use": "tanh"
   },
   "algorithm": {
