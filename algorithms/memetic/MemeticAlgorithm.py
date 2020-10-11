@@ -17,10 +17,11 @@ class MemeticAlgorithm(Algorithm):
         schedule_generator: ScheduleGenerator,
         logger: UCSPLogger,
         epochs=100,
-        min_acceptable_fitness=0,
+        min_acceptable_fitness=0.5,
         population_size=100,
         elite_pct=10,
         mateable_pct=50,
+        mutable_pct=20,
         lcl_search_pct=10,
         lcl_search_iters=30,
     ):
@@ -35,6 +36,7 @@ class MemeticAlgorithm(Algorithm):
         self.population_size = population_size
         self.elite_pct = elite_pct
         self.mateable_pct = mateable_pct
+        self.mutable_pct = mutable_pct
         self.lcl_search_pct = lcl_search_pct
         self.lcl_search_iters = lcl_search_iters
 
@@ -51,12 +53,14 @@ class MemeticAlgorithm(Algorithm):
             try:
                 population = sorted(
                     population,
-                    key=lambda sch: self.fitness_provider.fitness(sch))
+                    key=lambda sch: self.fitness_provider.fitness(sch),
+                    reverse=not self.fitness_provider.is_reverse()
+                )
 
                 best_fitness = self.fitness_provider.fitness(population[0])
                 self.logger.write(f"{epoch}\t\t{best_fitness}")
 
-                if best_fitness <= self.min_acceptable_fitness:
+                if self.fitness_provider.compare(best_fitness, self.min_acceptable_fitness):
                     return population[0]
 
                 """ Dominance by elites """
@@ -86,6 +90,36 @@ class MemeticAlgorithm(Algorithm):
                         population[parent1_idx].classes[crossover_point:])
                     )
 
+                """ Mutation """
+                # self.mutable_pct
+                mutable_count = (self.mutable_pct * self.population_size)//100
+                for i in range(mutable_count):
+                    # NOTE: research on optimal choice of `schedule_idx` range
+                    schedule_idx = np.random.randint(self.population_size)
+                    # schedule_idx = np.random.randint(elite_count, population_size)
+
+                    class_idx = np.random.randint(total_classes)
+
+                    param_idx = np.random.randint(3)
+
+                    tmp_sch = deepcopy(new_population[schedule_idx])
+
+                    if param_idx == 0:
+                        """ mutate room """
+                        tmp_sch.classes[class_idx].room = random.choice(
+                            self.schedule_param.rooms)
+                    elif param_idx == 1:
+                        """ mutate instructor """
+                        tmp_sch.classes[class_idx].instructor = \
+                            random.choice(self.schedule_param.instructors)
+                    else:  # param_idx == 2
+                        """ mutate timeslot """
+                        tmp_sch.classes[class_idx].timeslot = \
+                            random.choice(self.schedule_param.timeslots)
+
+                    new_population[schedule_idx] = tmp_sch
+
+
                 """ Local Search using Smart Mutation """
                 lcl_search_count = (self.lcl_search_pct * self.population_size)//100
                 for i in range(lcl_search_count):
@@ -110,7 +144,10 @@ class MemeticAlgorithm(Algorithm):
                             tmp_sch.classes[class_idx].timeslot = \
                                 random.choice(self.schedule_param.timeslots)
 
-                        if self.fitness_provider.fitness(tmp_sch) < self.fitness_provider.fitness(new_population[schedule_idx]):
+                        tmp_fitness = self.fitness_provider.fitness(tmp_sch)
+                        current_fitness = self.fitness_provider.fitness(new_population[schedule_idx])
+
+                        if self.fitness_provider.compare(tmp_fitness, current_fitness):
                             new_population[schedule_idx] = tmp_sch
                             break
 
@@ -123,7 +160,7 @@ class MemeticAlgorithm(Algorithm):
         best_fit_idx = 0
         for i in range(1, len(population)):
             f = self.fitness_provider.fitness(population[i])
-            if f < best_fitness:
+            if self.fitness_provider.compare(f, best_fitness):
                 best_fitness = f
                 best_fit_idx = i
 
@@ -136,6 +173,7 @@ class MemeticAlgorithm(Algorithm):
             "population_size": self.population_size,
             "elite_pct": self.elite_pct,
             "mateable_pct": self.mateable_pct,
+            "mutable_pct": self.mutable_pct,
             "lcl_search_pct": self.lcl_search_pct,
             "lcl_search_iters": self.lcl_search_iters,
         }
