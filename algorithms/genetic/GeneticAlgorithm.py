@@ -18,7 +18,7 @@ class GeneticAlgorithm(Algorithm):
         logger: UCSPLogger,
         epochs=100,
         population_size=100,
-        min_acceptable_fitness=0,
+        min_acceptable_fitness=0.5,
         elite_pct=10,
         mateable_pct=50,
         mutable_pct=20
@@ -49,12 +49,14 @@ class GeneticAlgorithm(Algorithm):
             try:
                 population = sorted(
                     population,
-                    key=lambda sch: self.fitness_provider.fitness(sch))
+                    key=lambda sch: self.fitness_provider.fitness(sch),
+                    reverse=not self.fitness_provider.is_reverse()
+                )
 
                 best_fitness = self.fitness_provider.fitness(population[0])
                 self.logger.write(f"{epoch}\t\t{best_fitness}")
 
-                if best_fitness <= self.min_acceptable_fitness:
+                if self.fitness_provider.compare(best_fitness, self.min_acceptable_fitness):
                     return population[0]
 
                 """ Dominance by elites """
@@ -111,8 +113,7 @@ class GeneticAlgorithm(Algorithm):
                         tmp_sch.classes[class_idx].timeslot = \
                             random.choice(self.schedule_param.timeslots)
 
-                    if self.fitness_provider.fitness(tmp_sch) < self.fitness_provider.fitness(new_population[schedule_idx]):
-                        new_population[schedule_idx] = tmp_sch
+                    new_population[schedule_idx] = tmp_sch
 
                 population = new_population
             except KeyboardInterrupt:
@@ -123,7 +124,7 @@ class GeneticAlgorithm(Algorithm):
         best_fit_idx = 0
         for i in range(1, len(population)):
             f = self.fitness_provider.fitness(population[i])
-            if f < best_fitness:
+            if self.fitness_provider.compare(f, best_fitness):
                 best_fitness = f
                 best_fit_idx = i
 
