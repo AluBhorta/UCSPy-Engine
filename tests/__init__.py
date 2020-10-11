@@ -12,4 +12,3 @@ class UCSPyEngineTest:
         
     def _test_solve(self, *a, **kw):
         s = self.ucspy_engine.solve(*a, **kw)
-        assert hasattr(s, "classes"), "Invalid return type from UCSPyEngine.solve()!"
