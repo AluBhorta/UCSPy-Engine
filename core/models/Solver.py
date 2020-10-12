@@ -31,7 +31,7 @@ class UCSPSolver:
             algo = self._get_algo(algo_name, *args, **kwargs)
             self._logger.write(f"Running: {type(algo).__name__}...")
             default_args = algo.get_default_args()
-            self._logger.write(f"Default arguments: {default_args}\n")
+            self._logger.write(f"Arguments used: {default_args}\n")
 
             t1 = perf_counter()
             sch = algo.run()

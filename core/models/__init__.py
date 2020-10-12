@@ -80,11 +80,12 @@ class Section:
         self.course = course
         self.sec_number = sec_number
 
+    def __str__(self):
+        return f'''Section - course_idx: {self.course.idx}, section: {self.sec_number}'''
+    
     def __repr__(self):
-        return f'''Section - course_idx: {self.course.idx}, 
-            section: {self.sec_number}
-            \n
-        '''
+        return self.__str__()
+
 
 
 class Instructor:
@@ -140,16 +141,16 @@ class Class:
         self.timeslot = timeslot
 
     def __str__(self):
-        return f"""Class: ({self.section.course.desc, self.section.sec_number, self.instructor.desc, self.room.desc, self.timeslot })\n"""
+        return self.__repr__()
 
     def __repr__(self):
-        return f"""### CLASS ###
+        return f"""(
             Course:\t{self.section.course}
             Section:\t{self.section}
             Instructor:\t{self.instructor}
             Room:\t{self.room}
             Timeslot:\t{self.timeslot}
-            \n
+        )\n
         """
 
 

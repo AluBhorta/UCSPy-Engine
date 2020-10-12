@@ -21,7 +21,7 @@ def penalty_of_soft_constraint_7(schedule: Schedule, schedule_param: SchedulePar
             violation_count += 1
             if _inspect:
                 print(
-                    f"Violation of SC7 ('Instructors have minimum credit load requirements.') - Required: {I.min_credit_req}, Assigned: {loads[idx]} - of instructor:\n\t{I}.\n"
+                    f"Violation of SC7 ('Instructors have minimum credit load requirements.') - \n\tRequired: {I.min_credit_req}, Assigned: {loads[idx]} - of instructor:\n\t\t{I}.\n"
                 )
 
     return violation_count * unit_penalty
