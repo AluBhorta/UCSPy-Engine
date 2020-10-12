@@ -188,11 +188,19 @@ A Schedule represents a solution of the UCSP inputs provided, which consists of:
 
 The fitness of a schedule determines how desirable it is, and how much a Schedule violates the constraints determines its fitness.
 
-<!-- The fitness of Schedule `s` is calculated as follows:
+There are 3 different fitness functions currently available:
 
-TODO: update fitness description with diagram of equation -->
+- TanH
 
-Therefore, following our fitness function - a Schedule of `1.0` fitness is infeasible, while a fitness of `0.0` is a perfect solution.
+Where a Schedule of `1.0` fitness is infeasible, while a fitness of `0.0` is a perfect solution.
+
+- Default
+
+Where a Schedule of `0.0` fitness is infeasible, while a fitness of `1.0` is a perfect solution.
+
+- Default Exponential
+
+Where a Schedule of `0.0` fitness is infeasible, while a fitness of `1.0` is a perfect solution.
 
 ---
 
@@ -324,9 +332,9 @@ python cli.py solve ga
 
 This will run the Genetic Algorithm using the default parameters, and print out the final schedule.
 
-**Passing parameters to the algorithm**
+**Customizing parameters of the algorithm**
 
-Each algorithm has a set of unique parameters that can provided as command line arguments.
+Each algorithm has a set of unique parameters that can be provided as command line arguments.
 
 For Genetic Algorithm:
 
@@ -346,6 +354,7 @@ For Memetic Algorithm:
 | population_size  | The size of the population in a generation. (default: 100)                           |
 | elite_pct        | The % of elites in the population. (default: 10)                                     |
 | mateable_pct     | The % of population that have a chance to perform crossover. (default: 50)           |
+| mutable_pct      | The % of population that could be mutated. (default: 20)                             |
 | lcl_search_pct   | The % of population that performs local search. (default: 10)                        |
 | lcl_search_iters | The number of iterations of local search for each selected individual. (default: 30) |
 
@@ -372,7 +381,7 @@ These generated logs can be used to automatically generate performance plots lik
 And it is done by using the `plot` command, which takes the path of the log file like so:
 
 ```sh
-python cli.py plot data/logs/<filename>
+python cli.py plot <filepath>
 ```
 
 To plot from the sample log file, for example, run:
