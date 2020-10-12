@@ -23,12 +23,20 @@ class UCSPSolver:
 
         self._save_sch = config['save_schedule']
         self._inspect_final_sch = config['inspect_final_schedule']
-        self._min_acceptable_fitness = config["fitness"]['min_acceptable_fitness']
         self._algo_name = config['algorithm']['use']
+
+        if config["fitness"].get('min_acceptable_fitness'):
+            self._min_acceptable_fitness = config["fitness"]['min_acceptable_fitness']
+        else:
+            self._min_acceptable_fitness = 0 if self._state.fitness_provider.is_reverse() else 1
 
     def solve(self, algo_name=None, *args, **kwargs):
         try:
-            algo = self._get_algo(algo_name, *args, **kwargs)
+            algo = self._get_algo(
+                algo_name,
+                min_acceptable_fitness=self._min_acceptable_fitness,
+                *args, **kwargs
+            )
             self._logger.write(f"Running: {type(algo).__name__}...")
             default_args = algo.get_default_args()
             self._logger.write(f"Arguments used: {default_args}\n")

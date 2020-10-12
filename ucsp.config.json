@@ -5,7 +5,7 @@
   "save_schedule": false,
   "inspect_final_schedule": false,
   "fitness": {
-    "min_acceptable_fitness": 0,
+    "min_acceptable_fitness": null,
     "functions": ["tanh", "default", "default_expo"],
     "use": "tanh"
   },

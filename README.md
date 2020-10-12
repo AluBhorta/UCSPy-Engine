@@ -271,7 +271,7 @@ The parameters required for solving UCSP are provided through a JSON configurati
 
 - `fitness`
 
-  - `min_acceptable_fitness`: the minimum acceptable fitness required to terminate if maximum iterations is not yet completed. Range is from 1-0, 1 being worst solution and 0 being perfect solution.
+  - `min_acceptable_fitness`: the minimum acceptable fitness required to terminate if maximum iterations is not yet completed. Default value is `null` which will require the perfect solution depending on the fitness function. If fitness function is_reverse (ie. smaller values better than larger ones), then perfect solution is at 0, else 1.
   - `functions`: (read only) list of available fitness functions names.
   - `use`: the name of the fitness function to use.
 
