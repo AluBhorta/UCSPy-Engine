@@ -71,15 +71,16 @@ class ParticleSwarmOptimization(Algorithm):
                 current_fitness = self._get_fitness_of(particle.position)
                 # print(f"{current_fitness}", end="\t")
 
-                if current_fitness < self.min_acceptable_fitness:
-                    return self.schedule_operator.flat_to_sch(particle.position), current_fitness
+                if self.fitness_provider.compare(current_fitness, self.min_acceptable_fitness):
+                # if current_fitness < self.min_acceptable_fitness:
+                    return self.schedule_operator.flat_to_sch(particle.position)
 
                 pbest_fitness = self._get_fitness_of(particle.pbest_position)
-                if current_fitness < pbest_fitness:
+                if self.fitness_provider.compare(current_fitness, pbest_fitness):
                     # print(f"current_fitness: {current_fitness}\t pbest_fitness: {pbest_fitness}")
                     particle.pbest_position = deepcopy(particle.position)
 
-                if current_fitness < gbest_fitness:
+                if self.fitness_provider.compare(current_fitness, gbest_fitness):
                     # print(f"current_fitness: {current_fitness}\t gbest_fitness: {gbest_fitness}")
                     gbest_fitness = current_fitness
                     gbest_position = deepcopy(particle.position)
