@@ -45,9 +45,10 @@ def make_line_plot(log_file="data/logs/sample.log", ygap=5, start_line=5, end_li
             plticker.MultipleLocator(base=ybase)
         )
 
-        plt.title(f"Plotting from: {log_file}")
-        plt.xlabel("Generation")
-        plt.ylabel("Fitness")
+        plt.title(f"Plotting from: {log_file}", fontsize=15)
+        plt.xlabel("Generation", fontsize=20)
+        plt.ylabel("Fitness", fontsize=20)
+        plt.tick_params(labelsize=15)
 
         plt.grid()
         plt.show()

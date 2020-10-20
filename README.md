@@ -170,10 +170,12 @@ The following are the current constraints that UCSPy-Engine holds, which are mos
 
 7. Instructors have minimum credit load requirements.
 
+8. The Theory Section and the corresponding Lab Section of a Course (if any) should be taken by the same Instructor.
+
 NOTE:
 
 - institutions can and should adjust the penalties to their needs.
-- the Lab course should should be directly after its corresponding Theory course in the `courses.csv` schedule_param
+- the Lab course should be directly after its corresponding Theory course in the `courses.csv` schedule_param
 
 ### The Output
 
@@ -188,19 +190,11 @@ A Schedule represents a solution of the UCSP inputs provided, which consists of:
 
 The fitness of a schedule determines how desirable it is, and how much a Schedule violates the constraints determines its fitness.
 
-There are 3 different fitness functions currently available:
+<!-- The fitness of Schedule `s` is calculated as follows:
 
-- TanH
+TODO: update fitness description with diagram of equation -->
 
-Where a Schedule of `1.0` fitness is infeasible, while a fitness of `0.0` is a perfect solution.
-
-- Default
-
-Where a Schedule of `0.0` fitness is infeasible, while a fitness of `1.0` is a perfect solution.
-
-- Default Exponential
-
-Where a Schedule of `0.0` fitness is infeasible, while a fitness of `1.0` is a perfect solution.
+Therefore, following our fitness function - a Schedule of `1.0` fitness is infeasible, while a fitness of `0.0` is a perfect solution.
 
 ---
 
@@ -271,7 +265,7 @@ The parameters required for solving UCSP are provided through a JSON configurati
 
 - `fitness`
 
-  - `min_acceptable_fitness`: the minimum acceptable fitness required to terminate if maximum iterations is not yet completed. Default value is `null` which will require the perfect solution depending on the fitness function. If fitness function is_reverse (ie. smaller values better than larger ones), then perfect solution is at 0, else 1.
+  - `min_acceptable_fitness`: the minimum acceptable fitness required to terminate if maximum iterations is not yet completed. Range is from 1-0, 1 being worst solution and 0 being perfect solution.
   - `functions`: (read only) list of available fitness functions names.
   - `use`: the name of the fitness function to use.
 
@@ -332,9 +326,9 @@ python cli.py solve ga
 
 This will run the Genetic Algorithm using the default parameters, and print out the final schedule.
 
-**Customizing parameters of the algorithm**
+**Passing parameters to the algorithm**
 
-Each algorithm has a set of unique parameters that can be provided as command line arguments.
+Each algorithm has a set of unique parameters that can provided as command line arguments.
 
 For Genetic Algorithm:
 
@@ -354,20 +348,19 @@ For Memetic Algorithm:
 | population_size  | The size of the population in a generation. (default: 100)                           |
 | elite_pct        | The % of elites in the population. (default: 10)                                     |
 | mateable_pct     | The % of population that have a chance to perform crossover. (default: 50)           |
-| mutable_pct      | The % of population that could be mutated. (default: 20)                             |
 | lcl_search_pct   | The % of population that performs local search. (default: 10)                        |
 | lcl_search_iters | The number of iterations of local search for each selected individual. (default: 30) |
 
 For example, the number of iteration could easily be changed to 500 like so:
 
 ```sh
-python cli.py solve ga --epochs=500
+python cli.py solve --save-sch=True <algo>
 ```
 
 The other parameter can be updated as well like so:
 
 ```sh
-python cli.py solve <algo> --<parameter>=<value>
+python cli.py solve --save_logs=True <algo>
 ```
 
 #### `plot`
@@ -381,7 +374,7 @@ These generated logs can be used to automatically generate performance plots lik
 And it is done by using the `plot` command, which takes the path of the log file like so:
 
 ```sh
-python cli.py plot <filepath>
+python cli.py plot data/logs/<filename>
 ```
 
 To plot from the sample log file, for example, run:
