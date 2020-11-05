@@ -48,13 +48,13 @@
         },
         {
           "id": 7,
-          "unit_penalty": 0.9,
-          "desc": "Instructors have minimum credit load requirements."
+          "unit_penalty": 0.6,
+          "desc": "The Theory Section and the corresponding Lab Section of a Course (if any) should be taken by the same Instructor."
         },
         {
           "id": 8,
-          "unit_penalty": 0.6,
-          "desc": "The Theory Section and the corresponding Lab Section of a Course (if any) should be taken by the same Instructor."
+          "unit_penalty": 0.9,
+          "desc": "Instructors have minimum credit load requirements."
         }
       ],
       "use_ids": [1, 2, 3, 4, 5, 6, 7, 8]

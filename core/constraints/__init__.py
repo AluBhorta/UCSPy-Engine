@@ -51,11 +51,11 @@ SOFT_CONSTRAINT_FUNCS = [
         "desc": "The Lab Section of a Course (if any) should be placed in a Timeslot that is before or after the corresponding Theory Section."
     },
     {
-        "id": 7, "unit_penalty": 0.9, "func": penalty_of_soft_constraint_7,
-        "desc": "Instructors have minimum credit load requirements."
+        "id": 7, "unit_penalty": 0.6, "func": penalty_of_soft_constraint_7,
+        "desc": "The Theory Section and the corresponding Lab Section of a Course (if any) should be taken by the same Instructor."
     },
     {
-        "id": 8, "unit_penalty": 0.6, "func": penalty_of_soft_constraint_8,
-        "desc": "The Theory Section and the corresponding Lab Section of a Course (if any) should be taken by the same Instructor."
+        "id": 8, "unit_penalty": 0.9, "func": penalty_of_soft_constraint_8,
+        "desc": "Instructors have minimum credit load requirements."
     },
 ]

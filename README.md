@@ -168,9 +168,9 @@ The following are the current constraints that UCSPy-Engine holds, which are mos
 
 6. The Lab Section of a Course (if any) should be placed in a Timeslot that is before or after the corresponding Theory Section.
 
-7. Instructors have minimum credit load requirements.
-
 8. The Theory Section and the corresponding Lab Section of a Course (if any) should be taken by the same Instructor.
+
+7. Instructors have minimum credit load requirements.
 
 NOTE:
 
