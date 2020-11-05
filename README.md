@@ -172,6 +172,8 @@ The following are the current constraints that UCSPy-Engine holds, which are mos
 
 7. Instructors have minimum credit load requirements.
 
+8. The Theory Section and the corresponding Lab Section of a Course (if any) should be taken by the same Instructor.
+
 NOTE:
 
 - institutions can and should adjust the penalties to their needs.
@@ -190,11 +192,27 @@ A Schedule represents a solution of the UCSP inputs provided, which consists of:
 
 The fitness of a schedule determines how desirable it is, and how much a Schedule violates the constraints determines its fitness.
 
-<!-- The fitness of Schedule `s` is calculated as follows:
+<!-- The fitness of Schedule `s` is calculated as follows: -->
 
-TODO: update fitness description with diagram of equation -->
+There are 3 different fitness functions currently available:
 
-Therefore, following our fitness function - a Schedule of `1.0` fitness is infeasible, while a fitness of `0.0` is a perfect solution.
+- TanH 
+
+![](data/img/Tanh.png)
+
+Where a schedule of `1.0` fitnes is infeasible, while a fitness of `0.0` is a perfect solution.
+
+- Default 
+
+![](data/img/Default.png)
+
+Where a schedule of `0.0` fitness in infeasible, while a fitness of `1.0` is a perfect solution.
+
+- Default Exponential 
+
+![](data/img/DefaultExpo.png)
+
+Where a schedule of `0.0` fitness in infeasible, while a fitness of `1.0` is a perfect solution. 
 
 ---
 
@@ -326,7 +344,7 @@ python cli.py solve ga
 
 This will run the Genetic Algorithm using the default parameters, and print out the final schedule.
 
-**Passing parameters to the algorithm**
+**Customizing parameters of the algorithm**
 
 Each algorithm has a set of unique parameters that can provided as command line arguments.
 
@@ -374,7 +392,7 @@ These generated logs can be used to automatically generate performance plots lik
 And it is done by using the `plot` command, which takes the path of the log file like so:
 
 ```sh
-python cli.py plot data/logs/<filename>
+python cli.py plot <filpath>
 ```
 
 To plot from the sample log file, for example, run:
