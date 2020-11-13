@@ -3,8 +3,10 @@ from matplotlib import pyplot as plt
 import matplotlib.ticker as plticker
 import bisect
 
+from core.logging import UCSPLogger
 
-def make_line_plot(log_file="data/logs/sample.log", ygap=1, start_line=6, end_line=-4):
+
+def make_line_plot(log_file="data/logs/sample.log", ygap=1):
     """
     Plotter
 
@@ -13,21 +15,33 @@ def make_line_plot(log_file="data/logs/sample.log", ygap=1, start_line=6, end_li
     :param log_file: path to the log file.
     \n
     :param ygap: Amount of gap in the Y-axis ticks, as a mutiple of the average gap. A higher value gives less frequent ticks. (default: 5)
-    \n
-    :param start_line: the line from which numeric Generation & Fitness log records start. Line numbers start from 1, not 0. (default: 6)
-    \n
-    :param end_line: the last line containing numeric Generation & Fitness log records. A negative number represents order in reverse direction. Line numbers start from 1, not 0. (default: -4)
 
     N.B:
 
     - modifying the auto generated log files might not make Plotter work properly.
     \n
     """
-    with open(log_file) as f:
-        start_line = start_line-1
-        end_line = end_line-1
 
-        data = f.read().split('\n')[start_line:end_line]
+    with open(log_file) as f:
+        lines = f.read().split('\n')
+
+        start = None
+        for i in range(len(lines)):
+            if lines[i].lower() == UCSPLogger.record_start_marker.lower():
+                start = i+1
+                break
+        if not start:
+            raise Exception('shit, no start marker found :/')
+
+        end = None
+        for i in range(len(lines)-1, 0, -1):
+            if lines[i].lower() == UCSPLogger.record_end_marker.lower():
+                end = i
+                break
+        if not end:
+            raise Exception('shit, no end marker found :/')
+
+        data = lines[start:end]
         plot_data = np.array([i.split('\t\t') for i in data])
 
         x, y = plot_data[:, 0], plot_data[:, 1]
@@ -40,15 +54,14 @@ def make_line_plot(log_file="data/logs/sample.log", ygap=1, start_line=6, end_li
             plticker.MultipleLocator(base=len(x)/10)
         )
         ybase = (min(y) + max(y)) / (len(y)) * ygap
-        # print(ybase)
         ax.yaxis.set_major_locator(
             plticker.MultipleLocator(base=ybase)
         )
 
-        plt.title(f"Plotting from: {log_file}", fontsize=15)
-        plt.xlabel("Generation", fontsize=20)
-        plt.ylabel("Fitness", fontsize=20)
-        plt.tick_params(labelsize=15)
+        plt.title(f"Plotting from: {log_file}", fontsize=16)
+        plt.xlabel("Generation", fontsize=15)
+        plt.ylabel("Fitness", fontsize=15)
+        plt.tick_params(labelsize=10)
 
         plt.grid()
         plt.show()

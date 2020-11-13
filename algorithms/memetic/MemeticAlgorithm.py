@@ -47,7 +47,7 @@ class MemeticAlgorithm(Algorithm):
         new_population = [None for _ in range(self.population_size)]
 
         total_classes = len(self.schedule_param.sections)
-        self.logger.write(f"Generation\t\tFitness")
+        self.logger.write(self.logger.record_start_marker)
 
         for epoch in range(self.epochs):
             try:
@@ -156,6 +156,8 @@ class MemeticAlgorithm(Algorithm):
                 print("Solver stopped by user")
                 break
 
+        self.logger.write(self.logger.record_end_marker)
+        
         best_fitness = self.fitness_provider.fitness(population[0])
         best_fit_idx = 0
         for i in range(1, len(population)):

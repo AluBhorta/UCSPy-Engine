@@ -8,6 +8,8 @@ class UCSPLogger(object):
 
         used for logging to the console or to the log file and console.
     """
+    record_start_marker = 'Generation\t\tFitness'
+    record_end_marker = '->end<-'
 
     def __init__(self, save_logs=False):
         self.terminal = sys.stdout
@@ -19,9 +21,12 @@ class UCSPLogger(object):
 
         if self.save_logs:
             if not hasattr(self, 'file'):
-                t = datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
-                fname = f"data/logs/{t}.log"
-                self.file = open(fname, "w")
-                print(f"Logging to file: {fname}")
+                self._create_file()
 
             self.file.write(message)
+
+    def _create_file(self):
+        t = datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+        fname = f"data/logs/{t}.log"
+        self.file = open(fname, "w")
+        print(f"Logging to file: {fname}")
