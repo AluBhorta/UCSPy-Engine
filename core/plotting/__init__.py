@@ -67,7 +67,7 @@ class UCSPPlotter:
                 start = i+1
                 break
         if not start:
-            raise Exception('shit, no start marker found :/')
+            raise Exception('ERROR! No start marker found :/')
 
         end = None
         for i in range(len(lines)-1, 0, -1):
@@ -75,6 +75,6 @@ class UCSPPlotter:
                 end = i
                 break
         if not end:
-            raise Exception('shit, no end marker found :/')
+            raise Exception('ERROR! No end marker found :/')
 
         return start, end
