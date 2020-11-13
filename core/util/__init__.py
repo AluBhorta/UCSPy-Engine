@@ -34,3 +34,10 @@ def _get_theory_lab_course_idx_paris(courses):
 def _get_classes_of_course_idx(c_idx, schedule):
     return [c for c in schedule.classes
             if c.section.course.idx == c_idx]
+
+
+def pretty_print_results(tsp=None, fitness_value=None, fitness_provider=None):
+    print("\n-\t-\t-\t-\t-\n")
+    fitness_provider and print(f"Fitness provider: {fitness_provider.__class__.__name__}")
+    fitness_value and print(f"Final Fitness: {fitness_value}")
+    tsp and print(f"Total Soft Penalty: {tsp}")

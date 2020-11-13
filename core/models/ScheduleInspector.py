@@ -2,7 +2,7 @@
 from pandas import read_csv
 import os
 
-from core.util import _str_to_array
+from core.util import _str_to_array, pretty_print_results
 from core.models.ScheduleOperator import ScheduleOperator
 from core.models.FitnessProvider import FitnessProvider
 
@@ -24,10 +24,7 @@ class ScheduleInspector:
         tsp = self.fitness_provider.constraint_manager.total_soft_penalty(sch)
         f_val = self.fitness_provider.fitness(sch, _inspect=True)
 
-        print("\n-\t-\t-\t-\t-\n")
-        print(f"Total Soft Penalty: {tsp}")
-        print(f"Final Fitness: {f_val}")
-        print(f"Fitness provider: {self.fitness_provider.__class__.__name__}")
+        pretty_print_results(tsp, f_val, self.fitness_provider)
 
     def _parse_numrepr_from_file(self, schedule_file):
         return read_csv(

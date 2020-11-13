@@ -25,7 +25,7 @@ class UCSPyEngine:
 
     def solve(self, *args, **kwargs):
         UCSPSolver(self._config, self._state).solve(*args, **kwargs)
-        return 
+        return
 
     def plot(self, *args, **kwargs):
         return make_line_plot(*args, **kwargs)

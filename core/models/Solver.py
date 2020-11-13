@@ -8,6 +8,7 @@ from core.logging import UCSPLogger
 from algorithms import ALL_ALGORITHMS
 from core.models.Algorithm import Algorithm
 from core.models.UCSPState import UCSPState
+from core.util import pretty_print_results
 
 
 class UCSPSolver:
@@ -38,6 +39,8 @@ class UCSPSolver:
                 *args, **kwargs
             )
             self._logger.write(f"Running: {type(algo).__name__}...")
+            self._logger.write(
+                f"Fitness provider: {self._state.fitness_provider.__class__.__name__}")
             default_args = algo.get_default_args()
             self._logger.write(f"Arguments used: {default_args}\n")
 
@@ -46,7 +49,7 @@ class UCSPSolver:
             t2 = perf_counter()
 
             self._write_schedule(sch)
-            self._logger.write(f"\nTime taken: {t2-t1} s")
+            self._logger.write(f"Time taken: {t2-t1} s")
 
             return sch
         except KeyboardInterrupt:
@@ -76,16 +79,16 @@ class UCSPSolver:
             with open(fname, "w") as f:
                 f.write(sch.to_csv())
             self._logger.write(
-                f"\nHuman Readable Schedule successfully saved to {fname}")
+                f"\nHuman Readable Schedule successfully saved to: {fname}")
 
             fname = os.path.join(
                 os.getcwd(), "data/schedules", f"sch-num-{t}.csv")
             with open(fname, "w") as f:
                 f.write(sch.to_num_csv())
             self._logger.write(
-                f"\nNumeric Schedule successfully saved to {fname}")
+                f"Numeric Schedule successfully saved to: {fname}")
 
         fit = self._state.fitness_provider.fitness(
             sch, _inspect=self._inspect_final_sch
         )
-        print(f"Final fitness: {fit}")
+        pretty_print_results(fitness_value=fit)

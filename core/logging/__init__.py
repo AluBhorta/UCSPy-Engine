@@ -18,10 +18,10 @@ class UCSPLogger(object):
         self.terminal.write(message)
 
         if self.save_logs:
-            if not self.file:
+            if not hasattr(self, 'file'):
                 t = datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 fname = f"data/logs/{t}.log"
                 self.file = open(fname, "w")
-                print(f"Logging to file {fname}")
+                print(f"Logging to file: {fname}")
 
             self.file.write(message)

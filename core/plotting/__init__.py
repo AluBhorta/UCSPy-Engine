@@ -4,7 +4,7 @@ import matplotlib.ticker as plticker
 import bisect
 
 
-def make_line_plot(log_file="data/logs/sample.log", ygap=1, start_line=5, end_line=-6):
+def make_line_plot(log_file="data/logs/sample.log", ygap=1, start_line=6, end_line=-4):
     """
     Plotter
 
@@ -14,9 +14,9 @@ def make_line_plot(log_file="data/logs/sample.log", ygap=1, start_line=5, end_li
     \n
     :param ygap: Amount of gap in the Y-axis ticks, as a mutiple of the average gap. A higher value gives less frequent ticks. (default: 5)
     \n
-    :param start_line: the line from which numeric Generation & Fitness log records start. Line numbers start from 1, not 0. (default: 4)
+    :param start_line: the line from which numeric Generation & Fitness log records start. Line numbers start from 1, not 0. (default: 6)
     \n
-    :param end_line: the last line containing numeric Generation & Fitness log records. A negative number represents order in reverse direction. Line numbers start from 1, not 0. (default: -6)
+    :param end_line: the last line containing numeric Generation & Fitness log records. A negative number represents order in reverse direction. Line numbers start from 1, not 0. (default: -4)
 
     N.B:
 
