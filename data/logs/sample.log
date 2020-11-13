@@ -1,4 +1,5 @@
 Running: GeneticAlgorithm...
+Fitness provider: TanhFitnessProvider
 Default arguments: {'epochs': 100, 'population_size': 100, 'min_acceptable_fitness': 0, 'elite_pct': 10, 'mateable_pct': 50, 'mutable_pct': 20}
 
 Generation		Fitness
@@ -104,7 +105,5 @@ Generation		Fitness
 99		0.6910694698329305
 
 Human Readable Schedule successfully saved to /home/alu/Documents/IUB-Semesters/Sem-8-Autumn-19/AI/Project/UCSPy-Engine/data/schedules/sch-str-2020-09-01T00-28-40.csv
-
 Numeric Schedule successfully saved to /home/alu/Documents/IUB-Semesters/Sem-8-Autumn-19/AI/Project/UCSPy-Engine/data/schedules/sch-num-2020-09-01T00-28-40.csv
-
 Time taken: 88.22213138300049 s
