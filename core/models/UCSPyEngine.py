@@ -1,7 +1,7 @@
 
 from pathlib import Path
 
-from core.plotting import make_line_plot
+from core.plotting import UCSPPlotter
 from core.models.Solver import UCSPSolver
 from core.models.ScheduleInspector import ScheduleInspector
 from core.parsers.parse_config import parse_config_file
@@ -28,7 +28,7 @@ class UCSPyEngine:
         return
 
     def plot(self, *args, **kwargs):
-        return make_line_plot(*args, **kwargs)
+        return UCSPPlotter(*args, **kwargs).plot()
 
     def inspect(self, *args, **kwargs):
         return ScheduleInspector(
