@@ -58,6 +58,9 @@ class UCSPSolver:
     def stop(self):
         raise NotImplementedError
 
+    def stop(self):
+        raise NotImplementedError
+
     def _get_algo(self, algo_name=None, *args, **kwargs) -> Algorithm:
         name = algo_name or self._algo_name
         algo = ALL_ALGORITHMS.get(name)
