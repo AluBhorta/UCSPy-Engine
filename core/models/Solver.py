@@ -9,6 +9,7 @@ from algorithms import ALL_ALGORITHMS
 from core.models.Algorithm import Algorithm
 from core.models.UCSPState import UCSPState
 from core.util import pretty_print_results
+from core.generators.StateGenerator import StateGenerator
 
 
 class UCSPSolver:
@@ -18,9 +19,9 @@ class UCSPSolver:
     Solves the univesity course scheduling problem using various intelligent algorithms.
     """
 
-    def __init__(self, config, state: UCSPState):
-        self._state = state
-        self._logger = state.logger
+    def __init__(self, config):
+        self._state = StateGenerator(config).generate()
+        self._logger = self._state.logger
 
         self._save_sch = config['save_schedule']
         self._inspect_final_sch = config['inspect_final_schedule']
@@ -31,7 +32,7 @@ class UCSPSolver:
         else:
             self._min_acceptable_fitness = 0 if self._state.fitness_provider.is_reverse() else 1
 
-    def solve(self, algo_name=None, *args, **kwargs):
+    def solve(self, algo_name=None, return_sch=False, *args, **kwargs):
         try:
             algo = self._get_algo(
                 algo_name,
@@ -50,13 +51,10 @@ class UCSPSolver:
 
             self._write_schedule(sch)
             self._logger.write(f"Time taken: {t2-t1} s")
-
-            return sch
         except KeyboardInterrupt:
             print("Stopped...")
-
-    def stop(self):
-        raise NotImplementedError
+        finally:
+            return sch if return_sch else None
 
     def stop(self):
         raise NotImplementedError
