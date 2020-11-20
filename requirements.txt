@@ -2,11 +2,14 @@ attrs==19.3.0
 autopep8==1.4.4
 click==7.1.2
 cycler==0.10.0
+dnspython==1.16.0
+eventlet==0.29.1
 fire==0.3.1
 Flask==1.1.2
 Flask-Cors==3.0.9
 Flask-SocketIO==4.3.1
 future==0.18.2
+greenlet==0.4.17
 itsdangerous==1.1.0
 Jinja2==2.11.2
 kiwisolver==1.1.0
