@@ -259,6 +259,26 @@ Install requirements using pip
 pip install -r requirements.txt
 ```
 
+### Installation on Mac with Apple Silicon
+
+dependencies
+
+- Python 3.9
+- pip3
+
+```bash
+# setup venv
+python3 -m venv .venv
+. .venv/bin/activate
+ 
+# install and build numpy + scipy separately after openblas
+brew install openblas
+OPENBLAS="$(brew --prefix openblas)" pip install numpy==1.22.1 scipy==1.7.3
+
+# install rest of the dependencies
+pip install -r requirements.arm.txt
+```
+
 ### Usage
 
 There are 3 main services offered by UCSPy-Engine:
