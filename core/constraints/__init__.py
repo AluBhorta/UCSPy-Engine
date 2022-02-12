@@ -12,8 +12,6 @@ from core.constraints.soft.soft_constraint_7 import penalty_of_soft_constraint_7
 from core.constraints.soft.soft_constraint_8 import penalty_of_soft_constraint_8
 
 
-""" to learn how to add new constraints, read `core/constraints/modify_constraints.md` """
-
 HARD_CONSTRAINT_FUNCS = [
     {
         "id": 1, "func": violates_hard_constraint_1,
