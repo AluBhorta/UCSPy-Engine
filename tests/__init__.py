@@ -9,6 +9,6 @@ class UCSPyEngineTest:
     def run_tests(self):
         self._test_solve("ga", epochs=5)
         self._test_solve("meme", epochs=5)
-        
+
     def _test_solve(self, *a, **kw):
         s = self.ucspy_engine.solve(*a, **kw)
