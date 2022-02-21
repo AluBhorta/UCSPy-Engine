@@ -59,7 +59,7 @@ A Room consists of:
 
 - `idx`: unique index.
 - `desc`: detail description. Can contain meta-information.
-- `seat_capacity`: you already understand what it is.
+- `seat_capacity`: the number of students that a room can accommodate.
 - `allowed_course_idxs`: a collection of course indices that are allowed in this room.
 
 #### Timeslot

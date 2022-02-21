@@ -23,6 +23,8 @@ UCSPy-Engine should (in theory) allow any university or educational institution 
 
 It also allows any smart individuals (like you) who like solving challenging problems - to plug in their own algorithms and achieve better or faster solutions than the algorithms currently available. This gives innovators the platform and possibility to publish their own solutions, at the same time contributing to a worthwhile and interesting problem.
 
+<!-- TODO: (fix tone - 'you') -->
+
 ---
 
 <!-- TODO: possibly link or include the thesis paper -->
