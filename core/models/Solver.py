@@ -1,24 +1,23 @@
 import os
 import json
 import datetime
-from time import perf_counter
 
 from core.models import Schedule
 from core.logging import UCSPLogger
 from algorithms import ALL_ALGORITHMS
 from core.models.Algorithm import Algorithm
 from core.models.UCSPState import UCSPState
-from core.util import pretty_print_results
+from core.util import bench_time, pretty_print_results
 
 
 class UCSPSolver:
     """ 
     UCSP Solver
 
-    Solves the univesity course scheduling problems using various intelligent algorithms.
+    Solves univesity course scheduling problems using various different algorithms.
     """
 
-    def __init__(self, config, state: UCSPState):
+    def __init__(self, config, state: UCSPState, *args, **kwargs):
         self._state = state
         self._logger = state.logger
 
@@ -31,32 +30,32 @@ class UCSPSolver:
         else:
             self._min_acceptable_fitness = 0 if self._state.fitness_provider.is_reverse() else 1
 
-    def solve(self, algo_name=None, *args, **kwargs):
+        self.algo = self._get_algo(
+            min_acceptable_fitness=self._min_acceptable_fitness,
+            *args, **kwargs
+        )
+
+    @bench_time
+    def solve(self):
         try:
-            algo = self._get_algo(
-                algo_name,
-                min_acceptable_fitness=self._min_acceptable_fitness,
-                *args, **kwargs
-            )
-            self._logger.write(f"Running: {type(algo).__name__}...")
-            self._logger.write(
-                f"Fitness provider: {self._state.fitness_provider.__class__.__name__}")
-            default_args = algo.get_default_args()
-            self._logger.write(f"Arguments used: {default_args}\n")
-
-            t1 = perf_counter()
-            sch = algo.run()
-            t2 = perf_counter()
-
-            self._write_schedule(sch)
-            self._logger.write(f"Time taken: {t2-t1} s")
-
-            return sch
+            self.show_args()
+            
+            schedule = self.algo.run()
+            self._write_schedule(schedule)
+            return
         except KeyboardInterrupt:
             print("Stopped...")
 
-    def _get_algo(self, algo_name=None, *args, **kwargs) -> Algorithm:
-        name = algo_name or self._algo_name
+    def show_args(self):
+        self._logger.write(
+            f"Fitness provider: {self._state.fitness_provider.__class__.__name__}")
+        self._logger.write(f"Algo: {type(self.algo).__name__}")
+        default_args = self.algo.get_default_args()
+        self._logger.write(
+            f"Arguments used for - {type(self.algo).__name__}: {default_args}\n")
+
+    def _get_algo(self, *args, **kwargs) -> Algorithm:
+        name = self._algo_name
         algo = ALL_ALGORITHMS.get(name)
 
         if not hasattr(algo, 'run'):

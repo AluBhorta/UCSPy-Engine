@@ -1,4 +1,3 @@
-
 # Design
 
 This section describes how UCSPy-Engine formulates and encodes UCSP into a set of models that can be understood by a computer. This allows us to generate, store, or manipulate schedules, as well as to measure and analyze their performance.
@@ -168,24 +167,36 @@ The fitness of a schedule determines how desirable it is, and how much a Schedul
 
 There are 3 different fitness functions currently available:
 
-- TanH 
+- TanH
 
 ![](../data/img/Tanh.png)
 
 Where a schedule of `1.0` fitnes is infeasible, while a fitness of `0.0` is a perfect solution.
 
-- Default 
+- Default
 
 ![](../data/img/Default.png)
 
 Where a schedule of `0.0` fitness in infeasible, while a fitness of `1.0` is a perfect solution.
 
-- Default Exponential 
+- Default Exponential
 
 ![](../data/img/DefaultExpo.png)
 
-Where a schedule of `0.0` fitness in infeasible, while a fitness of `1.0` is a perfect solution. 
+Where a schedule of `0.0` fitness in infeasible, while a fitness of `1.0` is a perfect solution.
 
 ---
 
 <!-- TODO: specify the input knobs that can be turned, including the shape of the csv/excel files that are needed -->
+
+## Extensibility (Advanced)
+
+The system is designed to be flexible, so that you may customize it according to your needs/use-case with a bit of effort.
+
+- to add new algorithms - extend the `Algorithm` abstract class
+- to add new fitness functions - extend the `FitnessProvider` abstract class
+- to modify/add new constraints - read [this](docs/modify_constraints.md)
+
+You may also decide to change the `DefaultScheduleGenerator` or update the shape of the `ScheduleParam` to suit your needs, but that will also require changes to other components of the system.
+
+Feel free to open a PR or an Issue if you need help.

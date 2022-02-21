@@ -134,6 +134,7 @@ dmypy.json
 
 *.csv
 data/schedules/**/*.csv
+!data/schedules/sch-num-sample.csv
 !data/schedule_params/default/*.csv
 
 !data/logs/sample.log
