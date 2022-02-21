@@ -38,7 +38,7 @@ class UCSPyEngine:
 
         :param log_file: The log file to use for plotting.
         """
-        return UCSPPlotter(log_file=log_file, *args, **kwargs).plot()
+        return UCSPPlotter(log_file=log_file).plot(*args, **kwargs)
 
     def inspect(self, schedule_file="data/schedules/sch-num-sample.csv", *args, **kwargs):
         """ used to inspect the quality of the solution provided, by showing detail constraint violations. 

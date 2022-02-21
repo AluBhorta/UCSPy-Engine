@@ -22,7 +22,7 @@ class UCSPPlotter:
     def __init__(self, log_file="data/logs/sample.log"):
         self.log_file = log_file
 
-    def plot(self):
+    def plot(self, should_wait=True, *args, **kwargs):
         with open(self.log_file, 'r') as f:
             lines = f.read().split('\n')
             x, y = self._get_processed_axes(lines)
@@ -40,7 +40,7 @@ class UCSPPlotter:
             plt.tick_params(labelsize=10)
 
             plt.grid()
-            plt.show()
+            plt.show(block=should_wait)
 
     def _get_processed_axes(self, lines):
         start, end = self._get_start_and_end(lines)
