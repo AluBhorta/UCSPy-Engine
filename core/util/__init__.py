@@ -22,7 +22,7 @@ def _str_to_array(str_values):
 
 def _get_theory_lab_course_idx_paris(courses):
     """ NOTE: for this to work, the Lab course should should be directly after its corresponding Theory course  in the `courses.csv` schedule_param
-    TODO: replace the indexing strategy with a dedicated parameter in Course instance (e.g. C.lab_of_course_idx)
+    alternative way to handle it - replace the indexing strategy with a dedicated parameter in Course instance (e.g. C.lab_of_course_idx)
     """
     pairs = []
     for crs in courses:

@@ -68,7 +68,7 @@ class Course:
         """
 
     def _get_credits(self):
-        # TODO: take this as input
+        # NOTE: you can take this as input
         return 1 if self.course_type.lower() == "lab" else 3
 
     def _generate_sections(self):

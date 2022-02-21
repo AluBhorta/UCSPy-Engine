@@ -106,8 +106,7 @@ def _get_parsed_schedule_param(param_collection) -> ScheduleParam:
         COURSE_GROUPS[i][3] = _str_to_array(COURSE_GROUPS[i][3])
 
     '''
-    TODO: deduce implied sanity checks
-    - if NUM_OF_LECS_BEING_OFFERED > MAX_LECS_THAT_CAN_BE_OFFERED:
+    NOTE: the following sanity check can be deduced: (if NUM_OF_LECS_BEING_OFFERED > MAX_LECS_THAT_CAN_BE_OFFERED)
     '''
 
     for i in range(len(TIMESLOTS)):

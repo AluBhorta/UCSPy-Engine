@@ -1,7 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
 import matplotlib.ticker as plticker
-import bisect
 
 from core.logging import UCSPLogger
 
@@ -13,8 +12,6 @@ class UCSPPlotter:
     make plots to analyze performance of UCSP Solvers using saved log files auto generated from running Solver in `save_logs` mode.
 
     :param log_file: path to the log file.
-    \n
-    :param ygap: Amount of gap in the Y-axis ticks, as a mutiple of the average gap. A higher value gives less frequent ticks. (default: 5)
 
     N.B:
 
@@ -22,24 +19,19 @@ class UCSPPlotter:
     \n
     """
 
-    def __init__(self, log_file="data/logs/sample.log", ygap=1):
+    def __init__(self, log_file="data/logs/sample.log"):
         self.log_file = log_file
-        self.ygap = ygap
 
     def plot(self):
         with open(self.log_file, 'r') as f:
             lines = f.read().split('\n')
             x, y = self._get_processed_axes(lines)
 
-            fig, ax = plt.subplots()
+            _, ax = plt.subplots()
             ax.plot(x, y)
 
             ax.xaxis.set_major_locator(
                 plticker.MultipleLocator(base=len(x)/10)
-            )
-            ybase = (min(y) + max(y)) / (len(y)) * self.ygap
-            ax.yaxis.set_major_locator(
-                plticker.MultipleLocator(base=ybase)
             )
 
             plt.title(f"Plotting from: {self.log_file}", fontsize=16)
