@@ -67,6 +67,12 @@ pip install -r requirements.arm.txt
 
 ## Usage
 
+The general usage is as follows:
+
+```bash
+python cli.py <service>
+```
+
 There are 3 main services offered by UCSPy-Engine:
 
 - `solve` - used to solve a course scheduling problem.
@@ -169,6 +175,16 @@ python cli.py inspect
 
 NOTE: make sure you set the correct schedule_param and contraints that was used to generate the schedule in the first place. Otherwise, results will be erroneous.
 
+## Testing
+
+To run automated tests, use:
+
+```bash
+python test.py
+```
+
+NOTE: this only tests the operation of the high level services as of now.
+
 ## Additional info
 
 For help or synopsis use:
@@ -176,8 +192,7 @@ For help or synopsis use:
 ```bash
 python cli.py -
 python cli.py --help
-
-python cli.py <command> -- --help
+python cli.py <service> -- --help
 ```
 
 NOTE
