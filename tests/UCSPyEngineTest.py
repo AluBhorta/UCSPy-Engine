@@ -1,5 +1,5 @@
 
-from core.models.UCSPyEngine import UCSPyEngine
+from core.UCSPyEngine import UCSPyEngine
 
 
 class UCSPyEngineTest:
@@ -15,3 +15,5 @@ class UCSPyEngineTest:
 
         # test plot
         self.ucspy_engine.plot(should_wait=False)
+
+        print("\ntests successful! ✅")

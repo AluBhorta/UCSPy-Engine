@@ -1,9 +1,9 @@
 
 from pathlib import Path
 
-from core.plotting import UCSPPlotter
-from core.models.Solver import UCSPSolver
-from core.models.ScheduleInspector import ScheduleInspector
+from core.services.UCSPPlotter import UCSPPlotter
+from core.services.UCSPSolver import UCSPSolver
+from core.services.ScheduleInspector import ScheduleInspector
 from core.parsers.parse_config import parse_config_file
 from core.generators.StateGenerator import StateGenerator
 from core.models.ScheduleOperator import ScheduleOperator
