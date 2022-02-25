@@ -1,11 +1,8 @@
 
-from pathlib import Path
-
-from core.services.UCSPPlotter import UCSPPlotter
-from core.services.UCSPSolver import UCSPSolver
-from core.services.ScheduleInspector import ScheduleInspector
 from core.services.StateGenerator import StateGenerator
-from core.services.ScheduleOperator import ScheduleOperator
+from core.services.UCSPSolver import UCSPSolver
+from core.services.UCSPPlotter import UCSPPlotter
+from core.services.ScheduleInspector import ScheduleInspector
 
 
 class UCSPyEngine:
@@ -42,7 +39,4 @@ class UCSPyEngine:
         :param schedule_file: The numerical schedule file to inspect.
         """
         state = StateGenerator(self._config_file).generate()
-        return ScheduleInspector(
-            state.fitness_provider,
-            ScheduleOperator(state.schedule_param)
-        ).inspect(schedule_file, *args, **kwargs)
+        return ScheduleInspector(state).inspect(schedule_file, *args, **kwargs)

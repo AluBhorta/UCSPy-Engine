@@ -1,6 +1,6 @@
 
 import json
-from algorithms import ALL_ALGORITHMS
+from core.algorithms import ALL_ALGORITHMS
 from core.models.Algorithm import Algorithm
 
 from core.models.UCSPState import UCSPState
@@ -44,9 +44,9 @@ class StateGenerator:
             self.fitness_provider,
             self.schedule_generator,
             self.logger,
+            algo,
             should_save_schedule=self.config['save_schedule'],
             should_inspect_final_schedule=self.config['inspect_final_schedule'],
-            algo=algo
         )
 
     def _parse_config_file(self, fpath="ucsp.config.json"):
@@ -65,7 +65,7 @@ class StateGenerator:
         algo = ALL_ALGORITHMS.get(algo_name)
 
         if not hasattr(algo, 'run'):
-            raise Exception(f"ERROR! Invalid algo name provided: {algo}")
+            raise Exception(f"ERROR! Invalid algo name provided: {algo_name}")
 
         return algo(
             self.schedule_param,

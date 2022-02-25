@@ -12,9 +12,9 @@ class UCSPState:
         fitness_provider: FitnessProvider,
         schedule_generator: ScheduleGenerator,
         logger: UCSPLogger,
+        algo: Algorithm,
         should_save_schedule,
         should_inspect_final_schedule,
-        algo: Algorithm
     ):
         self.schedule_param = schedule_param
         self.fitness_provider = fitness_provider

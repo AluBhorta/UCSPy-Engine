@@ -1,6 +1,7 @@
 
 from pandas import read_csv
 import os
+from core.models.UCSPState import UCSPState
 
 from core.services.ScheduleOperator import ScheduleOperator
 from core.models.FitnessProvider import FitnessProvider
@@ -12,9 +13,9 @@ class ScheduleInspector:
         Inspect the quality of a schedule.
     """
 
-    def __init__(self, fitness_provider: FitnessProvider, schedule_operator: ScheduleOperator):
-        self.fitness_provider = fitness_provider
-        self.schedule_operator = schedule_operator
+    def __init__(self, state: UCSPState):
+        self.fitness_provider = state.fitness_provider
+        self.schedule_operator = ScheduleOperator(state.schedule_param)
 
     def inspect(self, schedule_file):
         numrepr = self._parse_numrepr_from_file(schedule_file)
@@ -32,7 +33,7 @@ class ScheduleInspector:
 
     def pretty_print_results(self, tsp=None, fitness_value=None, fitness_provider=None):
         print("\n-\t-\t-\t-\t-\n")
-        fitness_provider and print(f"Fitness provider: {fitness_provider.__class__.__name__}")
+        fitness_provider and print(
+            f"Fitness provider: {fitness_provider.__class__.__name__}")
         fitness_value and print(f"Final Fitness: {fitness_value}")
         tsp and print(f"Total Soft Penalty: {tsp}")
-
