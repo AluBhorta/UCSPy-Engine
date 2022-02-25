@@ -1,6 +1,6 @@
 
 from core.models import Schedule, Timeslot, ScheduleParam
-from core.util import _get_theory_lab_course_idx_paris, _get_classes_of_course_idx
+from core.constraints.util import _get_theory_lab_course_idx_paris, _get_classes_of_course_idx
 
 
 def penalty_of_soft_constraint_7(schedule: Schedule, schedule_param: ScheduleParam, unit_penalty, _inspect=False):

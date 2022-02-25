@@ -1,9 +1,9 @@
+from numpy import array
 from typing import List
 from pandas import read_csv
 import os
 
 from core.models import Room, Timeslot, Course, Instructor, CourseGroup, ScheduleParam, Section
-from core.util import _str_to_array
 
 
 def parse_schedule_params(schedule_param_config) -> ScheduleParam:
@@ -73,6 +73,13 @@ def parse_schedule_params(schedule_param_config) -> ScheduleParam:
 
 
 def _get_parsed_schedule_param(param_collection) -> ScheduleParam:
+    def _str_to_array(str_values):
+        values = []
+        for i in str_values.split(","):
+            if i != '':
+                values.append(int(i))
+        return array(values)
+
     ROOMS, TIMESLOTS, COURSES, INSTRUCTORS, COURSE_GROUPS = param_collection
     all_theory_courses = list(filter(lambda x: x[4] == "Theory", COURSES))
     all_theory_course_indices = [c[0] for c in all_theory_courses]

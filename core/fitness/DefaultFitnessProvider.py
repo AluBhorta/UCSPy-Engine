@@ -1,6 +1,6 @@
 
-from core.services.FitnessProvider import FitnessProvider
-from core.models.ConstraintManager import ConstraintManager
+from core.models.FitnessProvider import FitnessProvider
+from core.services.ConstraintManager import ConstraintManager
 
 
 class DefaultFitnessProvider(FitnessProvider):

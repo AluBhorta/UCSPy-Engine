@@ -1,5 +1,6 @@
+from core.models.Algorithm import Algorithm
 from . import ScheduleParam
-from ..services.FitnessProvider import FitnessProvider
+from .FitnessProvider import FitnessProvider
 from .ScheduleGenerator import ScheduleGenerator
 from core.services.UCSPLogger import UCSPLogger
 
@@ -13,7 +14,7 @@ class UCSPState:
         logger: UCSPLogger,
         should_save_schedule,
         should_inspect_final_schedule,
-        get_algo
+        algo: Algorithm
     ):
         self.schedule_param = schedule_param
         self.fitness_provider = fitness_provider
@@ -21,4 +22,4 @@ class UCSPState:
         self.logger = logger
         self.should_save_schedule = should_save_schedule
         self.should_inspect_final_schedule = should_inspect_final_schedule
-        self.get_algo = get_algo
+        self.algo = algo

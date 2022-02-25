@@ -27,6 +27,3 @@ class ScheduleOperator:
         numrepr = self.deflatten(flat_schedule)
         schedule = self.numrepr_to_sch(numrepr)
         return schedule
-
-    # def numrepr_fitness(self, numrepr_schedule, **kwargs) -> float:
-    #     raise NotImplementedError

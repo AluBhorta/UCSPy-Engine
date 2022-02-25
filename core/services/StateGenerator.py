@@ -4,10 +4,9 @@ from algorithms import ALL_ALGORITHMS
 from core.models.Algorithm import Algorithm
 
 from core.models.UCSPState import UCSPState
-from core.models.ConstraintManager import ConstraintManager
-from core.services.FitnessProvider import FitnessProvider
-from core.generators.schedule.DefaultScheduleGenerator import DefaultScheduleGenerator
-from core.generators.generate_constraints import generate_constraints
+from core.services.ConstraintManager import ConstraintManager
+from core.models.FitnessProvider import FitnessProvider
+from core.services.DefaultScheduleGenerator import DefaultScheduleGenerator
 from core.util.parse_schedule_params import parse_schedule_params
 from core.fitness import FITNESS_PROVIDERS
 from core.fitness.TanhFitnessProvider import TanhFitnessProvider
@@ -18,15 +17,13 @@ class StateGenerator:
     def __init__(self, config_file):
         self.config = self._parse_config_file(config_file)
 
-    def generate(self) -> UCSPState:
+    def generate(self, *args, **kwargs) -> UCSPState:
         self.schedule_param = parse_schedule_params(
             self.config['schedule_param'])
 
-        HARD_CONSTRAINTS, SOFT_CONSTRAINTS = generate_constraints(
-            self.config['constraints']
-        )
         constraint_manager = ConstraintManager(
-            HARD_CONSTRAINTS, SOFT_CONSTRAINTS, self.schedule_param
+            constraints_config=self.config['constraints'],
+            schedule_param=self.schedule_param
         )
         self.fitness_provider = self._get_fitness_provider(constraint_manager)
 
@@ -39,7 +36,8 @@ class StateGenerator:
         else:
             self._min_acceptable_fitness = 0 if self.fitness_provider.is_reverse() else 1
 
-        self.algo_name = self.config['algorithm']['use']
+        algo_name = self.config['algorithm']['use']
+        algo = self._get_algo(algo_name, *args, **kwargs)
 
         return UCSPState(
             self.schedule_param,
@@ -48,7 +46,7 @@ class StateGenerator:
             self.logger,
             should_save_schedule=self.config['save_schedule'],
             should_inspect_final_schedule=self.config['inspect_final_schedule'],
-            get_algo=self._get_algo
+            algo=algo
         )
 
     def _parse_config_file(self, fpath="ucsp.config.json"):
@@ -63,8 +61,8 @@ class StateGenerator:
             raise Exception(f"ERROR! Invalid fitness provided: {fp}")
         return fp(constraint_manager)
 
-    def _get_algo(self, *args, **kwargs) -> Algorithm:
-        algo = ALL_ALGORITHMS.get(self.algo_name)
+    def _get_algo(self, algo_name, *args, **kwargs) -> Algorithm:
+        algo = ALL_ALGORITHMS.get(algo_name)
 
         if not hasattr(algo, 'run'):
             raise Exception(f"ERROR! Invalid algo name provided: {algo}")

@@ -4,7 +4,7 @@ from pathlib import Path
 from core.services.UCSPPlotter import UCSPPlotter
 from core.services.UCSPSolver import UCSPSolver
 from core.services.ScheduleInspector import ScheduleInspector
-from core.generators.StateGenerator import StateGenerator
+from core.services.StateGenerator import StateGenerator
 from core.services.ScheduleOperator import ScheduleOperator
 
 
@@ -23,8 +23,8 @@ class UCSPyEngine:
 
         :param show_args: shows the arguments provided for the current solver when this flag is used.
         """
-        state = StateGenerator(self._config_file).generate()
-        solver = UCSPSolver(state, *args, **kwargs)
+        state = StateGenerator(self._config_file).generate(*args, **kwargs)
+        solver = UCSPSolver(state)
         if show_args:
             return solver.show_args()
         solver.solve()
