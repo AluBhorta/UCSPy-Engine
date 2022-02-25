@@ -74,19 +74,18 @@
     }
   },
   "schedule_param": {
-    "strategies": [
-      { "name": "folder", "path": "data/schedule_params/default/" },
-      {
-        "name": "discrete_files",
-        "files": {
-          "rooms_file": "data/schedule_params/default/rooms.csv",
-          "timeslots_file": "data/schedule_params/default/timeslots.csv",
-          "courses_file": "data/schedule_params/default/courses.csv",
-          "instructors_file": "data/schedule_params/default/instructors.csv",
-          "coursegroups_file": "data/schedule_params/default/course_groups.csv"
-        }
+    "strategies": {
+      "folder": {
+        "path": "data/schedule_params/default/"
+      },
+      "discrete_files": {
+        "rooms_file": "data/schedule_params/default/rooms.csv",
+        "timeslots_file": "data/schedule_params/default/timeslots.csv",
+        "courses_file": "data/schedule_params/default/courses.csv",
+        "instructors_file": "data/schedule_params/default/instructors.csv",
+        "coursegroups_file": "data/schedule_params/default/course_groups.csv"
       }
-    ],
+    },
     "use_strategy": "folder"
   }
 }

@@ -57,12 +57,9 @@ pip install -r requirements.txt
 If you're using a Mac with **Apple Silicon**, run the commands below instead of the previous one:
 
 ```bash
-# install and build numpy + scipy separately after openblas
 brew install openblas
-OPENBLAS="$(brew --prefix openblas)" pip install numpy==1.22.1 scipy==1.7.3
-
-# install rest of the dependencies
-pip install -r requirements.arm.txt
+pip install --upgrade pip
+OPENBLAS="$(brew --prefix openblas)" pip install -r requirements.arm.txt
 ```
 
 ## Usage

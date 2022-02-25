@@ -47,14 +47,18 @@ The following are the main settings:
       - `desc`: (read only) the description of the hard constraint.
     - `use_ids`: list of the hard constraint IDs to use.
 
-- `schedule_param`: configuration block for specifying the schedule parameters. There are two strategies for providing the schedule_param, `discrete_files` & `folder`.
+- `schedule_param`: configuration block for specifying the schedule parameters. There are two strategies for parsing files required for generating the schedule_param.
 
-  `discrete_files` requires the path to each schedule_param file, namely: `rooms_file, timeslots_file, courses_file, instructors_file, coursegroups_file.`
+  - `strategies`: object containing the schedule_param parsing strategies - `discrete_files` & `folder`.
 
-  `folder` accepts the path to a folder that contains the required schedule_param files names as `'rooms.csv', 'timeslots.csv', 'courses.csv', 'instructors.csv', 'course_groups.csv'`.
+    - `folder`: contains the `path` path property, which specifies a path to a folder that contains the required schedule_param files, named specifically as `'rooms.csv', 'timeslots.csv', 'courses.csv', 'instructors.csv', 'course_groups.csv'`. if your files are named differently, consider renaming them or use `discrete_files` instead.
 
-  - `strategies`: list of length 2 containing the strategies.
-    - `name`: (read only) The name of the strategy.
-    - `path`: (for folder strategy) path to the folder that contains the required schedule_param files as mentioned above
-    - `*_file`: (for discrete_files strategy) path to each schedule_param file as mentioned above.
+    - `discrete_files`: requires the path to each schedule_param file, namely:
+
+      - `rooms_file`
+      - `timeslots_file`
+      - `courses_file`
+      - `instructors_file`
+      - `coursegroups_file`
+
   - `use_strategy`: name of the strategy to use, `discrete_files` or `folder`.

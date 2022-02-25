@@ -7,12 +7,8 @@ from core.models import Room, Timeslot, Course, Instructor, CourseGroup, Schedul
 
 
 def parse_schedule_params(schedule_param_config) -> ScheduleParam:
-
     if schedule_param_config['use_strategy'] == "folder":
-
-        st = next(
-            s for s in schedule_param_config['strategies'] if s['name'] == 'folder')
-        _path = st['path']
+        _path = schedule_param_config['strategies']['folder']['path']
 
         r_fname = "rooms.csv"
         t_fname = "timeslots.csv"
@@ -36,27 +32,27 @@ def parse_schedule_params(schedule_param_config) -> ScheduleParam:
             )
 
     elif schedule_param_config['use_strategy'] == 'discrete_files':
-        st = next(
-            s for s in schedule_param_config['strategies'] if s['name'] == 'discrete_files')
+        st = schedule_param_config['strategies']['discrete_files']
 
         try:
             R_DF = read_csv(os.path.join(
-                os.getcwd(), st['files']['rooms_file']))
+                os.getcwd(), st['rooms_file']))
             T_DF = read_csv(os.path.join(
-                os.getcwd(), st['files']['timeslots_file']))
+                os.getcwd(), st['timeslots_file']))
             C_DF = read_csv(os.path.join(
-                os.getcwd(), st['files']['courses_file']))
+                os.getcwd(), st['courses_file']))
             I_DF = read_csv(os.path.join(
-                os.getcwd(), st['files']['instructors_file']))
+                os.getcwd(), st['instructors_file']))
             CG_DF = read_csv(os.path.join(
-                os.getcwd(), st['files']['coursegroups_file']))
+                os.getcwd(), st['coursegroups_file']))
         except:
             raise Exception(
                 f"ERROR! Failed to make schedule_param from discrete_files!"
             )
+    
     else:
         raise Exception(
-            f"ERROR! Invalid schedule_param strategy given!"
+            f"ERROR! Invalid schedule_param strategy: {schedule_param_config['use_strategy']} ! Valid values are any one of: ['folder', 'discrete_files']"
         )
 
     ROOMS = R_DF.to_numpy()
