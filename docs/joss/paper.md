@@ -35,16 +35,16 @@ Yet, Solving UCSP for a particular institution is still a challenge - as it requ
 # Citations
 
 # Figures
-![General Structure of UCSPy-Engine.\label{fig:Flowchart}](flowchart.PNG) 
+![General Structure of UCSPy-Engine.\label{fig:Flowchart}](../../data/img/UCSP_flowchart.PNG) 
 Figure 1: General Structure of UCSPy-Engine
 
-![Fitness chart.\label{fig:fitnesschart}](fitnesschart.PNG) 
+![Fitness chart.\label{fig:fitnesschart}](../../data/img/fitnesschart.PNG) 
 Figure 2: varying fitness funtions in both GA and MA
 
-![Fitness chart.\label{fig:fitnesschart}](EpochVaryChart.PNG) 
+![Fitness chart.\label{fig:fitnesschart}](../../data/img/EpochVaryChart.PNG) 
 Figure 3: varying epochs in both GA and MA by using tanh fitness
 
-![Fitness chart.\label{fig:fitnesschart}](PopulationVaryChart.PNG) 
+![Fitness chart.\label{fig:fitnesschart}](../../data/img/PopulationVaryChart.PNG) 
 Figure 4: varying Population in both GA and MA by using tanh fitness
 
 
