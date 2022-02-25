@@ -1,5 +1,5 @@
 
-from . import Schedule, Class, Section, ScheduleParam
+from ..models import Schedule, Class, Section, ScheduleParam
 
 
 class ScheduleOperator:

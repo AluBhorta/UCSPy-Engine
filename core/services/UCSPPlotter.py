@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import matplotlib.ticker as plticker
 
-from core.logging import UCSPLogger
+from core.services.UCSPLogger import UCSPLogger
 
 
 class UCSPPlotter:

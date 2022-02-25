@@ -2,9 +2,9 @@
 from pandas import read_csv
 import os
 
-from core.util import _str_to_array, pretty_print_results
-from core.models.ScheduleOperator import ScheduleOperator
-from core.models.FitnessProvider import FitnessProvider
+from core.util import pretty_print_results
+from core.services.ScheduleOperator import ScheduleOperator
+from core.services.FitnessProvider import FitnessProvider
 
 
 class ScheduleInspector:

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from core.logging import UCSPLogger
-from core.models.FitnessProvider import FitnessProvider
+from core.services.UCSPLogger import UCSPLogger
+from core.services.FitnessProvider import FitnessProvider
 from core.models import ScheduleParam
 from core.models.ScheduleGenerator import ScheduleGenerator
 

@@ -75,7 +75,7 @@ There are 3 main services offered by UCSPy-Engine:
 
 ### configuration
 
-The services of UCSPyEngine require valid a json [configuration file](ucsp.config.json) (named `ucsp.config.json` by default) to be present at the root of the project. Learn more about the configuration file [here](docs/configuration.md).
+The `solve` and `inspect` services require valid a json [configuration file](ucsp.config.json) (named `ucsp.config.json` by default) to be present at the root of the project. Learn more about the configuration file [here](docs/configuration.md).
 
 ### `solve`
 

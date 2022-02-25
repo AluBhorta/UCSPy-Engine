@@ -1,5 +1,5 @@
 
-from core.models.FitnessProvider import FitnessProvider
+from core.services.FitnessProvider import FitnessProvider
 from core.models.ConstraintManager import ConstraintManager
 
 

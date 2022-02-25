@@ -4,9 +4,8 @@ from pathlib import Path
 from core.services.UCSPPlotter import UCSPPlotter
 from core.services.UCSPSolver import UCSPSolver
 from core.services.ScheduleInspector import ScheduleInspector
-from core.parsers.parse_config import parse_config_file
 from core.generators.StateGenerator import StateGenerator
-from core.models.ScheduleOperator import ScheduleOperator
+from core.services.ScheduleOperator import ScheduleOperator
 
 
 class UCSPyEngine:
@@ -17,18 +16,15 @@ class UCSPyEngine:
     """
 
     def __init__(self, config_file="ucsp.config.json"):
-        Path("data/logs").mkdir(parents=True, exist_ok=True)
-        Path("data/schedules").mkdir(parents=True, exist_ok=True)
-
-        self._config = parse_config_file(config_file)
-        self._state = StateGenerator(self._config).generate()
+        self._config_file = config_file
 
     def solve(self, show_args=False, *args, **kwargs):
         """ used to solve a course scheduling problem. 
-        
+
         :param show_args: shows the arguments provided for the current solver when this flag is used.
         """
-        solver = UCSPSolver(self._config, self._state, *args, **kwargs)
+        state = StateGenerator(self._config_file).generate()
+        solver = UCSPSolver(state, *args, **kwargs)
         if show_args:
             return solver.show_args()
         solver.solve()
@@ -45,7 +41,8 @@ class UCSPyEngine:
 
         :param schedule_file: The numerical schedule file to inspect.
         """
+        state = StateGenerator(self._config_file).generate()
         return ScheduleInspector(
-            self._state.fitness_provider,
-            ScheduleOperator(self._state.schedule_param)
+            state.fitness_provider,
+            ScheduleOperator(state.schedule_param)
         ).inspect(schedule_file, *args, **kwargs)

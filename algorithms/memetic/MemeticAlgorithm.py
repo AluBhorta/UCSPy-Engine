@@ -3,9 +3,9 @@ import random
 from copy import deepcopy
 
 from core.models import Schedule, ScheduleParam
-from core.logging import UCSPLogger
+from core.services.UCSPLogger import UCSPLogger
 from core.models.Algorithm import Algorithm
-from core.models.FitnessProvider import FitnessProvider
+from core.services.FitnessProvider import FitnessProvider
 from core.models.ScheduleGenerator import ScheduleGenerator
 
 
