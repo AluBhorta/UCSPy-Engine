@@ -1,8 +1,8 @@
 # Configuration
 
-The main services of UCSPyEngine require valid a json configuration file (named `ucsp.config.json` by default) to be present at the root of the project.
+The main services of UCSPy-Engine require valid a json configuration file (named `ucsp.config.json` by default) to be present at the root of the project.
 
-you can use the `--config_file` argument to set an alternative config file.
+you can use the `--config_file` argument to specify an alternative config file.
 
 ```bash
 python cli.py --config_file=custom.config.json <command>

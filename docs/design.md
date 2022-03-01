@@ -2,31 +2,24 @@
 
 This section describes how UCSPy-Engine formulates and encodes UCSP into a set of models that can be understood by a computer. This allows us to generate, store, or manipulate schedules, as well as to measure and analyze their performance.
 
-## How does it work?
+## Architecture
 
-Our target is to find an optimal Schedule that satisfies our constraints best. But, in order to get a Schedule as output, we need to provide the necessary input.
-
-The following diagram is a visual of UCSPyEngine from a functional perspective:
+The following diagram demonstrates the components of UCSPy-Engine from a high-level, functional perspective:
 
 ![](../data/img/UCSP_flowchart.PNG)
 
-## The Inputs
+The target is to find an optimal Schedule that satisfies our constraints best. But, in order to get a Schedule as output, we need to provide the necessary input.
 
-<!-- TODO: revise to check if all models are upto date -->
+## The Inputs
 
 To define a UCSP, we need 2 main inputs:
 
-- the `schedule params`: which are the required data needed to form a schedule
+- the `schedule_param`: which are the required data needed to form a schedule
 - and `constraints`: which are what we want to satisfy
-
-The following represents a class diagram of the inputs- Course, Instructor, Room, Timeslot and CourseGroup:
-![](../data/img/UCSPinput.PNG)
 
 ### Schedule Params
 
-The `schedule params` consists of: `Courses`, `Instructors`, `Timeslots` and `Rooms`. We have one more component called `CourseGroups`, which is specific to the needs of our university i.e. IUB (and maybe to other universities as well).
-
-A breakdown of the information/data held in each component of `schedule params` should be sufficient for working with the engine.
+A `schedule_param` consists of lists of `Courses`, `Instructors`, `Timeslots`, `Rooms`, `CourseGroups`.
 
 #### Course
 
@@ -37,10 +30,10 @@ A course consists of:
 - `idx`: unique index.
 - `desc`: detail description. Can contain meta-information.
 - `num_of_sections`: number of sections of that course to be offered.
-- `lectures_per_week`: how many lectures are offered in a week. A `lecture` represents a physical event in the real world.
-- `course_type`: Lab or Theory (more types can be used).
+- `lectures_per_week`: how many lectures are offered in a week for this course. A `lecture` represents a physical event in the real world.
+- `course_type`: "Lab" or "Theory" (more types could be used).
 - `sections`: Reference to the collection of all the Sections.
-- `credits`: The credits rewarded for taking this particular course. Currently the credits are being deduced by the `course_type` attribute, but it can be assigned explicitly to individual courses.
+- `credits`: The credits rewarded for taking this particular course. Currently the credits are being deduced by the `course_type` attribute, but it could be provided as an input.
 
 #### Section
 
@@ -64,54 +57,38 @@ A Room consists of:
 
 #### Timeslot
 
-A particular period/interval of time in a week.
+A particular period/interval of time in a week. (e.g. Sun & Tue 08:00-09:30).
 
 A Timeslot consists of:
 
 - `idx`: unique index.
 - `desc`: detail description. Can contain meta-information.
-- `weekday`: The day of the week (Sun-Sat).
-- `daily_slot`: A workday is usually divided up into periods or slots e.g. '08:00-09:30' or 'period 1' etc. If there are 7 periods for example, then daily_slot takes a value from 0 to 6.
+- `day_code`: the code to identify the weekday(s) e.g. "S" for Sunday or "ST" for Sunday+Tuesday.
+- `daily_slot`: the daily time slot e.g "08:00-09:30" or "09:40-11:10"
+- `conflicts_with_idxs`: the indices of the timeslots which this timeslot conflicts with e.g. "ST,08:00-09:30" conflicts with "S,08:00-09:30" as both are on Sunday on the same slot.
 
 #### Instructor
 
-The teacher/professor/faculty that takes a particular class.
+The teacher/professor/faculty for teaching courses.
 
 An Instructor consists of:
 
 - `idx`: unique index.
 - `desc`: detail description. Can contain meta-information.
-- `assigned_course_idxs`: the collection of courses that they are assigned.
-- `preferred_timeslot_idxs`: timeslots they prefer.
-- `min_credit_req`: the minimum credits that should be taken by a particular instructor.
+- `assigned_course_idxs`: the collection of courses that this Instructor can take or is assigned.
+- `preferred_timeslot_idxs`: indices of the timeslots they prefer (used for a soft constraint).
+- `min_credit_req`: the minimum credits that should be taken by a particular instructor (used for a soft constraint).
 
 #### CourseGroup
 
-A group of courses, to no ones surprise.
+Represents a group of courses.
 
 A CourseGroup consists of:
 
 - `idx`: unique index.
 - `desc`: detail description. Can contain meta-information.
 - `course_idxs`: a collection of Course indices.
-- `preferred_timeslot_idxs`: a collection of Timeslot indices, which are preferred for the courses.
-
-#### Class
-
-A Class is the base unit of a schedule that defines a particular event, in space and time i.e. in room and timeslot(s).
-
-![](../data/img/UCSPclass.PNG)
-
-A Class consists of:
-
-- `section`: The Section (of a Course).
-- `instructor`: The Instructor.
-- `room`: The Room.
-- `timeslots`: The Timeslots. Note the 's' - some courses can have classes that exceed several consecutive periods.
-
-NOTE:
-
-- the properties of a `schedule params` component can be modified to suit the needs of a particular university.
+- `preferred_timeslot_idxs`: a collection of Timeslot indices, which are preferred for the courses (used for a soft constraint).
 
 ### Constraints
 
@@ -147,39 +124,48 @@ The following are the current constraints that UCSPy-Engine holds, which are mos
 NOTE:
 
 - institutions can and should adjust the penalties to their needs.
-- the Lab course should be directly after its corresponding Theory course in the `courses.csv` schedule_param
+- a Lab course should be directly after its corresponding Theory course in the `courses.csv` schedule_param
 - read [this](./modify_constraints.md) to learn more about how to modify/add constraints.
 
 ## The Output
+
+#### Class
+
+A Class is the base unit of a schedule that defines a particular event, in space and time.
+
+A Class consists of:
+
+- `section`: The Section (of a Course).
+- `instructor`: The Instructor.
+- `room`: The Room.
+- `timeslots`: The Timeslots. Note the 's' - some courses can have classes that exceed several consecutive periods.
 
 ### Schedule
 
 A Schedule represents a solution of the UCSP inputs provided, which consists of:
 
-- `classes`: the collection of all classes. You might realize that the total number of classes is equal to the total number of sections, as they have a 1 to 1 mapping.
+- `classes`: the collection of all classes. note that the total number of classes is equal to the total number of sections, as they have a 1 to 1 mapping.
 - `course_groups`: the CourseGroups. This property was optional but turned out useful for our fitness calculation of individual schedules.
 
 ## Fitness Calculation
 
 The fitness of a schedule determines how desirable it is, and how much a Schedule violates the constraints determines its fitness.
 
-<!-- The fitness of Schedule `s` is calculated as follows: -->
+The section below describes how the fitness of a Schedule `s` is calculated using the (3) currently available fitness functions:
 
-There are 3 different fitness functions currently available:
-
-- TanH
+### TanH
 
 ![](../data/img/Tanh.png)
 
 Where a schedule of `1.0` fitnes is infeasible, while a fitness of `0.0` is a perfect solution.
 
-- Default
+### Default
 
 ![](../data/img/Default.png)
 
 Where a schedule of `0.0` fitness in infeasible, while a fitness of `1.0` is a perfect solution.
 
-- Default Exponential
+### Default Exponential
 
 ![](../data/img/DefaultExpo.png)
 
@@ -187,16 +173,14 @@ Where a schedule of `0.0` fitness in infeasible, while a fitness of `1.0` is a p
 
 ---
 
-<!-- TODO: specify the input knobs that can be turned, including the shape of the csv/excel files that are needed -->
-
 ## Extensibility (Advanced)
 
-The system is designed to be flexible, so that you may customize it according to your needs/use-case with a bit of effort.
+The system is designed to be flexible, so that it may be customized (with a bit of effort) according to the needs of the institution.
 
 - to add new algorithms - extend the `Algorithm` abstract class
 - to add new fitness functions - extend the `FitnessProvider` abstract class
-- to modify/add new constraints - read [this](docs/modify_constraints.md)
+- to modify/add new constraints - read [this](./modify_constraints.md)
 
-You may also decide to change the `DefaultScheduleGenerator` or update the shape of the `ScheduleParam` to suit your needs, but that will also require changes to other components of the system.
+You may also decide to change the `DefaultScheduleGenerator` or update the shape of the `ScheduleParam` to suit your needs, but that will also require changes to other components of the system as well.
 
 Feel free to open a PR or an Issue if you need help.
