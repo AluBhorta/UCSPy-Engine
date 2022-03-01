@@ -8,7 +8,7 @@ The following diagram demonstrates the components of UCSPy-Engine from a high-le
 
 ![](../data/img/UCSP_flowchart.PNG)
 
-The target is to find an optimal Schedule that satisfies our constraints best. But, in order to get a Schedule as output, we need to provide the necessary input.
+The target is to find an optimal Schedule that satisfies our constraints best. But, to get a Schedule as output, we need to provide the necessary input.
 
 ## The Inputs
 
@@ -33,7 +33,7 @@ A course consists of:
 - `lectures_per_week`: how many lectures are offered in a week for this course. A `lecture` represents a physical event in the real world.
 - `course_type`: "Lab" or "Theory" (more types could be used).
 - `sections`: Reference to the collection of all the Sections.
-- `credits`: The credits rewarded for taking this particular course. Currently the credits are being deduced by the `course_type` attribute, but it could be provided as an input.
+- `credits`: The credits rewarded for taking this particular course. Currently, the credits are being deduced by the `course_type` attribute, but it could be provided as an input.
 
 #### Section
 
@@ -46,7 +46,7 @@ A Section consists of:
 
 #### Room
 
-Room is a location where a particular section of a course is held (e.g. CSELAB1, GPL, 5012, etc.)
+A room is a location where a particular section of a course is held (e.g. CSELAB1, GPL, 5012, etc.)
 
 A Room consists of:
 
@@ -113,7 +113,7 @@ The following are the current constraints that UCSPy-Engine holds, which are mos
 
 4. Instructors have Timeslot preferences.
 
-5. If a Course has 2 Lectures Per Week, it should take place in a composite Timeslot i.e. with Day code of "ST" or "MW".
+5. If a Course has 2 Lectures Per Week, it should take place in a composite Timeslot i.e. with a Day code of "ST" or "MW".
 
 6. The Lab Section of a Course (if any) should be placed in a Timeslot that is before or after the corresponding Theory Section.
 
@@ -157,19 +157,19 @@ The section below describes how the fitness of a Schedule `s` is calculated usin
 
 ![](../data/img/Tanh.png)
 
-Where a schedule of `1.0` fitnes is infeasible, while a fitness of `0.0` is a perfect solution.
+Where a schedule of `1.0` fitness is infeasible, while a fitness of `0.0` is a perfect solution.
 
 ### Default
 
 ![](../data/img/Default.png)
 
-Where a schedule of `0.0` fitness in infeasible, while a fitness of `1.0` is a perfect solution.
+Where a schedule of `0.0` fitness is infeasible, while a fitness of `1.0` is a perfect solution.
 
 ### Default Exponential
 
 ![](../data/img/DefaultExpo.png)
 
-Where a schedule of `0.0` fitness in infeasible, while a fitness of `1.0` is a perfect solution.
+Where a schedule of `0.0` fitness is infeasible, while a fitness of `1.0` is a perfect solution.
 
 ---
 
@@ -181,6 +181,6 @@ The system is designed to be flexible, so that it may be customized (with a bit 
 - to add new fitness functions - extend the `FitnessProvider` abstract class
 - to modify/add new constraints - read [this](./modify_constraints.md)
 
-You may also decide to change the `DefaultScheduleGenerator` or update the shape of the `ScheduleParam` to suit your needs, but that will also require changes to other components of the system as well.
+You may also decide to change the `DefaultScheduleGenerator` or update the shape of the `ScheduleParam` to suit your needs, but that will require changes to other components of the system as well.
 
 Feel free to open a PR or an Issue if you need help.

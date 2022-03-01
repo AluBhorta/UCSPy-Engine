@@ -22,22 +22,22 @@ The following are the main settings:
 
 - `fitness`: configuration block for the fitness function.
 
-  - `min_acceptable_fitness`: the minimum acceptable fitness required to terminate if maximum iterations is not yet completed. Range is from 1-0, 1 being worst solution and 0 being perfect solution.
-  - `functions`: (read only) list of available fitness functions names.
+  - `min_acceptable_fitness`: the minimum acceptable fitness required to terminate if maximum iterations are not yet completed. The range is from 1-0, 1 being the worst solution and 0 being the perfect solution.
+  - `functions`: (read-only) list of available fitness functions names.
   - `use`: the name of the fitness function to use.
 
 - `algorithm`: configuration block for the algorithm.
 
-  - `algorithms`: (read only) list of available algorithm names.
+  - `algorithms`: (read-only) list of available algorithm names.
   - `use`: the name of the default algorithm to use (can be overridden by the `algo` argument to solve).
 
-- `constraints`: configuration block for the contraints.
+- `constraints`: configuration block for the constraints.
 
   - `soft_constraints`
 
     - `constraints`
-      - `id`: (read only) The ID of the soft constraint.
-      - `desc`: (read only) the description of the soft constraint.
+      - `id`: (read-only) The ID of the soft constraint.
+      - `desc`: (read-only) the description of the soft constraint.
       - `unit_penalty`: Unit penalty value for the soft constraint. Adjust this to set the priority of the constraints. Range is 0.0-1.0, 0.0 being no penalty and 1.0 being max penalty.
     - `use_ids`: list of the soft constraint IDs to use.
 

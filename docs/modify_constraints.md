@@ -2,7 +2,7 @@
 
 Hard and Soft constraints can only be included or excluded via the `use_ids` json configuration parameter (`constraints.hard_constraints.use_ids` & `constraints.soft_constraints.use_ids`).
 
-Each Soft constraint additionally require a `unit_penalty` parameter (0.0-1.0). The higher the `unit_penalty`, the more it is given preference relative to other soft contraints.
+Each Soft constraint additionally require a `unit_penalty` parameter (0.0-1.0). The higher the `unit_penalty`, the more it is given preference relative to other soft constraints.
 
 ---
 
