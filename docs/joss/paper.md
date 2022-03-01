@@ -1,5 +1,5 @@
 ---
-title: "UCSPy-Engine: An Extensible Framework for solving University Course Scheduling Problem"
+title: "UCSPy-Engine: An Extensible Framework for solving the University Course Scheduling Problem"
 tags:
   - Python
   - Artificial Intelligence
@@ -10,9 +10,10 @@ tags:
   - Evolutionary Algorithms
 
 authors:
-  - name: Farhim Ferdous
+  - name: Amin Ahasn Ali, Ph.D.
   - name: Juaria Iqbal
-  - name: "Amin Ahasn Ali, Ph.D."
+  - name: Farhim Ferdous^[co-first author]
+    orcid: 0000-0003-3496-7466
 
 date: 1 March 2022
 bibliography: paper.bib
@@ -50,7 +51,7 @@ Figure 4: varying population in both GA and MA by using tanh fitness
 
 # Acknowledgement
 
-We would like to take this opportunity to convey our special appreciation and gratitude to Dr. Amin Ahsan Ali, our respected supervisor, for his guidelines and suggestions throughout the whole project.
+<!-- We would like to take this opportunity to convey our special appreciation and gratitude to Dr. Amin Ahsan Ali, our respected supervisor, for his guidelines and suggestions throughout the whole project. -->
 
 We would like to thank Dr. Mahady Hasan for his valuable advice, feedback, and for providing us with the course offerings dataset of IUB. We would also like to thank Ms. Naureen Rehnuma for providing the course schedules of the English Department.
 
