@@ -12,9 +12,9 @@ tags:
 authors:
   - name: Farhim Ferdous
   - name: Juaria Iqbal
-  - name: Amin Ahasn Ali, Ph.D.
+  - name: "Amin Ahasn Ali, Ph.D."
 
-date: # TODO
+date: 1 March 2022
 bibliography: paper.bib
 ---
 
