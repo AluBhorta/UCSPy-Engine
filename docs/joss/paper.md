@@ -10,10 +10,10 @@ tags:
   - Evolutionary Algorithms
 
 authors:
-  - name: Amin Ahasn Ali, Ph.D.
-  - name: Juaria Iqbal
-  - name: Farhim Ferdous^[co-first author]
+  - name: "Farhim Ferdous"
     orcid: 0000-0003-3496-7466
+  - name: "Juaria Iqbal"
+  - name: "Amin Ahasn Ali, Ph.D."
 
 date: 1 March 2022
 bibliography: paper.bib
