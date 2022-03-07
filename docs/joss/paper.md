@@ -12,8 +12,16 @@ tags:
 authors:
   - name: "Farhim Ferdous"
     orcid: 0000-0003-3496-7466
+    affiliation: "1, 2"
   - name: "Juaria Iqbal"
+    affiliation: "1, 2"
   - name: "Amin Ahasn Ali, Ph.D."
+    affiliation: "1"
+affiliations:
+ - name: "Independent University, Bangladesh"
+   index: 1
+ - name: "Mahady Hasan (PhD, UNSW)"
+   index: 2
 
 date: 1 March 2022
 bibliography: paper.bib
