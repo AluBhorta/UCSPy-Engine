@@ -22,7 +22,7 @@ pythran==0.11.0
 pytz==2019.3
 PyYAML==6.0
 rope==0.22.0
-scipy==1.7.3
+scipy==1.10.0
 six==1.13.0
 termcolor==1.1.0
 toml==0.10.2
